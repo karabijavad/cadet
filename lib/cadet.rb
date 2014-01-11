@@ -1,10 +1,10 @@
 require 'java'
 
-Dir["../neo4j-lib/*.jar"].each {|file| require file }
+Dir["../../neo4j-lib/*.jar"].each {|file| require file }
 
-require 'session/session'
-require 'node/node'
+require_relative './cadet/session'
+require_relative './cadet/node'
 
-db = Cadet::Session.open("/tmp/db")
-Cadet::Node.create(db)
-Cadet::Session.close(db)
+#db = Cadet::Session.open("/tmp/db")
+#Cadet::Node.create(db)
+#Cadet::Session.close(db)
