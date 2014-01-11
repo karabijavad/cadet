@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>19.1. Transactional HTTP endpoint</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="The Neo4j Manual v2.0.0" /><link rel="up" href="rest-api.html" title="Chapter 19. REST API" /><link rel="prev" href="rest-api.html" title="Chapter 19. REST API" /><link rel="next" href="status-codes.html" title="19.2. Neo4j Status Codes" /><link rel="preface" href="preface.html" title="Preface" /><link rel="part" href="introduction.html" title="Part I. Introduction" /><link rel="chapter" href="introduction-highlights.html" title="Chapter 1. Neo4j Highlights" /><link rel="chapter" href="graphdb-concepts.html" title="Chapter 2. Graph Database Concepts" /><link rel="chapter" href="graphdb-neo4j.html" title="Chapter 3. The Neo4j Graph Database" /><link rel="part" href="tutorials.html" title="Part II. Tutorials" /><link rel="chapter" href="tutorials-cypher.html" title="Chapter 4. Getting started with Cypher" /><link rel="chapter" href="data-modeling-examples.html" title="Chapter 5. Data Modeling Examples" /><link rel="chapter" href="languages.html" title="Chapter 6. Languages" /><link rel="part" href="cypher-query-lang.html" title="Part III. Cypher Query Language" /><link rel="chapter" href="cypher-intro.html" title="Chapter 7. Introduction" /><link rel="chapter" href="query-syntax.html" title="Chapter 8. Syntax" /><link rel="chapter" href="query-general.html" title="Chapter 9. General Clauses" /><link rel="chapter" href="query-read.html" title="Chapter 10. Reading Clauses" /><link rel="chapter" href="query-write.html" title="Chapter 11. Writing Clauses" /><link rel="chapter" href="query-function.html" title="Chapter 12. Functions" /><link rel="chapter" href="cypher-schema.html" title="Chapter 13. Schema" /><link rel="chapter" href="examples-from-sql-to-cypher.html" title="Chapter 14. From SQL to Cypher" /><link rel="part" href="reference-documentation.html" title="Part IV. Reference" /><link rel="chapter" href="capabilities.html" title="Chapter 15. Capabilities" /><link rel="chapter" href="transactions.html" title="Chapter 16. Transaction Management" /><link rel="chapter" href="import.html" title="Chapter 17. Data Import" /><link rel="chapter" href="graph-algo.html" title="Chapter 18. Graph Algorithms" /><link rel="chapter" href="rest-api.html" title="Chapter 19. REST API" /><link rel="chapter" href="deprecations.html" title="Chapter 20. Deprecations" /><link rel="part" href="operations.html" title="Part V. Operations" /><link rel="chapter" href="deployment.html" title="Chapter 21. Installation &amp; Deployment" /><link rel="chapter" href="embedded-configuration.html" title="Chapter 22. Configuration &amp; Performance" /><link rel="chapter" href="ha.html" title="Chapter 23. High Availability" /><link rel="chapter" href="operations-backup.html" title="Chapter 24. Backup" /><link rel="chapter" href="operations-security.html" title="Chapter 25. Security" /><link rel="chapter" href="operations-monitoring.html" title="Chapter 26. Monitoring" /><link rel="part" href="tools.html" title="Part VI. Tools" /><link rel="chapter" href="tools-webadmin.html" title="Chapter 27. Web Interface" /><link rel="chapter" href="shell.html" title="Chapter 28. Neo4j Shell" /><link rel="part" href="community.html" title="Part VII. Community" /><link rel="chapter" href="community-support.html" title="Chapter 29. Community Support" /><link rel="chapter" href="community-contributing.html" title="Chapter 30. Contributing to Neo4j" /><link rel="part" href="advanced-usage.html" title="Part VIII. Advanced Usage" /><link rel="chapter" href="server-extending.html" title="Chapter 31. Extending the Neo4j Server" /><link rel="chapter" href="tutorials-java-embedded.html" title="Chapter 32. Using Neo4j embedded in Java applications" /><link rel="chapter" href="tutorial-traversal.html" title="Chapter 33. The Traversal Framework" /><link rel="chapter" href="indexing.html" title="Chapter 34. Legacy Indexing" /><link rel="chapter" href="batchinsert.html" title="Chapter 35. Batch Insertion" /><link rel="appendix" href="manpages.html" title="Appendix A. Manpages" /><link rel="refentry" href="re01.html" title="neo4j" /><link rel="refentry" href="re02.html" title="neo4j-installer" /><link rel="refentry" href="re03.html" title="neo4j-shell" /><link rel="refentry" href="re04.html" title="neo4j-backup" /><link rel="refentry" href="re05.html" title="neo4j-arbiter" /><link rel="subsection" href="rest-api-transactional.html#rest-api-begin-a-transaction" title="19.1.1. Begin a transaction" /><link rel="subsection" href="rest-api-transactional.html#rest-api-execute-statements-in-an-open-transaction" title="19.1.2. Execute statements in an open transaction" /><link rel="subsection" href="rest-api-transactional.html#rest-api-execute-statements-in-an-open-transaction-in-rest-format-for-the-return" title="19.1.3. Execute statements in an open transaction in REST format for the return" /><link rel="subsection" href="rest-api-transactional.html#rest-api-reset-transaction-timeout-of-an-open-transaction" title="19.1.4. Reset transaction timeout of an open transaction" /><link rel="subsection" href="rest-api-transactional.html#rest-api-commit-an-open-transaction" title="19.1.5. Commit an open transaction" /><link rel="subsection" href="rest-api-transactional.html#rest-api-rollback-an-open-transaction" title="19.1.6. Rollback an open transaction" /><link rel="subsection" href="rest-api-transactional.html#rest-api-begin-and-commit-a-transaction-in-one-request" title="19.1.7. Begin and commit a transaction in one request" /><link rel="subsection" href="rest-api-transactional.html#rest-api-return-results-in-graph-format" title="19.1.8. Return results in graph format" /><link rel="subsection" href="rest-api-transactional.html#rest-api-handling-errors" title="19.1.9. Handling errors" /><link rel="copyright" href="ln-idp218960.html" title="License: Creative Commons 3.0" />
+
+
+<!-- favicon -->
+
+<link rel="shortcut icon" href="http://neo4j.org/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="icon" href="http://neo4j.org/favicon.ico" type="image/x-icon" />
+
+<!-- style -->
+
+<link href="css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="css/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/shThemeEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/neo.css" rel="stylesheet" type="text/css" />
+
+<!-- Syntax Highlighter -->
+
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushJava.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushBash.js"></script>
+<script type="text/javascript" src="js/shBrushPlain.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushGroovy.js"></script>
+<script type="text/javascript" src="js/shBrushCypher.js"></script>
+<script type="text/javascript" src="js/shBrushScala.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript" src="js/shBrushPython.js"></script>
+<script type="text/javascript" src="js/shBrushProperties.js"></script>
+
+<!-- activate when needed
+<script type="text/javascript" src="js/shBrushRuby.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+-->
+ 
+<script type="text/javascript">
+  SyntaxHighlighter.defaults['tab-size'] = 4;
+  SyntaxHighlighter.defaults['gutter'] = false;
+  SyntaxHighlighter.defaults['toolbar'] = false;
+  SyntaxHighlighter.all()
+</script>
+
+<!-- JQuery -->
+
+<script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
+
+<!-- Replace SVG for browsers that lack support. -->
+<script type="text/javascript" src="js/svgreplacer.js"></script>
+
+<!-- Image Scaler -->
+
+<script type="text/javascript" src="js/imagescaler.js"></script>
+
+<!-- Table Styler -->
+
+<script type="text/javascript" src="js/tablestyler.js"></script>
+
+<!-- Version -->
+
+<script type="text/javascript" src="js/version.js"></script>
+
+<!-- Offline Sidebar -->
+
+<script type="text/javascript" src="js/sidebar.js"></script>
+
+
+<div xmlns="" class="breadcrumbs"><span class="breadcrumb-link"><a href="index.html">The Neo4j Manual</a></span> &gt; <span class="breadcrumb-link"><a href="reference-documentation.html">Reference</a></span> &gt; <span class="breadcrumb-link"><a href="rest-api.html">REST API</a></span> &gt; <span class="breadcrumb-node">Transactional HTTP endpoint</span></div></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="rest-api.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="status-codes.html">Next</a></td></tr></table><hr /></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="rest-api-transactional"></a>19.1. Transactional HTTP endpoint</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="rest-api-transactional.html#rest-api-begin-a-transaction">19.1.1. Begin a transaction</a></span></dt><dt><span class="section"><a href="rest-api-transactional.html#rest-api-execute-statements-in-an-open-transaction">19.1.2. Execute statements in an open transaction</a></span></dt><dt><span class="section"><a href="rest-api-transactional.html#rest-api-execute-statements-in-an-open-transaction-in-rest-format-for-the-return">19.1.3. Execute statements in an open transaction in REST format for the return</a></span></dt><dt><span class="section"><a href="rest-api-transactional.html#rest-api-reset-transaction-timeout-of-an-open-transaction">19.1.4. Reset transaction timeout of an open transaction</a></span></dt><dt><span class="section"><a href="rest-api-transactional.html#rest-api-commit-an-open-transaction">19.1.5. Commit an open transaction</a></span></dt><dt><span class="section"><a href="rest-api-transactional.html#rest-api-rollback-an-open-transaction">19.1.6. Rollback an open transaction</a></span></dt><dt><span class="section"><a href="rest-api-transactional.html#rest-api-begin-and-commit-a-transaction-in-one-request">19.1.7. Begin and commit a transaction in one request</a></span></dt><dt><span class="section"><a href="rest-api-transactional.html#rest-api-return-results-in-graph-format">19.1.8. Return results in graph format</a></span></dt><dt><span class="section"><a href="rest-api-transactional.html#rest-api-handling-errors">19.1.9. Handling errors</a></span></dt></dl></div><p>The Neo4j transactional HTTP endpoint allows you to execute a series of Cypher statements within the scope of a
+transaction. The transaction may be kept open across multiple HTTP requests, until the client chooses to commit or roll
+back. Each HTTP request can include a list of statements, and for convenience you can include statements along with a
+request to begin or commit a transaction.</p><p>The server guards against orphaned transactions by using a timeout. If there are no requests for a given transaction
+within the timeout period, the server will roll it back. You can configure the timeout in the server configuration, by
+setting <span class="emphasis"><em>org.neo4j.server.transaction.timeout</em></span> to the number of seconds before timeout. The default timeout is 60
+seconds.</p><p>The key difference between the transactional HTTP endpoint and the Cypher endpoint (see <a class="xref" href="rest-api-cypher.html" title="19.5. Cypher queries via REST">Section 19.5, “Cypher queries via REST”</a>) is the ability to
+use the same transaction across multiple HTTP requests. The cypher endpoint always attempts to commit a transaction at
+the end of each HTTP request.</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/admon/note.png" /></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>The serialization format for cypher results is mostly the same as the <a class="link" href="rest-api-cypher.html" title="19.5. Cypher queries via REST">cypher endpoint</a>.
+However, the format for raw entities is slightly less verbose and does not include hypermedia links.</p></td></tr></table></div><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/admon/note.png" /></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Open transactions are not shared among members of an HA cluster. Therefore, if you use this endpoint in an HA cluster,
+you must ensure that all requests for a given transaction are sent to the same Neo4j instance.</p></td></tr></table></div><div class="tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/admon/tip.png" /></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>In order to speed up queries in repeated scenarios, try not to use literals but replace them with parameters wherever
+possible in order to let the server cache query plans.</p></td></tr></table></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="rest-api-begin-a-transaction"></a>19.1.1. Begin a transaction</h3></div></div></div><p>You begin a new transaction by posting zero or more Cypher statements
+to the transaction endpoint. The server will respond with the result of
+your statements, as well as the location of your open transaction.</p><p><span class="emphasis"><em>Example request</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">POST</code></strong></span>  <code class="literal">http://localhost:7474/db/data/transaction</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Accept:</code></strong></span> <code class="literal">application/json; charset=UTF-8</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "statements" : [ {
+    "statement" : "CREATE (n {props}) RETURN n",
+    "parameters" : {
+      "props" : {
+        "name" : "My Node"
+      }
+    }
+  } ]
+}</pre><p><span class="emphasis"><em>Example response</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">201:</code></strong></span> <code class="literal">Created</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Location:</code></strong></span> <code class="literal">http://localhost:7474/db/data/transaction/7</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "commit" : "http://localhost:7474/db/data/transaction/7/commit",
+  "results" : [ {
+    "columns" : [ "n" ],
+    "data" : [ {
+      "row" : [ {
+        "name" : "My Node"
+      } ]
+    } ]
+  } ],
+  "transaction" : {
+    "expires" : "Sun, 08 Dec 2013 15:05:52 +0000"
+  },
+  "errors" : [ ]
+}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="rest-api-execute-statements-in-an-open-transaction"></a>19.1.2. Execute statements in an open transaction</h3></div></div></div><p>Given that you have an open transaction, you can make a number of requests, each of which executes additional
+statements, and keeps the transaction open by resetting the transaction timeout.</p><p><span class="emphasis"><em>Example request</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">POST</code></strong></span>  <code class="literal">http://localhost:7474/db/data/transaction/9</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Accept:</code></strong></span> <code class="literal">application/json; charset=UTF-8</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "statements" : [ {
+    "statement" : "CREATE n RETURN n"
+  } ]
+}</pre><p><span class="emphasis"><em>Example response</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">200:</code></strong></span> <code class="literal">OK</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "commit" : "http://localhost:7474/db/data/transaction/9/commit",
+  "results" : [ {
+    "columns" : [ "n" ],
+    "data" : [ {
+      "row" : [ {
+      } ]
+    } ]
+  } ],
+  "transaction" : {
+    "expires" : "Sun, 08 Dec 2013 15:05:52 +0000"
+  },
+  "errors" : [ ]
+}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="rest-api-execute-statements-in-an-open-transaction-in-rest-format-for-the-return"></a>19.1.3. Execute statements in an open transaction in REST format for the return</h3></div></div></div><p>Given that you have an open transaction, you can make a number of requests, each of which executes additional
+statements, and keeps the transaction open by resetting the transaction timeout. Specifying the <code class="literal">REST</code> format will
+give back full Neo4j Rest API representations of the Neo4j Nodes, Relationships and Paths, if returned.</p><p><span class="emphasis"><em>Example request</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">POST</code></strong></span>  <code class="literal">http://localhost:7474/db/data/transaction/1</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Accept:</code></strong></span> <code class="literal">application/json; charset=UTF-8</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "statements" : [ {
+    "statement" : "CREATE n RETURN n",
+    "resultDataContents" : [ "REST" ]
+  } ]
+}</pre><p><span class="emphasis"><em>Example response</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">200:</code></strong></span> <code class="literal">OK</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "commit" : "http://localhost:7474/db/data/transaction/1/commit",
+  "results" : [ {
+    "columns" : [ "n" ],
+    "data" : [ {
+      "rest" : [ {
+        "paged_traverse" : "http://localhost:7474/db/data/node/12/paged/traverse/{returnType}{?pageSize,leaseTime}",
+        "labels" : "http://localhost:7474/db/data/node/12/labels",
+        "outgoing_relationships" : "http://localhost:7474/db/data/node/12/relationships/out",
+        "traverse" : "http://localhost:7474/db/data/node/12/traverse/{returnType}",
+        "all_typed_relationships" : "http://localhost:7474/db/data/node/12/relationships/all/{-list|&amp;|types}",
+        "property" : "http://localhost:7474/db/data/node/12/properties/{key}",
+        "all_relationships" : "http://localhost:7474/db/data/node/12/relationships/all",
+        "self" : "http://localhost:7474/db/data/node/12",
+        "properties" : "http://localhost:7474/db/data/node/12/properties",
+        "outgoing_typed_relationships" : "http://localhost:7474/db/data/node/12/relationships/out/{-list|&amp;|types}",
+        "incoming_relationships" : "http://localhost:7474/db/data/node/12/relationships/in",
+        "incoming_typed_relationships" : "http://localhost:7474/db/data/node/12/relationships/in/{-list|&amp;|types}",
+        "create_relationship" : "http://localhost:7474/db/data/node/12/relationships",
+        "data" : {
+        }
+      } ]
+    } ]
+  } ],
+  "transaction" : {
+    "expires" : "Sun, 08 Dec 2013 15:05:48 +0000"
+  },
+  "errors" : [ ]
+}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="rest-api-reset-transaction-timeout-of-an-open-transaction"></a>19.1.4. Reset transaction timeout of an open transaction</h3></div></div></div><p>Every orphaned transaction is automatically expired after a period of inactivity.  This may be prevented
+by resetting the transaction timeout.</p><p>The timeout may be reset by sending a keep-alive request to the server that executes an empty list of statements.
+This request will reset the transaction timeout and return the new time at which the transaction will
+expire as an RFC1123 formatted timestamp value in the “transaction” section of the response.</p><p><span class="emphasis"><em>Example request</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">POST</code></strong></span>  <code class="literal">http://localhost:7474/db/data/transaction/2</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Accept:</code></strong></span> <code class="literal">application/json; charset=UTF-8</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "statements" : [ ]
+}</pre><p><span class="emphasis"><em>Example response</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">200:</code></strong></span> <code class="literal">OK</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "commit" : "http://localhost:7474/db/data/transaction/2/commit",
+  "results" : [ ],
+  "transaction" : {
+    "expires" : "Sun, 08 Dec 2013 15:05:51 +0000"
+  },
+  "errors" : [ ]
+}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="rest-api-commit-an-open-transaction"></a>19.1.5. Commit an open transaction</h3></div></div></div><p>Given you have an open transaction, you can send a commit request. Optionally, you submit additional statements
+along with the request that will be executed before committing the transaction.</p><p><span class="emphasis"><em>Example request</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">POST</code></strong></span>  <code class="literal">http://localhost:7474/db/data/transaction/4/commit</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Accept:</code></strong></span> <code class="literal">application/json; charset=UTF-8</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "statements" : [ {
+    "statement" : "CREATE n RETURN id(n)"
+  } ]
+}</pre><p><span class="emphasis"><em>Example response</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">200:</code></strong></span> <code class="literal">OK</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "results" : [ {
+    "columns" : [ "id(n)" ],
+    "data" : [ {
+      "row" : [ 14 ]
+    } ]
+  } ],
+  "errors" : [ ]
+}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="rest-api-rollback-an-open-transaction"></a>19.1.6. Rollback an open transaction</h3></div></div></div><p>Given that you have an open transaction, you can send a roll back request. The server will roll back the
+transaction.</p><p><span class="emphasis"><em>Example request</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">DELETE</code></strong></span>  <code class="literal">http://localhost:7474/db/data/transaction/3</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Accept:</code></strong></span> <code class="literal">application/json; charset=UTF-8</code>
+</li></ul></div><p><span class="emphasis"><em>Example response</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">200:</code></strong></span> <code class="literal">OK</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json; charset=UTF-8</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "results" : [ ],
+  "errors" : [ ]
+}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="rest-api-begin-and-commit-a-transaction-in-one-request"></a>19.1.7. Begin and commit a transaction in one request</h3></div></div></div><p>If there is no need to keep a transaction open across multiple HTTP requests, you can begin a transaction,
+execute statements, and commit with just a single HTTP request.</p><p><span class="emphasis"><em>Example request</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">POST</code></strong></span>  <code class="literal">http://localhost:7474/db/data/transaction/commit</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Accept:</code></strong></span> <code class="literal">application/json; charset=UTF-8</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "statements" : [ {
+    "statement" : "CREATE n RETURN id(n)"
+  } ]
+}</pre><p><span class="emphasis"><em>Example response</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">200:</code></strong></span> <code class="literal">OK</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "results" : [ {
+    "columns" : [ "id(n)" ],
+    "data" : [ {
+      "row" : [ 15 ]
+    } ]
+  } ],
+  "errors" : [ ]
+}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="rest-api-return-results-in-graph-format"></a>19.1.8. Return results in graph format</h3></div></div></div><p>If you want to understand the graph structure of nodes and relationships returned by your query,
+you can specify the "graph" results data format. For example, this is useful when you want to visualise the
+graph structure. The format collates all the nodes and relationships from all columns of the result,
+and also flattens collections of nodes and relationships, including paths.</p><p><span class="emphasis"><em>Example request</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">POST</code></strong></span>  <code class="literal">http://localhost:7474/db/data/transaction/commit</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Accept:</code></strong></span> <code class="literal">application/json; charset=UTF-8</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "statements" : [ {
+    "statement" : "CREATE ( bike:Bike { weight: 10 } )CREATE ( frontWheel:Wheel { spokes: 3 } )CREATE ( backWheel:Wheel { spokes: 32 } )CREATE p1 = bike -[:HAS { position: 1 } ]-&gt; frontWheel CREATE p2 = bike -[:HAS { position: 2 } ]-&gt; backWheel RETURN bike, p1, p2",
+    "resultDataContents" : [ "row", "graph" ]
+  } ]
+}</pre><p><span class="emphasis"><em>Example response</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">200:</code></strong></span> <code class="literal">OK</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "results" : [ {
+    "columns" : [ "bike", "p1", "p2" ],
+    "data" : [ {
+      "row" : [ {
+        "weight" : 10
+      }, [ {
+        "weight" : 10
+      }, {
+        "position" : 1
+      }, {
+        "spokes" : 3
+      } ], [ {
+        "weight" : 10
+      }, {
+        "position" : 2
+      }, {
+        "spokes" : 32
+      } ] ],
+      "graph" : {
+        "nodes" : [ {
+          "id" : "17",
+          "labels" : [ "Wheel" ],
+          "properties" : {
+            "spokes" : 3
+          }
+        }, {
+          "id" : "16",
+          "labels" : [ "Bike" ],
+          "properties" : {
+            "weight" : 10
+          }
+        }, {
+          "id" : "18",
+          "labels" : [ "Wheel" ],
+          "properties" : {
+            "spokes" : 32
+          }
+        } ],
+        "relationships" : [ {
+          "id" : "9",
+          "type" : "HAS",
+          "startNode" : "16",
+          "endNode" : "17",
+          "properties" : {
+            "position" : 1
+          }
+        }, {
+          "id" : "10",
+          "type" : "HAS",
+          "startNode" : "16",
+          "endNode" : "18",
+          "properties" : {
+            "position" : 2
+          }
+        } ]
+      }
+    } ]
+  } ],
+  "errors" : [ ]
+}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="rest-api-handling-errors"></a>19.1.9. Handling errors</h3></div></div></div><p>The result of any request against the transaction endpoint is streamed back to the client.
+Therefore the server does not know whether the request will be successful or not when it sends the HTTP status
+code.</p><p>Because of this, all requests against the transactional endpoint will return 200 or 201 status code, regardless
+of whether statements were successfully executed. At the end of the response payload, the server includes a list
+of errors that occurred while executing statements. If this list is empty, the request completed successfully.</p><p>If any errors occur while executing statements, the server will roll back the transaction.</p><p>In this example, we send the server an invalid statement to demonstrate error handling.</p><p>For more information on the status codes, see <a class="xref" href="status-codes.html" title="19.2. Neo4j Status Codes">Section 19.2, “Neo4j Status Codes”</a>.</p><p><span class="emphasis"><em>Example request</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">POST</code></strong></span>  <code class="literal">http://localhost:7474/db/data/transaction/8/commit</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Accept:</code></strong></span> <code class="literal">application/json; charset=UTF-8</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "statements" : [ {
+    "statement" : "This is not a valid Cypher Statement."
+  } ]
+}</pre><p><span class="emphasis"><em>Example response</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong><code class="literal">200:</code></strong></span> <code class="literal">OK</code>
+</li><li class="listitem">
+<span class="strong"><strong><code class="literal">Content-Type:</code></strong></span> <code class="literal">application/json</code>
+</li></ul></div><pre class="programlisting brush: javascript">{
+  "results" : [ ],
+  "errors" : [ {
+    "code" : "Neo.ClientError.Statement.InvalidSyntax",
+    "message" : "Invalid input 'T': expected SingleStatement (line 1, column 1)\n\"This is not a valid Cypher Statement.\"\n ^"
+  } ]
+}</pre></div></div><HR xmlns=""></HR><a xmlns="" href="ln-idp218960.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2013 Neo Technology</p></a><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rest-api.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rest-api.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="status-codes.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

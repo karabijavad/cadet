@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>11.3. Merge</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="The Neo4j Manual v2.0.0" /><link rel="up" href="query-write.html" title="Chapter 11. Writing Clauses" /><link rel="prev" href="query-create-unique.html" title="11.2. Create Unique" /><link rel="next" href="query-set.html" title="11.4. Set" /><link rel="preface" href="preface.html" title="Preface" /><link rel="part" href="introduction.html" title="Part I. Introduction" /><link rel="chapter" href="introduction-highlights.html" title="Chapter 1. Neo4j Highlights" /><link rel="chapter" href="graphdb-concepts.html" title="Chapter 2. Graph Database Concepts" /><link rel="chapter" href="graphdb-neo4j.html" title="Chapter 3. The Neo4j Graph Database" /><link rel="part" href="tutorials.html" title="Part II. Tutorials" /><link rel="chapter" href="tutorials-cypher.html" title="Chapter 4. Getting started with Cypher" /><link rel="chapter" href="data-modeling-examples.html" title="Chapter 5. Data Modeling Examples" /><link rel="chapter" href="languages.html" title="Chapter 6. Languages" /><link rel="part" href="cypher-query-lang.html" title="Part III. Cypher Query Language" /><link rel="chapter" href="cypher-intro.html" title="Chapter 7. Introduction" /><link rel="chapter" href="query-syntax.html" title="Chapter 8. Syntax" /><link rel="chapter" href="query-general.html" title="Chapter 9. General Clauses" /><link rel="chapter" href="query-read.html" title="Chapter 10. Reading Clauses" /><link rel="chapter" href="query-write.html" title="Chapter 11. Writing Clauses" /><link rel="chapter" href="query-function.html" title="Chapter 12. Functions" /><link rel="chapter" href="cypher-schema.html" title="Chapter 13. Schema" /><link rel="chapter" href="examples-from-sql-to-cypher.html" title="Chapter 14. From SQL to Cypher" /><link rel="part" href="reference-documentation.html" title="Part IV. Reference" /><link rel="chapter" href="capabilities.html" title="Chapter 15. Capabilities" /><link rel="chapter" href="transactions.html" title="Chapter 16. Transaction Management" /><link rel="chapter" href="import.html" title="Chapter 17. Data Import" /><link rel="chapter" href="graph-algo.html" title="Chapter 18. Graph Algorithms" /><link rel="chapter" href="rest-api.html" title="Chapter 19. REST API" /><link rel="chapter" href="deprecations.html" title="Chapter 20. Deprecations" /><link rel="part" href="operations.html" title="Part V. Operations" /><link rel="chapter" href="deployment.html" title="Chapter 21. Installation &amp; Deployment" /><link rel="chapter" href="embedded-configuration.html" title="Chapter 22. Configuration &amp; Performance" /><link rel="chapter" href="ha.html" title="Chapter 23. High Availability" /><link rel="chapter" href="operations-backup.html" title="Chapter 24. Backup" /><link rel="chapter" href="operations-security.html" title="Chapter 25. Security" /><link rel="chapter" href="operations-monitoring.html" title="Chapter 26. Monitoring" /><link rel="part" href="tools.html" title="Part VI. Tools" /><link rel="chapter" href="tools-webadmin.html" title="Chapter 27. Web Interface" /><link rel="chapter" href="shell.html" title="Chapter 28. Neo4j Shell" /><link rel="part" href="community.html" title="Part VII. Community" /><link rel="chapter" href="community-support.html" title="Chapter 29. Community Support" /><link rel="chapter" href="community-contributing.html" title="Chapter 30. Contributing to Neo4j" /><link rel="part" href="advanced-usage.html" title="Part VIII. Advanced Usage" /><link rel="chapter" href="server-extending.html" title="Chapter 31. Extending the Neo4j Server" /><link rel="chapter" href="tutorials-java-embedded.html" title="Chapter 32. Using Neo4j embedded in Java applications" /><link rel="chapter" href="tutorial-traversal.html" title="Chapter 33. The Traversal Framework" /><link rel="chapter" href="indexing.html" title="Chapter 34. Legacy Indexing" /><link rel="chapter" href="batchinsert.html" title="Chapter 35. Batch Insertion" /><link rel="appendix" href="manpages.html" title="Appendix A. Manpages" /><link rel="refentry" href="re01.html" title="neo4j" /><link rel="refentry" href="re02.html" title="neo4j-installer" /><link rel="refentry" href="re03.html" title="neo4j-shell" /><link rel="refentry" href="re04.html" title="neo4j-backup" /><link rel="refentry" href="re05.html" title="neo4j-arbiter" /><link rel="subsection" href="query-merge.html#_introduction_4" title="11.3.1. Introduction" /><link rel="subsection" href="query-merge.html#_merge_nodes" title="11.3.2. Merge nodes" /><link rel="subsection" href="query-merge.html#_use_on_create_and_on_match" title="11.3.3. Use ON CREATE and ON MATCH" /><link rel="subsection" href="query-merge.html#_merge_relationships" title="11.3.4. Merge relationships" /><link rel="subsection" href="query-merge.html#_using_unique_constraints_with_merge" title="11.3.5. Using unique constraints with MERGE" /><link rel="subsection" href="query-merge.html#merge-using-map-parameters-with-merge" title="11.3.6. Using map parameters with MERGE" /><link rel="copyright" href="ln-idp218960.html" title="License: Creative Commons 3.0" />
+
+
+<!-- favicon -->
+
+<link rel="shortcut icon" href="http://neo4j.org/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="icon" href="http://neo4j.org/favicon.ico" type="image/x-icon" />
+
+<!-- style -->
+
+<link href="css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="css/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/shThemeEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/neo.css" rel="stylesheet" type="text/css" />
+
+<!-- Syntax Highlighter -->
+
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushJava.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushBash.js"></script>
+<script type="text/javascript" src="js/shBrushPlain.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushGroovy.js"></script>
+<script type="text/javascript" src="js/shBrushCypher.js"></script>
+<script type="text/javascript" src="js/shBrushScala.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript" src="js/shBrushPython.js"></script>
+<script type="text/javascript" src="js/shBrushProperties.js"></script>
+
+<!-- activate when needed
+<script type="text/javascript" src="js/shBrushRuby.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+-->
+ 
+<script type="text/javascript">
+  SyntaxHighlighter.defaults['tab-size'] = 4;
+  SyntaxHighlighter.defaults['gutter'] = false;
+  SyntaxHighlighter.defaults['toolbar'] = false;
+  SyntaxHighlighter.all()
+</script>
+
+<!-- JQuery -->
+
+<script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
+
+<!-- Replace SVG for browsers that lack support. -->
+<script type="text/javascript" src="js/svgreplacer.js"></script>
+
+<!-- Image Scaler -->
+
+<script type="text/javascript" src="js/imagescaler.js"></script>
+
+<!-- Table Styler -->
+
+<script type="text/javascript" src="js/tablestyler.js"></script>
+
+<!-- Version -->
+
+<script type="text/javascript" src="js/version.js"></script>
+
+<!-- Offline Sidebar -->
+
+<script type="text/javascript" src="js/sidebar.js"></script>
+
+
+<div xmlns="" class="breadcrumbs"><span class="breadcrumb-link"><a href="index.html">The Neo4j Manual</a></span> &gt; <span class="breadcrumb-link"><a href="cypher-query-lang.html">Cypher Query Language</a></span> &gt; <span class="breadcrumb-link"><a href="query-write.html">Writing Clauses</a></span> &gt; <span class="breadcrumb-node">Merge</span></div></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="query-create-unique.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="query-set.html">Next</a></td></tr></table><hr /></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="query-merge"></a>11.3. Merge</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="query-merge.html#_introduction_4">11.3.1. Introduction</a></span></dt><dt><span class="section"><a href="query-merge.html#_merge_nodes">11.3.2. Merge nodes</a></span></dt><dt><span class="section"><a href="query-merge.html#_use_on_create_and_on_match">11.3.3. Use ON CREATE and ON MATCH</a></span></dt><dt><span class="section"><a href="query-merge.html#_merge_relationships">11.3.4. Merge relationships</a></span></dt><dt><span class="section"><a href="query-merge.html#_using_unique_constraints_with_merge">11.3.5. Using unique constraints with MERGE</a></span></dt><dt><span class="section"><a href="query-merge.html#merge-using-map-parameters-with-merge">11.3.6. Using map parameters with MERGE</a></span></dt></dl></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_introduction_4"></a>11.3.1. Introduction</h3></div></div></div><div class="caution" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Caution: Provisional Feature"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="images/icons/admon/caution.png" /></td><th align="left">Provisional Feature</th></tr><tr><td align="left" valign="top"><p><code class="literal">MERGE</code> is a new addition and a provisional feature of Cypher.
+Its scope and syntax are subject to change.
+Therefore, please be aware that you may need to change queries that use <code class="literal">MERGE</code> in the future.</p></td></tr></table></div><p><code class="literal">MERGE</code> ensures that a pattern exists in the graph.
+Either the pattern already exists, or it needs to be created.</p><p><code class="literal">MERGE</code> either matches existing nodes and binds them, or it creates new data and binds that.
+It’s like a combination of <code class="literal">MATCH</code> and <code class="literal">CREATE</code> that additionally allows you to specify what happens if the data was matched or created.</p><p>For example, you can specify that the graph must contain a node for a user with a certain name.
+If there isn’t a node with the correct name, a new node will be created and its name property set.</p><p>When using <code class="literal">MERGE</code> on full patterns, the behavior is that either the whole pattern matches, or the whole pattern is created.
+<code class="literal">MERGE</code> will not partially use existing patterns — it’s all or nothing.
+If partial matches are needed, this can be accomplished by splitting a pattern up into multiple <code class="literal">MERGE</code> clauses.</p><p>As with <code class="literal">MATCH</code>, <code class="literal">MERGE</code> can match multiple occurrences of a pattern.
+If there are multiple matches, they will all be passed on to later stages of the query.</p><p>The last part of <code class="literal">MERGE</code> is the <code class="literal">ON CREATE</code> and <code class="literal">ON MATCH</code>.
+These allow a query to express additional changes to the properties of a node or relationship, depending on if the element was <code class="literal">MATCH</code>ed in the database or if it was <code class="literal">CREATE</code>d.</p><p>The following graph is used for the examples below:</p><div class="figure"><a id="idp10154352"></a><p class="title"><strong>Figure 11.1. Graph</strong></p><div class="figure-contents"><a class="ulink" href="images/cypher-merge-graph.svg" target="_top">
+<span class="inlinemediaobject"><img src="images/cypher-merge-graph.svg" alt="cypher-merge-graph.svg" /></span>
+</a></div></div><br class="figure-break" /></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_merge_nodes"></a>11.3.2. Merge nodes</h3></div></div></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="merge-merge-single-node-with-a-label"></a>Merge single node with a label</h4></div></div></div><p>Merging a single node with a given label.</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MERGE (robert:Critic)
+RETURN robert, labels(robert)</pre><p>
+</p><p>Because there are no nodes labeled <code class="literal">Critic</code> in the database, a new node is created.</p><div class="queryresult table"><a id="idp10164048"></a><p class="title"><strong>Result</strong></p><div class="queryresult table-contents"><table summary="Result" cellspacing="0" cellpadding="0" border="1"><colgroup><col class="col1" /><col class="col2" /></colgroup><thead><tr><th align="left" valign="top">robert</th><th align="left" valign="top">labels(robert)</th></tr></thead><tfoot><tr><th colspan="2" align="left" valign="top">1 row
+</th></tr><tr><th colspan="2" align="left" valign="top">Nodes created: 1
+</th></tr><tr><th colspan="2" align="left" valign="top">Labels added: 1</th></tr></tfoot><tbody><tr><td align="left" valign="top"><p><code class="literal">Node[8]{}</code></p></td><td align="left" valign="top"><p><code class="literal">["Critic"]</code></p></td></tr></tbody></table></div></div><br class="queryresult table-break" /></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="merge-merge-single-node-with-properties"></a>Merge single node with properties</h4></div></div></div><p>Merging a single node with properties where not all properties match any existing node.</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MERGE (charlie { name:'Charlie Sheen', age:10 })
+RETURN charlie</pre><p>
+</p><p>A new node with the name Charlie Sheen will be created since not all properties matched the existing Charlie Sheen node.</p><div class="queryresult table"><a id="idp10183984"></a><p class="title"><strong>Result</strong></p><div class="queryresult table-contents"><table summary="Result" cellspacing="0" cellpadding="0" border="1"><colgroup><col class="col1" /></colgroup><thead><tr><th align="left" valign="top">charlie</th></tr></thead><tfoot><tr><th align="left" valign="top">1 row
+</th></tr><tr><th align="left" valign="top">Nodes created: 1
+</th></tr><tr><th align="left" valign="top">Properties set: 2</th></tr></tfoot><tbody><tr><td align="left" valign="top"><p><code class="literal">Node[8]{name:"Charlie Sheen",age:10}</code></p></td></tr></tbody></table></div></div><br class="queryresult table-break" /></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="merge-merge-single-node-specifying-both-label-and-property"></a>Merge single node specifying both label and property</h4></div></div></div><p>Merging a single node with both label and property matching an existing node.</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MERGE (michael:Person { name:'Michael Douglas' })
+RETURN michael</pre><p>
+</p><p>Michael Douglas will be matched and returned.</p><div class="queryresult table"><a id="idp10201568"></a><p class="title"><strong>Result</strong></p><div class="queryresult table-contents"><table summary="Result" cellspacing="0" cellpadding="0" border="1"><colgroup><col class="col1" /></colgroup><thead><tr><th align="left" valign="top">michael</th></tr></thead><tfoot><tr><th align="left" valign="top">1 row</th></tr></tfoot><tbody><tr><td align="left" valign="top"><p><code class="literal">Node[6]{name:"Michael Douglas"}</code></p></td></tr></tbody></table></div></div><br class="queryresult table-break" /></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_use_on_create_and_on_match"></a>11.3.3. Use ON CREATE and ON MATCH</h3></div></div></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="merge-merge-with-on-create"></a>Merge with ON CREATE</h4></div></div></div><p>Merge a node and set properties if the node needs to be created.</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MERGE (keanu:Person { name:'Keanu Reeves' })
+ON CREATE SET keanu.created = timestamp()
+RETURN keanu</pre><p>
+</p><p>Creates the Keanu node, and sets a timestamp on creation time.</p><div class="queryresult table"><a id="idp10217280"></a><p class="title"><strong>Result</strong></p><div class="queryresult table-contents"><table summary="Result" cellspacing="0" cellpadding="0" border="1"><colgroup><col class="col1" /></colgroup><thead><tr><th align="left" valign="top">keanu</th></tr></thead><tfoot><tr><th align="left" valign="top">1 row
+</th></tr><tr><th align="left" valign="top">Nodes created: 1
+</th></tr><tr><th align="left" valign="top">Properties set: 2
+</th></tr><tr><th align="left" valign="top">Labels added: 1</th></tr></tfoot><tbody><tr><td align="left" valign="top"><p><code class="literal">Node[8]{name:"Keanu Reeves",created:1386514444417}</code></p></td></tr></tbody></table></div></div><br class="queryresult table-break" /></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="merge-merge-with-on-match"></a>Merge with ON MATCH</h4></div></div></div><p>Merging nodes and setting properties on found nodes.</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MERGE (person:Person)
+ON MATCH SET person.found = TRUE RETURN person</pre><p>
+</p><p>Finds all the <code class="literal">Person</code> nodes, sets a property on them, and returns them.</p><div class="queryresult table"><a id="idp10236928"></a><p class="title"><strong>Result</strong></p><div class="queryresult table-contents"><table summary="Result" cellspacing="0" cellpadding="0" border="1"><colgroup><col class="col1" /></colgroup><thead><tr><th align="left" valign="top">person</th></tr></thead><tfoot><tr><th align="left" valign="top">5 rows
+</th></tr><tr><th align="left" valign="top">Properties set: 5</th></tr></tfoot><tbody><tr><td align="left" valign="top"><p><code class="literal">Node[0]{name:"Oliver Stone",found:true}</code></p></td></tr><tr><td align="left" valign="top"><p><code class="literal">Node[1]{name:"Charlie Sheen",found:true}</code></p></td></tr><tr><td align="left" valign="top"><p><code class="literal">Node[2]{name:"Martin Sheen",found:true}</code></p></td></tr><tr><td align="left" valign="top"><p><code class="literal">Node[5]{name:"Rob Reiner",found:true}</code></p></td></tr><tr><td align="left" valign="top"><p><code class="literal">Node[6]{name:"Michael Douglas",found:true}</code></p></td></tr></tbody></table></div></div><br class="queryresult table-break" /></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="merge-merge-with-on-create-and-on-match"></a>Merge with ON CREATE and ON MATCH</h4></div></div></div><p>Merge a node and set properties if the node needs to be created.</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MERGE (keanu:Person { name:'Keanu Reeves' })
+ON CREATE SET keanu.created = timestamp()
+ON MATCH SET keanu.lastSeen = timestamp()
+RETURN keanu</pre><p>
+</p><p>The query creates the Keanu node, and sets a timestamp on creation time. If Keanu already existed, a different property would have been set.</p><div class="queryresult table"><a id="idp10258912"></a><p class="title"><strong>Result</strong></p><div class="queryresult table-contents"><table summary="Result" cellspacing="0" cellpadding="0" border="1"><colgroup><col class="col1" /></colgroup><thead><tr><th align="left" valign="top">keanu</th></tr></thead><tfoot><tr><th align="left" valign="top">1 row
+</th></tr><tr><th align="left" valign="top">Nodes created: 1
+</th></tr><tr><th align="left" valign="top">Properties set: 2
+</th></tr><tr><th align="left" valign="top">Labels added: 1</th></tr></tfoot><tbody><tr><td align="left" valign="top"><p><code class="literal">Node[8]{created:1386514447501,name:"Keanu Reeves"}</code></p></td></tr></tbody></table></div></div><br class="queryresult table-break" /></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_merge_relationships"></a>11.3.4. Merge relationships</h3></div></div></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="merge-merge-on-a-relationship"></a>Merge on a relationship</h4></div></div></div><p><code class="literal">MERGE</code> can be used to match or create a relationship.</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MATCH (charlie:Person { name:'Charlie Sheen' }),(wallStreet:Movie { title:'Wall Street' })
+MERGE (charlie)-[r:ACTED_IN]-&gt;(wallStreet)
+RETURN r</pre><p>
+</p><p>Charlie Sheen had already been marked as acting on Wall Street, so the existing relationship is found and returned. Note that in order to match or create a relationship when using <code class="literal">MERGE</code>, at least one bound node must be specified, which is done via the <code class="literal">MATCH</code> clause in the above example.</p><div class="queryresult table"><a id="idp10281472"></a><p class="title"><strong>Result</strong></p><div class="queryresult table-contents"><table summary="Result" cellspacing="0" cellpadding="0" border="1"><colgroup><col class="col1" /></colgroup><thead><tr><th align="left" valign="top">r</th></tr></thead><tfoot><tr><th align="left" valign="top">1 row</th></tr></tfoot><tbody><tr><td align="left" valign="top"><p><code class="literal">:ACTED_IN[0]{}</code></p></td></tr></tbody></table></div></div><br class="queryresult table-break" /></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="merge-merge-on-multiple-relationships"></a>Merge on multiple relationships</h4></div></div></div><p>When <code class="literal">MERGE</code> is used on a whole pattern, either everything matches, or everything is created.</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MATCH (oliver:Person { name:'Oliver Stone' }),(reiner:Person { name:'Rob Reiner' })
+MERGE (oliver)-[:DIRECTED]-&gt;(movie:Movie)&lt;-[:ACTED_IN]-(reiner)
+RETURN movie</pre><p>
+</p><p>In our example graph, Oliver Stone and Rob Reiner have never worked together. When we try to <code class="literal">MERGE</code> a movie between them, Cypher will not use any of the existing movies already connected to either person. Instead, a new movie node is created.</p><div class="queryresult table"><a id="idp10297760"></a><p class="title"><strong>Result</strong></p><div class="queryresult table-contents"><table summary="Result" cellspacing="0" cellpadding="0" border="1"><colgroup><col class="col1" /></colgroup><thead><tr><th align="left" valign="top">movie</th></tr></thead><tfoot><tr><th align="left" valign="top">1 row
+</th></tr><tr><th align="left" valign="top">Nodes created: 1
+</th></tr><tr><th align="left" valign="top">Relationships created: 2
+</th></tr><tr><th align="left" valign="top">Labels added: 1</th></tr></tfoot><tbody><tr><td align="left" valign="top"><p><code class="literal">Node[8]{}</code></p></td></tr></tbody></table></div></div><br class="queryresult table-break" /></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_using_unique_constraints_with_merge"></a>11.3.5. Using unique constraints with MERGE</h3></div></div></div><p>Cypher prevents getting conflicting results from <code class="literal">MERGE</code> when using patterns that involve uniqueness constrains.
+In this case, there must be at most one node that matches that pattern.</p><p>For example, given two uniqueness constraints on <code class="literal">:Person(id)</code> and <code class="literal">:Person(ssn)</code>: then a query such as <code class="literal">MERGE (n:Person {id: 12, ssn: 437})</code> will fail, if there are two different nodes (one with <code class="literal">id</code> 12 and one with <code class="literal">ssn</code> 437) or if there is only one node with only one of the properties.
+In other words, there must be exactly one node that matches the pattern, or no matching nodes.</p><p>Note that the following examples assume the existence of uniqueness constraints that have been created using:</p><pre class="programlisting brush: cypher">CREATE CONSTRAINT ON (n:Person) ASSERT n.name IS UNIQUE;
+CREATE CONSTRAINT ON (n:Person) ASSERT n.role IS UNIQUE;</pre><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="merge-merge-using-unique-constraints-creates-a-new-node-if-no-node-is-found"></a>Merge using unique constraints creates a new node if no node is found</h4></div></div></div><p>Merge using unique constraints creates a new node if no node is found.</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MERGE (laurence:Person { name: 'Laurence Fishburne' })
+RETURN laurence</pre><p>
+</p><p>The query creates the laurence node. If laurence already existed, merge would just return the existing node.</p><div class="queryresult table"><a id="idp10326176"></a><p class="title"><strong>Result</strong></p><div class="queryresult table-contents"><table summary="Result" cellspacing="0" cellpadding="0" border="1"><colgroup><col class="col1" /></colgroup><thead><tr><th align="left" valign="top">laurence</th></tr></thead><tfoot><tr><th align="left" valign="top">1 row
+</th></tr><tr><th align="left" valign="top">Nodes created: 1
+</th></tr><tr><th align="left" valign="top">Properties set: 1
+</th></tr><tr><th align="left" valign="top">Labels added: 1</th></tr></tfoot><tbody><tr><td align="left" valign="top"><p><code class="literal">Node[8]{name:"Laurence Fishburne"}</code></p></td></tr></tbody></table></div></div><br class="queryresult table-break" /></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="merge-merge-using-unique-constraints-matches-an-existing-node"></a>Merge using unique constraints matches an existing node</h4></div></div></div><p>Merge using unique constraints matches an existing node.</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MERGE (oliver:Person { name:'Oliver Stone' })
+RETURN oliver</pre><p>
+</p><p>The oliver node already exists, so merge just returns it.</p><div class="queryresult table"><a id="idp10345136"></a><p class="title"><strong>Result</strong></p><div class="queryresult table-contents"><table summary="Result" cellspacing="0" cellpadding="0" border="1"><colgroup><col class="col1" /></colgroup><thead><tr><th align="left" valign="top">oliver</th></tr></thead><tfoot><tr><th align="left" valign="top">1 row</th></tr></tfoot><tbody><tr><td align="left" valign="top"><p><code class="literal">Node[0]{name:"Oliver Stone"}</code></p></td></tr></tbody></table></div></div><br class="queryresult table-break" /></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="merge-merge-with-unique-constraints-and-partial-matches"></a>Merge with unique constraints and partial matches</h4></div></div></div><p>Merge using unique constraints fails when finding partial matches.</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MERGE (michael:Person { name:'Michael Douglas', role:'Gordon Gekko' })
+RETURN michael</pre><p>
+</p><p>While there is a matching unique michael node with the name <span class="emphasis"><em>Michael Douglas</em></span>, there is no unique node with the role of <span class="emphasis"><em>Gordon Gekko</em></span> and merge fails to match.</p><p><strong>Error message. </strong>
+</p><pre class="programlisting brush: plain">Merge did not find a matching node and can not create a new node due to conflicts
+with both existing and missing unique nodes. The conflicting constraints are on:
+:Person.name and :Person.role</pre><p>
+</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="merge-merge-with-unique-constraints-and-conflicting-matches"></a>Merge with unique constraints and conflicting matches</h4></div></div></div><p>Merge using unique constraints fails when finding conflicting matches.</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MERGE (oliver:Person { name:'Oliver Stone', role:'Gordon Gekko' })
+RETURN oliver</pre><p>
+</p><p>While there is a matching unique oliver node with the name <span class="emphasis"><em>Oliver Stone</em></span>, there is also another unique node with the role of <span class="emphasis"><em>Gordon Gekko</em></span> and merge fails to match.</p><p><strong>Error message. </strong>
+</p><pre class="programlisting brush: plain">Merge did not find a matching node and can not create a new node due to conflicts
+with both existing and missing unique nodes. The conflicting constraints are on:
+:Person.name and :Person.role</pre><p>
+</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="merge-using-map-parameters-with-merge"></a>11.3.6. Using map parameters with MERGE</h3></div></div></div><p><code class="literal">MERGE</code> does not support map parameters like for example <code class="literal">CREATE</code> does.
+To use map parameters with <code class="literal">MERGE</code>, it is necessary to explicitly use the expected properties, like in the following example.
+For more information on parameters, see <a class="xref" href="cypher-parameters.html" title="7.5. Parameters">Section 7.5, “Parameters”</a>.</p><p><strong>Parameters. </strong>
+</p><pre class="programlisting brush: javascript">{
+  "param" : {
+    "name" : "Keanu Reeves",
+    "role" : "Neo"
+  }
+}</pre><p>
+</p><p><strong>Query. </strong>
+</p><pre class="programlisting brush: cypher">MERGE (oliver:Person { name: { param }.name, role: { param }.role })
+RETURN oliver</pre><p>
+</p><div class="queryresult table"><a id="idp10379840"></a><p class="title"><strong>Result</strong></p><div class="queryresult table-contents"><table summary="Result" cellspacing="0" cellpadding="0" border="1"><colgroup><col class="col1" /></colgroup><thead><tr><th align="left" valign="top">oliver</th></tr></thead><tfoot><tr><th align="left" valign="top">1 row
+</th></tr><tr><th align="left" valign="top">Nodes created: 1
+</th></tr><tr><th align="left" valign="top">Properties set: 2
+</th></tr><tr><th align="left" valign="top">Labels added: 1</th></tr></tfoot><tbody><tr><td align="left" valign="top"><p><code class="literal">Node[8]{name:"Keanu Reeves",role:"Neo"}</code></p></td></tr></tbody></table></div></div><br class="queryresult table-break" /></div></div><HR xmlns=""></HR><a xmlns="" href="ln-idp218960.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2013 Neo Technology</p></a><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="query-create-unique.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="query-write.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="query-set.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

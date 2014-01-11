@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>22.2. Server Configuration</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="The Neo4j Manual v2.0.0" /><link rel="up" href="embedded-configuration.html" title="Chapter 22. Configuration &amp; Performance" /><link rel="prev" href="configuration-introduction.html" title="22.1. Introduction" /><link rel="next" href="server-performance.html" title="22.3. Server Performance Tuning" /><link rel="preface" href="preface.html" title="Preface" /><link rel="part" href="introduction.html" title="Part I. Introduction" /><link rel="chapter" href="introduction-highlights.html" title="Chapter 1. Neo4j Highlights" /><link rel="chapter" href="graphdb-concepts.html" title="Chapter 2. Graph Database Concepts" /><link rel="chapter" href="graphdb-neo4j.html" title="Chapter 3. The Neo4j Graph Database" /><link rel="part" href="tutorials.html" title="Part II. Tutorials" /><link rel="chapter" href="tutorials-cypher.html" title="Chapter 4. Getting started with Cypher" /><link rel="chapter" href="data-modeling-examples.html" title="Chapter 5. Data Modeling Examples" /><link rel="chapter" href="languages.html" title="Chapter 6. Languages" /><link rel="part" href="cypher-query-lang.html" title="Part III. Cypher Query Language" /><link rel="chapter" href="cypher-intro.html" title="Chapter 7. Introduction" /><link rel="chapter" href="query-syntax.html" title="Chapter 8. Syntax" /><link rel="chapter" href="query-general.html" title="Chapter 9. General Clauses" /><link rel="chapter" href="query-read.html" title="Chapter 10. Reading Clauses" /><link rel="chapter" href="query-write.html" title="Chapter 11. Writing Clauses" /><link rel="chapter" href="query-function.html" title="Chapter 12. Functions" /><link rel="chapter" href="cypher-schema.html" title="Chapter 13. Schema" /><link rel="chapter" href="examples-from-sql-to-cypher.html" title="Chapter 14. From SQL to Cypher" /><link rel="part" href="reference-documentation.html" title="Part IV. Reference" /><link rel="chapter" href="capabilities.html" title="Chapter 15. Capabilities" /><link rel="chapter" href="transactions.html" title="Chapter 16. Transaction Management" /><link rel="chapter" href="import.html" title="Chapter 17. Data Import" /><link rel="chapter" href="graph-algo.html" title="Chapter 18. Graph Algorithms" /><link rel="chapter" href="rest-api.html" title="Chapter 19. REST API" /><link rel="chapter" href="deprecations.html" title="Chapter 20. Deprecations" /><link rel="part" href="operations.html" title="Part V. Operations" /><link rel="chapter" href="deployment.html" title="Chapter 21. Installation &amp; Deployment" /><link rel="chapter" href="embedded-configuration.html" title="Chapter 22. Configuration &amp; Performance" /><link rel="chapter" href="ha.html" title="Chapter 23. High Availability" /><link rel="chapter" href="operations-backup.html" title="Chapter 24. Backup" /><link rel="chapter" href="operations-security.html" title="Chapter 25. Security" /><link rel="chapter" href="operations-monitoring.html" title="Chapter 26. Monitoring" /><link rel="part" href="tools.html" title="Part VI. Tools" /><link rel="chapter" href="tools-webadmin.html" title="Chapter 27. Web Interface" /><link rel="chapter" href="shell.html" title="Chapter 28. Neo4j Shell" /><link rel="part" href="community.html" title="Part VII. Community" /><link rel="chapter" href="community-support.html" title="Chapter 29. Community Support" /><link rel="chapter" href="community-contributing.html" title="Chapter 30. Contributing to Neo4j" /><link rel="part" href="advanced-usage.html" title="Part VIII. Advanced Usage" /><link rel="chapter" href="server-extending.html" title="Chapter 31. Extending the Neo4j Server" /><link rel="chapter" href="tutorials-java-embedded.html" title="Chapter 32. Using Neo4j embedded in Java applications" /><link rel="chapter" href="tutorial-traversal.html" title="Chapter 33. The Traversal Framework" /><link rel="chapter" href="indexing.html" title="Chapter 34. Legacy Indexing" /><link rel="chapter" href="batchinsert.html" title="Chapter 35. Batch Insertion" /><link rel="appendix" href="manpages.html" title="Appendix A. Manpages" /><link rel="refentry" href="re01.html" title="neo4j" /><link rel="refentry" href="re02.html" title="neo4j-installer" /><link rel="refentry" href="re03.html" title="neo4j-shell" /><link rel="refentry" href="re04.html" title="neo4j-backup" /><link rel="refentry" href="re05.html" title="neo4j-arbiter" /><link rel="subsection" href="server-configuration.html#_important_server_configurations_parameters" title="22.2.1. Important server configurations parameters" /><link rel="subsection" href="server-configuration.html#_neo4j_database_performance_configuration" title="22.2.2. Neo4j Database performance configuration" /><link rel="subsection" href="server-configuration.html#_server_logging_configuration" title="22.2.3. Server logging configuration" /><link rel="subsection" href="server-configuration.html#_http_logging_configuration" title="22.2.4. HTTP logging configuration" /><link rel="subsection" href="server-configuration.html#_using_x_forwarded_proto_and_x_forwarded_host_to_parameterize_the_base_uri_for_rest_responses" title="22.2.5. Using X-Forwarded-Proto and X-Forwarded-Host to parameterize the base URI for REST responses" /><link rel="subsection" href="server-configuration.html#_other_configuration_options" title="22.2.6. Other configuration options" /><link rel="copyright" href="ln-idp218960.html" title="License: Creative Commons 3.0" />
+
+
+<!-- favicon -->
+
+<link rel="shortcut icon" href="http://neo4j.org/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="icon" href="http://neo4j.org/favicon.ico" type="image/x-icon" />
+
+<!-- style -->
+
+<link href="css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="css/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/shThemeEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/neo.css" rel="stylesheet" type="text/css" />
+
+<!-- Syntax Highlighter -->
+
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushJava.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushBash.js"></script>
+<script type="text/javascript" src="js/shBrushPlain.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushGroovy.js"></script>
+<script type="text/javascript" src="js/shBrushCypher.js"></script>
+<script type="text/javascript" src="js/shBrushScala.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript" src="js/shBrushPython.js"></script>
+<script type="text/javascript" src="js/shBrushProperties.js"></script>
+
+<!-- activate when needed
+<script type="text/javascript" src="js/shBrushRuby.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+-->
+ 
+<script type="text/javascript">
+  SyntaxHighlighter.defaults['tab-size'] = 4;
+  SyntaxHighlighter.defaults['gutter'] = false;
+  SyntaxHighlighter.defaults['toolbar'] = false;
+  SyntaxHighlighter.all()
+</script>
+
+<!-- JQuery -->
+
+<script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
+
+<!-- Replace SVG for browsers that lack support. -->
+<script type="text/javascript" src="js/svgreplacer.js"></script>
+
+<!-- Image Scaler -->
+
+<script type="text/javascript" src="js/imagescaler.js"></script>
+
+<!-- Table Styler -->
+
+<script type="text/javascript" src="js/tablestyler.js"></script>
+
+<!-- Version -->
+
+<script type="text/javascript" src="js/version.js"></script>
+
+<!-- Offline Sidebar -->
+
+<script type="text/javascript" src="js/sidebar.js"></script>
+
+
+<div xmlns="" class="breadcrumbs"><span class="breadcrumb-link"><a href="index.html">The Neo4j Manual</a></span> &gt; <span class="breadcrumb-link"><a href="operations.html">Operations</a></span> &gt; <span class="breadcrumb-link"><a href="embedded-configuration.html">Configuration &amp; Performance</a></span> &gt; <span class="breadcrumb-node">Server Configuration</span></div></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="configuration-introduction.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="server-performance.html">Next</a></td></tr></table><hr /></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="server-configuration"></a>22.2. Server Configuration</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="server-configuration.html#_important_server_configurations_parameters">22.2.1. Important server configurations parameters</a></span></dt><dt><span class="section"><a href="server-configuration.html#_neo4j_database_performance_configuration">22.2.2. Neo4j Database performance configuration</a></span></dt><dt><span class="section"><a href="server-configuration.html#_server_logging_configuration">22.2.3. Server logging configuration</a></span></dt><dt><span class="section"><a href="server-configuration.html#_http_logging_configuration">22.2.4. HTTP logging configuration</a></span></dt><dt><span class="section"><a href="server-configuration.html#_using_x_forwarded_proto_and_x_forwarded_host_to_parameterize_the_base_uri_for_rest_responses">22.2.5. Using X-Forwarded-Proto and X-Forwarded-Host to parameterize the base URI for REST responses</a></span></dt><dt><span class="section"><a href="server-configuration.html#_other_configuration_options">22.2.6. Other configuration options</a></span></dt></dl></div><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>Quick info</strong></p></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+The server’s primary configuration file is found under <span class="emphasis"><em>conf/neo4j-server.properties</em></span>
+</li><li class="listitem">
+The <span class="emphasis"><em>conf/log4j.properties</em></span> file contains the default server logging configuration
+</li><li class="listitem">
+Low-level performance tuning parameters are found in <span class="emphasis"><em>conf/neo4j.properties</em></span>
+</li><li class="listitem">
+Configuraion of the deamonizing wrapper are found in <span class="emphasis"><em>conf/neo4j-wrapper.properties</em></span>
+</li><li class="listitem">
+HTTP logging configuration is found in <span class="emphasis"><em>conf/neo4j-http-logging.xml</em></span>
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_important_server_configurations_parameters"></a>22.2.1. Important server configurations parameters</h3></div></div></div><p>The main configuration file for the server can be found at <span class="emphasis"><em>conf/neo4j-server.properties</em></span>.
+This file contains several important settings, and although the defaults are sensible
+administrators might choose to make changes (especially to the port settings).</p><p>Set the location on disk of the database directory like this:</p><pre class="programlisting brush: plain">org.neo4j.server.database.location=data/graph.db</pre><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/admon/note.png" /></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>On Windows systems, absolute locations including drive letters need to read <span class="emphasis"><em>"c:/data/db"</em></span>.</p></td></tr></table></div><p>Specify the HTTP server port supporting data, administrative, and UI access:</p><pre class="programlisting brush: plain">org.neo4j.server.webserver.port=7474</pre><p>Specify the client accept pattern for the webserver (default is <code class="literal">127.0.0.1</code>, localhost only):</p><pre class="programlisting brush: plain">#allow any client to connect
+org.neo4j.server.webserver.address=0.0.0.0</pre><p>For securing the Neo4j Server, see also <a class="xref" href="operations-security.html" title="Chapter 25. Security">Chapter 25, <em>Security</em></a></p><p>Set the location of the round-robin database directory which gathers metrics on the running server instance:</p><pre class="programlisting brush: plain">org.neo4j.server.webadmin.rrdb.location=data/graph.db/../rrd</pre><p>Set the URI path for the REST data API through which the database is accessed. This should be a relative path.</p><pre class="programlisting brush: plain">org.neo4j.server.webadmin.data.uri=/db/data/</pre><p>Setting the management URI for the administration API that the Webadmin tool uses. This should be a relative path.</p><pre class="programlisting brush: plain">org.neo4j.server.webadmin.management.uri=/db/manage</pre><p>Force the server to use IPv4 network addresses, in <span class="emphasis"><em>conf/neo4j-wrapper.conf</em></span> under the section <span class="emphasis"><em>Java Additional Parameters</em></span> add a new paramter:</p><pre class="programlisting brush: plain">wrapper.java.additional.3=-Djava.net.preferIPv4Stack=true</pre><p>Specify the number of threads used by the Neo4j Web server to control the level of concurrent HTTP requests that the server will service.</p><pre class="programlisting brush: plain">org.neo4j.server.webserver.maxthreads=200</pre><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/admon/note.png" /></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>The default value is 10 times the number of CPUs reported available by the JVM.</p></td></tr></table></div><p>The server guards against orphaned transactions by using a timeout. If there are no requests for a given transaction
+within the timeout period, the server will roll it back. You can configure the timeout period by setting
+the following property to the number of seconds before timeout. The default timeout is 60 seconds.</p><pre class="programlisting brush: plain">org.neo4j.server.transaction.timeout=60</pre><p>Low-level performance tuning parameters can be explicitly set by referring
+to the following property:</p><pre class="programlisting brush: plain">org.neo4j.server.db.tuning.properties=neo4j.properties</pre><p>If this property isn’t set, the server will look for a file called <span class="emphasis"><em>neo4j.properties</em></span> in
+the same directory as the <span class="emphasis"><em>neo4j-server.properties</em></span> file.</p><p>If this property isn’t set, and there is no <span class="emphasis"><em>neo4j.properties</em></span> file in the default
+configuration directory, then the server will log a warning. Subsequently at runtime the
+database engine will attempt tune itself based on the prevailing conditions.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_neo4j_database_performance_configuration"></a>22.2.2. Neo4j Database performance configuration</h3></div></div></div><p>The fine-tuning of the low-level Neo4j graph database engine is specified in a separate
+properties file, <span class="emphasis"><em>conf/neo4j.properties</em></span>.</p><p>The graph database engine has a range of performance tuning options which are enumerated in
+<a class="xref" href="server-performance.html" title="22.3. Server Performance Tuning">Section 22.3, “Server Performance Tuning”</a>. Note that other factors than Neo4j tuning should be considered
+when performance tuning a server, including general server load, memory and file contention,
+and even garbage collection penalties on the JVM, though such considerations are beyond the scope
+of this configuration document.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_server_logging_configuration"></a>22.2.3. Server logging configuration</h3></div></div></div><p>Application events within Neo4j server are processed with
+ <code class="literal"><a class="ulink" href="http://download.oracle.com/javase/6/docs/technotes/guides/logging/overview.html" target="_top">java.util.logging</a></code> and
+ configured in the file <span class="emphasis"><em>conf/logging.properties</em></span>.</p><p>By default it is setup to print <code class="literal">INFO</code> level messages both on screen and in a rolling file in <span class="emphasis"><em>data/log</em></span>.
+Most deployments will choose to use their own configuration here to meet local standards.
+During development, much useful information can be found in the logs so some form of logging to disk is well worth keeping.
+On the other hand, if you want to completely silence the console output, set:</p><pre class="programlisting brush: plain">java.util.logging.ConsoleHandler.level=OFF</pre><p>By default log files are rotated at approximately 10Mb and named consecutively neo4j.&lt;id&gt;.&lt;rotation sequence #&gt;.log
+To change the naming scheme, rotation frequency and backlog size modify</p><pre class="programlisting brush: plain">java.util.logging.FileHandler.pattern
+java.util.logging.FileHandler.limit
+java.util.logging.FileHandler.count</pre><p>respectively to your needs. Details are available at the Javadoc for <code class="literal"><a class="ulink" href="http://download.oracle.com/javase/6/docs/api/java/util/logging/FileHandler.html" target="_top">java.util.logging.FileHandler</a></code>.</p><p>Apart from log statements originating from the Neo4j server, other libraries report their messages
+through various frameworks.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_http_logging_configuration"></a>22.2.4. HTTP logging configuration</h3></div></div></div><p>As well as logging events happening within the Neo4j server, it is possible to log the HTTP requests and responses
+that the server consumes and produces. Configuring HTTP logging requires operators to enable and configure the
+logger and where it will log; and then to optionally configure the log format.</p><div class="warning" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Warning"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/icons/admon/warning.png" /></td><th align="left">Warning</th></tr><tr><td align="left" valign="top"><p>By default the HTTP logger uses <code class="literal"><a class="ulink" href="http://en.wikipedia.org/wiki/Common_Log_Format" target="_top">Common Log Format</a></code>
+meaning that most Web server tooling can automtically consume such logs. In general users should only enable HTTP logging,
+select an output directory, and if necessary alter the rollover and retention policies.</p></td></tr></table></div><p>To enable HTTP logging, edit the <span class="emphasis"><em>conf/neo4j-server.properties</em></span> file to resemble the following:</p><pre class="programlisting brush: plain">org.neo4j.server.http.log.enabled=true
+org.neo4j.server.http.log.config=conf/neo4j-http-logging.xml</pre><p><span class="emphasis"><em>org.neo4j.server.http.log.enabled=true</em></span> tells the server that HTTP logging is enabled. HTTP logging can be totally
+disabled by setting this property to <span class="emphasis"><em>false</em></span>.
+<span class="emphasis"><em>org.neo4j.server.http.log.config=conf/neo4j-http-logging.xml</em></span> specifies the logging format and rollover policy file
+that governs how HTTP log output is presented and archived. The defaults provided with Neo4j server uses an hourly log
+rotation and <code class="literal"><a class="ulink" href="http://en.wikipedia.org/wiki/Common_Log_Format" target="_top">Common Log Format</a></code>.</p><p>If logging is set up to use log files then the server will check that the log file directory exists and is writable. If
+this check fails, then the server will not startup and wil report the failure another available channel like standard out.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_using_x_forwarded_proto_and_x_forwarded_host_to_parameterize_the_base_uri_for_rest_responses"></a>22.2.5. Using X-Forwarded-Proto and X-Forwarded-Host to parameterize the base URI for REST responses</h3></div></div></div><p>There are occasions, for example when you want to host Neo4j server behind a proxy (e.g. one that handles HTTPS traffic),
+and still have Neo4j respect the base URI of that externally visible proxy.</p><p>Ordinarily Neo4j uses the <code class="literal">HOST</code> header of the HTTP request to construct URIs in its responses. Where a proxy is involved
+however, this is often undesirable. Instead Neo4j, uses the
+<code class="literal">X-Forwarded-Host</code> and <code class="literal">X-Forwarded-Proto</code> headers provided by proxies to parameterize the URIs in the responses from
+the databases’s REST API. From the outside it looks as if the proxy generated that payload. If an <code class="literal">X-Forwarded-Host</code>
+header value contains more than one address (<code class="literal">X-Forwarded-Host</code> allows comma-and-space separated lists of addresses),
+Neo4j picks the first, which represents the client request.</p><p>In order to take advantage of this functionality, your proxy server must be configured to transmit these headers to the
+Neo4j server. Failure to transmit both <code class="literal">X-Forwarded-Host</code> and <code class="literal">X-Forwarded-Proto</code> headers will result in the original
+base URI being used.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_other_configuration_options"></a>22.2.6. Other configuration options</h3></div></div></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_enabling_logging_from_the_garbage_collector"></a>Enabling logging from the garbage collector</h4></div></div></div><p>To get garbage collection logging output you have to pass the corresponding option to the server JVM
+executable by setting in <span class="emphasis"><em>conf/neo4j-wrapper.conf</em></span> the value</p><pre class="programlisting brush: plain">wrapper.java.additional.3=-Xloggc:data/log/neo4j-gc.log</pre><p>This line is already present and needs uncommenting. Note also that logging is not directed to console ;
+You will find the logging statements in <span class="emphasis"><em>data/log/ne4j-gc.log</em></span> or whatever directory you set at the option.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_disabling_console_types_in_webadmin"></a>Disabling console types in Webadmin</h4></div></div></div><p>You may, for security reasons, want to disable the the Neo4j Shell in Webadmin.
+Shells allow arbitrary code execution, and so they could constitute a security risk if you do not trust all users of your Neo4j Server.</p><p>In the <span class="emphasis"><em>conf/neo4j-server.properties</em></span> file:</p><pre class="programlisting brush: plain"># To disable all shells:
+org.neo4j.server.manage.console_engines=
+
+# To enable only the Neo4j Shell:
+org.neo4j.server.manage.console_engines=shell</pre></div></div></div><HR xmlns=""></HR><a xmlns="" href="ln-idp218960.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2013 Neo Technology</p></a><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="configuration-introduction.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="embedded-configuration.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="server-performance.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

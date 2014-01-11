@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>23.5. Upgrading a Neo4j HA Cluster</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="The Neo4j Manual v2.0.0" /><link rel="up" href="ha.html" title="Chapter 23. High Availability" /><link rel="prev" href="arbiter-instances.html" title="23.4. Arbiter Instances" /><link rel="next" href="ha-setup-tutorial.html" title="23.6. High Availability setup tutorial" /><link rel="preface" href="preface.html" title="Preface" /><link rel="part" href="introduction.html" title="Part I. Introduction" /><link rel="chapter" href="introduction-highlights.html" title="Chapter 1. Neo4j Highlights" /><link rel="chapter" href="graphdb-concepts.html" title="Chapter 2. Graph Database Concepts" /><link rel="chapter" href="graphdb-neo4j.html" title="Chapter 3. The Neo4j Graph Database" /><link rel="part" href="tutorials.html" title="Part II. Tutorials" /><link rel="chapter" href="tutorials-cypher.html" title="Chapter 4. Getting started with Cypher" /><link rel="chapter" href="data-modeling-examples.html" title="Chapter 5. Data Modeling Examples" /><link rel="chapter" href="languages.html" title="Chapter 6. Languages" /><link rel="part" href="cypher-query-lang.html" title="Part III. Cypher Query Language" /><link rel="chapter" href="cypher-intro.html" title="Chapter 7. Introduction" /><link rel="chapter" href="query-syntax.html" title="Chapter 8. Syntax" /><link rel="chapter" href="query-general.html" title="Chapter 9. General Clauses" /><link rel="chapter" href="query-read.html" title="Chapter 10. Reading Clauses" /><link rel="chapter" href="query-write.html" title="Chapter 11. Writing Clauses" /><link rel="chapter" href="query-function.html" title="Chapter 12. Functions" /><link rel="chapter" href="cypher-schema.html" title="Chapter 13. Schema" /><link rel="chapter" href="examples-from-sql-to-cypher.html" title="Chapter 14. From SQL to Cypher" /><link rel="part" href="reference-documentation.html" title="Part IV. Reference" /><link rel="chapter" href="capabilities.html" title="Chapter 15. Capabilities" /><link rel="chapter" href="transactions.html" title="Chapter 16. Transaction Management" /><link rel="chapter" href="import.html" title="Chapter 17. Data Import" /><link rel="chapter" href="graph-algo.html" title="Chapter 18. Graph Algorithms" /><link rel="chapter" href="rest-api.html" title="Chapter 19. REST API" /><link rel="chapter" href="deprecations.html" title="Chapter 20. Deprecations" /><link rel="part" href="operations.html" title="Part V. Operations" /><link rel="chapter" href="deployment.html" title="Chapter 21. Installation &amp; Deployment" /><link rel="chapter" href="embedded-configuration.html" title="Chapter 22. Configuration &amp; Performance" /><link rel="chapter" href="ha.html" title="Chapter 23. High Availability" /><link rel="chapter" href="operations-backup.html" title="Chapter 24. Backup" /><link rel="chapter" href="operations-security.html" title="Chapter 25. Security" /><link rel="chapter" href="operations-monitoring.html" title="Chapter 26. Monitoring" /><link rel="part" href="tools.html" title="Part VI. Tools" /><link rel="chapter" href="tools-webadmin.html" title="Chapter 27. Web Interface" /><link rel="chapter" href="shell.html" title="Chapter 28. Neo4j Shell" /><link rel="part" href="community.html" title="Part VII. Community" /><link rel="chapter" href="community-support.html" title="Chapter 29. Community Support" /><link rel="chapter" href="community-contributing.html" title="Chapter 30. Contributing to Neo4j" /><link rel="part" href="advanced-usage.html" title="Part VIII. Advanced Usage" /><link rel="chapter" href="server-extending.html" title="Chapter 31. Extending the Neo4j Server" /><link rel="chapter" href="tutorials-java-embedded.html" title="Chapter 32. Using Neo4j embedded in Java applications" /><link rel="chapter" href="tutorial-traversal.html" title="Chapter 33. The Traversal Framework" /><link rel="chapter" href="indexing.html" title="Chapter 34. Legacy Indexing" /><link rel="chapter" href="batchinsert.html" title="Chapter 35. Batch Insertion" /><link rel="appendix" href="manpages.html" title="Appendix A. Manpages" /><link rel="refentry" href="re01.html" title="neo4j" /><link rel="refentry" href="re02.html" title="neo4j-installer" /><link rel="refentry" href="re03.html" title="neo4j-shell" /><link rel="refentry" href="re04.html" title="neo4j-backup" /><link rel="refentry" href="re05.html" title="neo4j-arbiter" /><link rel="subsection" href="upgrade-guide.html#_upgrading_from_1_9_x_to_2_0" title="23.5.1. Upgrading from 1.9.x to 2.0" /><link rel="subsection" href="upgrade-guide.html#_upgrading_from_1_8_x_to_1_9" title="23.5.2. Upgrading from 1.8.x to 1.9" /><link rel="subsection" href="upgrade-guide.html#_upgrading_within_the_1_9_x_series" title="23.5.3. Upgrading within the 1.9.x series" /><link rel="copyright" href="ln-idp218960.html" title="License: Creative Commons 3.0" />
+
+
+<!-- favicon -->
+
+<link rel="shortcut icon" href="http://neo4j.org/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="icon" href="http://neo4j.org/favicon.ico" type="image/x-icon" />
+
+<!-- style -->
+
+<link href="css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="css/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/shThemeEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/neo.css" rel="stylesheet" type="text/css" />
+
+<!-- Syntax Highlighter -->
+
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushJava.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushBash.js"></script>
+<script type="text/javascript" src="js/shBrushPlain.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushGroovy.js"></script>
+<script type="text/javascript" src="js/shBrushCypher.js"></script>
+<script type="text/javascript" src="js/shBrushScala.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript" src="js/shBrushPython.js"></script>
+<script type="text/javascript" src="js/shBrushProperties.js"></script>
+
+<!-- activate when needed
+<script type="text/javascript" src="js/shBrushRuby.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+-->
+ 
+<script type="text/javascript">
+  SyntaxHighlighter.defaults['tab-size'] = 4;
+  SyntaxHighlighter.defaults['gutter'] = false;
+  SyntaxHighlighter.defaults['toolbar'] = false;
+  SyntaxHighlighter.all()
+</script>
+
+<!-- JQuery -->
+
+<script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
+
+<!-- Replace SVG for browsers that lack support. -->
+<script type="text/javascript" src="js/svgreplacer.js"></script>
+
+<!-- Image Scaler -->
+
+<script type="text/javascript" src="js/imagescaler.js"></script>
+
+<!-- Table Styler -->
+
+<script type="text/javascript" src="js/tablestyler.js"></script>
+
+<!-- Version -->
+
+<script type="text/javascript" src="js/version.js"></script>
+
+<!-- Offline Sidebar -->
+
+<script type="text/javascript" src="js/sidebar.js"></script>
+
+
+<div xmlns="" class="breadcrumbs"><span class="breadcrumb-link"><a href="index.html">The Neo4j Manual</a></span> &gt; <span class="breadcrumb-link"><a href="operations.html">Operations</a></span> &gt; <span class="breadcrumb-link"><a href="ha.html">High Availability</a></span> &gt; <span class="breadcrumb-node">Upgrading a Neo4j HA Cluster</span></div></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="arbiter-instances.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ha-setup-tutorial.html">Next</a></td></tr></table><hr /></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="upgrade-guide"></a>23.5. Upgrading a Neo4j HA Cluster</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="upgrade-guide.html#_upgrading_from_1_9_x_to_2_0">23.5.1. Upgrading from 1.9.x to 2.0</a></span></dt><dt><span class="section"><a href="upgrade-guide.html#_upgrading_from_1_8_x_to_1_9">23.5.2. Upgrading from 1.8.x to 1.9</a></span></dt><dt><span class="section"><a href="upgrade-guide.html#_upgrading_within_the_1_9_x_series">23.5.3. Upgrading within the 1.9.x series</a></span></dt></dl></div><p>This document describes the steps required to upgrade a Neo4j cluster without disrupting its operation.
+This process is referred to as a <span class="emphasis"><em>rolling upgrade</em></span>.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_upgrading_from_1_9_x_to_2_0"></a>23.5.1. Upgrading from 1.9.x to 2.0</h3></div></div></div><p>It is currently <span class="emphasis"><em>not</em></span> possible to do a rolling upgrade from 1.9.x to 2.0.
+This means that in order for you to upgrade a 1.9.x cluster to 2.0, you will incur some downtime.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_steps"></a>Steps</h4></div></div></div><p>In order to upgrade a cluster from 1.9.x to 2.0, you will need to do the following manually:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+Backup your data!
+</li><li class="listitem">
+Shut down every cluster member except the master.
+</li><li class="listitem">
+Install the new version of Neo4j for each slave instance — removing the data directory, but keeping the configuration.
+</li><li class="listitem">
+Shut down the master — this brings your cluster completely offline!
+</li><li class="listitem">
+Follow the instructions found in <a class="xref" href="deployment-upgrading.html#explicit-upgrade" title="21.4.2. Explicit Upgrade">Section 21.4.2, “Explicit Upgrade”</a> for <span class="emphasis"><em>just</em></span> the master instance — the data in master instance have now been converted to the new Neo4j 2.0 format.
+</li><li class="listitem">
+Shut down the master instance again.
+</li><li class="listitem">
+Distribute the data directory from master to each slave instance — this saves time by not having to re-build stores and indexes for each slave.
+</li><li class="listitem">
+Bring master online.
+</li><li class="listitem">
+Bring slaves online.
+</li></ol></div><p>Your entire cluster has now been completely converted to Neo4j 2.0.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_upgrading_from_1_8_x_to_1_9"></a>23.5.2. Upgrading from 1.8.x to 1.9</h3></div></div></div><p>The starting assumptions are that there exists a cluster running Neo4j version 1.8 or newer with the corresponding ZooKeeper instances and that the machine which is currently the master is known.
+It is also assumed that on each machine the Neo4j service and the neo4j coordinator service is installed under a directory which from here on is assumed to be /opt/old-neo4j</p><p>The process consists of upgrading each machine in turn by removing it from the cluster, moving over the database and starting it back up again.
+Configuration settings also have to be transferred. It is important to note that the last machine to be upgraded must be the master.
+In general, the "cluster version" is defined by the version of the master, providing the master is of the older version the cluster
+as a whole can operate (the 1.9 instances running in compatibility mode). When a 1.9 instance is elected master however, the older
+ instances are not capable of communicating with it, so we have to make sure that the last machine upgraded is the old master.
+ The upgrade process is detected automatically from the joining 1.9 instances and they will not participate in a master election while even a single old instance is part of the cluster.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_step_1_on_each_slave_perform_the_upgrade"></a>Step 1: On each slave perform the upgrade</h4></div></div></div><p>Download and unpack the new version. Copy over any configuration settings you run your instances with, taking care for deprecated settings and API changes that can occur between versions.
+Also, ensure that newly introduced settings have proper values (see <a class="xref" href="ha-configuration.html" title="23.2. Setup and configuration">Section 23.2, “Setup and configuration”</a>).
+The most important thing about the settings setup is the <code class="literal">ha.coordinators</code> setting in neo4j.properties which must be set to the value the existing 1.8 instances are using.
+You also have to make sure that all but one instance have the <code class="literal">ha.allow_init_cluster</code> setting to <code class="literal">false</code> - the machine that has it set to true should be the one that is to become
+ the new master.
+In addition, it is necessary that the last machine to be upgraded (the 1.8 master) does not have the <code class="literal">ha.coordinators</code> setting present in its configuration file.
+Finally, don’t forget to copy over any server plugins you may have.
+First, shutdown the neo4j instance with</p><pre class="programlisting brush: plain">service neo4j-service stop</pre><p>Next, uninstall it</p><pre class="programlisting brush: plain">service neo4j-service remove</pre><p>Now you can copy over the database. Assuming the old instance is at /opt/old-neo4j and the newly unpacked under /opt/neo4j-enterprise-1.9 the proper command would be</p><pre class="programlisting brush: plain">cp -R /opt/old-neo4j/data/graph.db /opt/neo4j-enterprise-1.9/data/</pre><p>Next install the neo4j service, which also starts it</p><pre class="programlisting brush: plain">/opt/neo4j-enterprise-1.9/bin/neo4j install</pre><p>Done. Now check that the services are running and that webadmin reports the version 1.9. Transactions should also be applied from the master as usual.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_step_2_upgrade_the_master_complete_the_procedure"></a>Step 2:  Upgrade the master, complete the procedure</h4></div></div></div><div class="warning" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Warning"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/icons/admon/warning.png" /></td><th align="left">Warning</th></tr><tr><td align="left" valign="top"><p>Make sure that the installation that will replace the current master instance does not have <code class="literal">ha.coordinators</code> setting present in the <code class="literal">neo4j.properties</code> file.</p></td></tr></table></div><p>Go to the current master and execute step 1 The moment it will be stopped another instance will take over (the one with the allow_init_cluster setting set to true), transitioning the cluster to 1.9. Finish Step 1 on this machine as well and you will have completed the process.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_step_3_cleanup_removing_the_coordinator_services"></a>Step 3:  Cleanup, removing the coordinator services</h4></div></div></div><p>Each 1.8 installation still has a coordinator service installed and running. To have those removed you need to execute at every upgraded instance</p><pre class="programlisting brush: plain">service neo4j-coordinator stop
+service neo4j-coordinator remove</pre><p>After that, the 1.8 instances are no longer active or needed and can be removed or archived.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_upgrading_within_the_1_9_x_series"></a>23.5.3. Upgrading within the 1.9.x series</h3></div></div></div><div class="warning" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Warning"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/icons/admon/warning.png" /></td><th align="left">Warning</th></tr><tr><td align="left" valign="top"><p>Due to an bug in the HA code, it may not be possible to do a rolling (i.e. uninterrupted) upgrade to Neo4j 1.9.2 on 1.9 or 1.9.1 clusters. Attempting to do so may lead to an unstable cluster and data loss may occur.
+It is suggested that upgrades to 1.9.2 happen offline, where all instances are shutdown, upgraded and restarted. Upgrading from 1.9.2 to any other version works as described elsewhere in this guide.</p></td></tr></table></div><p>Upgrading between 1.9.x versions follows the same general pattern as described in the first part of this guide, but is much simpler because of the compatibility of the configuration options between 1.9.x releases. We will describe a step by step
+procedure, aimed at reducing the master switches to a single change.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_step_1_on_each_slave_perform_the_upgrade_2"></a>Step 1: On each slave perform the upgrade</h4></div></div></div><p>Download and unpack the new version. Copy over any configuration settings, ensuring that newly introduced settings have proper values (see <a class="xref" href="ha-configuration.html" title="23.2. Setup and configuration">Section 23.2, “Setup and configuration”</a>).
+Don’t forget to copy over any server plugins you may have.</p><p>First, shutdown the neo4j instance with</p><pre class="programlisting brush: plain">service neo4j-service stop</pre><p>Next, uninstall it</p><pre class="programlisting brush: plain">service neo4j-service remove</pre><p>Now you can copy over the database. Assuming the old instance is at /opt/old-neo4j and the newly unpacked under /opt/neo4j-enterprise-1.9.x the proper command would be</p><pre class="programlisting brush: plain">cp -R /opt/old-neo4j/data/graph.db /opt/neo4j-enterprise-1.9.x/data/</pre><p>Next install the neo4j service, which also starts it</p><pre class="programlisting brush: plain">/opt/neo4j-enterprise-1.9.x/bin/neo4j install</pre><p>Now check that the services are running and that webadmin reports the version 1.9.x. Transactions should also be applied from the master as usual.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_step_2_upgrade_the_master_complete_the_procedure_2"></a>Step 2:  Upgrade the master, complete the procedure</h4></div></div></div><p>Go to the current master and execute step 1 The moment it will be stopped another instance will take over, transitioning the cluster to the new 1.9.x version. Finish Step 1 on this machine as well and you will have completed the process.</p></div></div></div><HR xmlns=""></HR><a xmlns="" href="ln-idp218960.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2013 Neo Technology</p></a><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="arbiter-instances.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ha.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ha-setup-tutorial.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

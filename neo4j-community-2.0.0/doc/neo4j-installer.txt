@@ -1,0 +1,54 @@
+﻿Name
+
+neo4j-installer — Neo4j Server installation and removal
+
+Synopsis
+
+neo4j-installer <command>
+
+DESCRIPTION
+
+Neo4j is a graph database, perfect for working with highly connected
+data.
+
+The preferred way to install Neo4j on Linux systems is by using
+prebuilt installation packages, but there’s also the possibility to
+use the neo4j-installer command to install or remove it as a system
+service. For information regarding Windows, see below.
+
+Use the neo4j command to control the Neo4j Server.
+
+COMMANDS
+
+install
+    Installs the server as a platform-appropriate system service.
+remove
+    Uninstalls the system service.
+
+Usage - Windows
+
+To just control the Neo4j Server, use the Neo4j.bat command.
+
+Neo4jInstaller.bat install/remove
+
+Neo4j can be installed and run as a Windows Service, running without
+a console window. You’ll need to run the scripts with Administrator
+privileges. Just use the Neo4jInstaller.bat script with the proper
+argument:
+
+  * Neo4jInstaller.bat install - install as a Windows service
+
+      o will install the service
+  * Neo4jInstaller.bat remove - remove the Neo4j service
+
+      o will stop and remove the Neo4j service
+
+FILES
+
+conf/neo4j-server.properties
+    Server configuration.
+conf/neo4j-wrapper.conf
+    Configuration for service wrapper.
+conf/neo4j.properties
+    Tuning configuration for the database.
+
