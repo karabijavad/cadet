@@ -17,9 +17,6 @@ module Cadet
     def create_node
       Cadet::Node.create(@db)
     end
-    def create_relationship(from, to, type)
-      Cadet::Relationship.create(from, to, type)
-    end
   end
 end
 
