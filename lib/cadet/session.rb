@@ -3,6 +3,7 @@ module Cadet
     def initialize(db)
       @db = db
     end
+
     def self.open(location)
       new(org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location))
     end
@@ -12,6 +13,12 @@ module Cadet
 
     def create_node
       Cadet::Node.new(@db.createNode())
+    end
+    def get_node(id)
+      Cadet::Node.new(@db.getNodeById(id))
+    end
+    def find_node(label, key, value)
+      Cadet::Node.new(@db.findNodesByLabelAndProperty(label, key, value))
     end
 
     def transaction
@@ -23,12 +30,5 @@ module Cadet
         tx.close()
       end
     end
-
-    # def self.getNodeById(db, id)
-    #   new(db.getNodeById(id))
-    # end
-    # def self.findNodesByLabelAndProperty(db, label, key, value)
-    #   new(db.findNodesByLabelAndProperty(label, key, value))
-    # end
   end
 end

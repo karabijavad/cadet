@@ -14,4 +14,3 @@ module Cadet
     end
   end
 end
-
