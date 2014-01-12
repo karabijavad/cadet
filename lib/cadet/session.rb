@@ -41,16 +41,10 @@ module Cadet
     end
 
     def constraint(label, property)
-      begin
-        @db.schema()
-          .constraintFor(org.neo4j.graphdb.DynamicLabel.label(label))
-          .assertPropertyIsUnique(property)
-          .create()
-      rescue org.neo4j.graphdb.ConstraintViolationException => e
-        # assuming the constraint already exists.
-        # ignore, so that ruby scripts may 'create' the constraint multiple
-        # times without worry of their script breaking.
-      end
+      @db.schema()
+        .constraintFor(org.neo4j.graphdb.DynamicLabel.label(label))
+        .assertPropertyIsUnique(property)
+        .create()
     end
 
   end
