@@ -11,7 +11,7 @@ module Cadet
       @db.shutdown()
     end
 
-    def create_node
+    def create_node(opts = {})
       Cadet::Node.new(@db.createNode())
     end
     def get_node(id)
@@ -30,5 +30,13 @@ module Cadet
         tx.close()
       end
     end
+
+    def constraint(label, property)
+      @db.schema()
+        .constraintFor(org.neo4j.graphdb.DynamicLabel.label(label))
+        .assertPropertyIsUnique(property)
+        .create()
+    end
+
   end
 end
