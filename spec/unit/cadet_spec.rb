@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Cadet do
 
-  it "should create a node" do
+  it "should create a node, (and also test that transaction works in the process)" do
     db = Cadet::Session.open("./tmp")
     db.transaction do
       n = db.create_node
