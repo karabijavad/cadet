@@ -13,8 +13,11 @@ module Cadet
       @node.addLabel(org.neo4j.graphdb.DynamicLabel.label(label))
     end
 
-    def method_missing(:name)
-      @node.setProperty(name, val) if name.to_s.end_with? "="
+    def method_missing(name, *args)
+      if name.to_s.end_with? "="
+        property = name.to_s.gsub(/=$/, '')
+        @node.setProperty(property, args[0])
+      end
     end
 
   end
