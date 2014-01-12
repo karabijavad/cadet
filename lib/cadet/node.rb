@@ -9,10 +9,10 @@ module Cadet
     def self.create(db)
       new(db.createNode())
     end
-    def self.getNodeById(id)
+    def self.getNodeById(db, id)
       new(db.getNodeById(id))
     end
-    def self.findNodesByLabelAndProperty(label, key, value)
+    def self.findNodesByLabelAndProperty(db, label, key, value)
       new(db.findNodesByLabelAndProperty(label, key, value))
     end
     def outgoing(to, type)
