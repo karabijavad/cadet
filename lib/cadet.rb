@@ -22,3 +22,4 @@ require 'java'
 
 require 'cadet/session'
 require 'cadet/node'
+require 'cadet/transaction'
