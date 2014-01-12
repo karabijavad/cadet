@@ -6,15 +6,6 @@ module Cadet
     def node
       @node
     end
-    def self.create(db)
-      new(db.createNode())
-    end
-    def self.getNodeById(db, id)
-      new(db.getNodeById(id))
-    end
-    def self.findNodesByLabelAndProperty(db, label, key, value)
-      new(db.findNodesByLabelAndProperty(label, key, value))
-    end
     def outgoing(to, type)
       @node.createRelationshipTo(to.node, org.neo4j.graphdb.DynamicRelationshipType.withName(type))
     end
