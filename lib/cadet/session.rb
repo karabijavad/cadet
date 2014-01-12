@@ -14,12 +14,21 @@ module Cadet
     def create_node(opts = {})
       Cadet::Node.new(@db.createNode())
     end
-    def get_node(id)
+    def get_node_by_id(id)
       Cadet::Node.new(@db.getNodeById(id))
     end
-    def find_node(label, key, value)
-      Cadet::Node.new(@db.findNodesByLabelAndProperty(label, key, value))
+    def find_nodes_by_label_and_property(label, key, value)
+      result = []
+
+      #findNodesByLabelAndProperty
+      #Returns all nodes having the label, and the wanted property value.
+      @db.findNodesByLabelAndProperty(org.neo4j.graphdb.DynamicLabel.label(label), key, value).each do |n|
+        result << Cadet::Node.new(n)
+      end
+
+      result
     end
+
 
     def transaction
       tx = @db.beginTx()
@@ -32,10 +41,16 @@ module Cadet
     end
 
     def constraint(label, property)
-      @db.schema()
-        .constraintFor(org.neo4j.graphdb.DynamicLabel.label(label))
-        .assertPropertyIsUnique(property)
-        .create()
+      begin
+        @db.schema()
+          .constraintFor(org.neo4j.graphdb.DynamicLabel.label(label))
+          .assertPropertyIsUnique(property)
+          .create()
+      rescue org.neo4j.graphdb.ConstraintViolationException => e
+        # assuming the constraint already exists.
+        # ignore, so that ruby scripts may 'create' the constraint multiple
+        # times without worry of their script breaking.
+      end
     end
 
   end
