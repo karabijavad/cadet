@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 describe Cadet do
-  it "should open a session" do
-    db = Cadet::Session.open("./tmp")
+  let (:db) {Cadet::Session.open("./tmp")}
+
+  it "should create a node" do
+    db.transaction do
+      n = db.create_node
+    end
   end
 end
