@@ -9,22 +9,22 @@ super simple. you dont even need to download neo4j.
 3. cadet-example.rb
 
     ```ruby
-    require 'cadet'
-    
-    db = Cadet::Session.open("/tmp")
-    db.transaction do
-        a = db.create_node
-        a.addLabel "Foolabel"
-        a.vala = "fooa"
-        a.valb = "foob"
-    
-        b = db.create_node
-        b.addLabel "Barlabel"
-        b.vala = "bara"
-        b.valb = "barb"
-    
-        a.outgoing b, "foobar"
-    end
-    db.close()
+require 'cadet'
+
+db = Cadet::Session.open("neo4j-community-2.0.0/data/graph.db")
+
+db.transaction do
+
+  javad = db.create_Person name: "Javad", age: 25
+  ellen = db.create_Person name: "Ellen", age: 25
+
+  movie = db.create_Movie name: "The Secret Life of Walter Mitty", release: 2013
+
+  javad.likes ellen
+  javad.likes movie
+
+end
+
+db.close()
     ```
 4. ```bundle exec ruby```
