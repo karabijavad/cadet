@@ -20,5 +20,15 @@ module Cadet
       end
     end
 
+    def get_single_relationship(type, dir="both")
+      directions = {
+        "incoming" => org.neo4j.graphdb.Direction[0],
+        "outgoing" => org.neo4j.graphdb.Direction[1],
+        "both"     => org.neo4j.graphdb.Direction[2]
+      } #this is probably not the right order
+
+      getSingleRelationship org.neo4j.graphdb.DynamicRelationshipType.withName(type), directions[dir]
+    end
+
   end
 end
