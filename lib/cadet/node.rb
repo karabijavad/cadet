@@ -25,7 +25,7 @@ module Cadet
     def method_missing(name, *args)
       if name.to_s.end_with? "="
         property = name.to_s.gsub(/=$/, '')
-        @node.setProperty(property, args[0])
+        set_property(property, args[0])
       end
     end
 
@@ -43,9 +43,12 @@ module Cadet
       @node.getRelationships DynamicRelationshipType.withName(type), @directions[dir]
     end
 
+    def set_property(property, value)
+      @node.setProperty(property, value)
+    end
     def set_properties(props)
       props.each do |k,v|
-        method_missing("#{k}=", v)
+        set_property(k.to_s, v)
       end
     end
   end

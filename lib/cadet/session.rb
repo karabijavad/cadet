@@ -22,6 +22,7 @@ module Cadet
       n = Cadet::Node.new(@db.createNode())
       n.add_label label
       n.set_properties props
+      n
     end
 
     def get_node_by_id(id)
