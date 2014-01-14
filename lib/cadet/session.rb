@@ -56,5 +56,11 @@ module Cadet
         .create()
     end
 
+    def method_missing(name, *args)
+      if match = /create_([A-Z][A-Za-z]*)$/.match(name.to_s)
+        create_node_with match.captures.first, args[0]
+      end
+    end
+
   end
 end
