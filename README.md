@@ -23,7 +23,7 @@ super simple. you dont even need to download neo4j.
     
       javad.likes ellen
       javad.likes movie
-    
+      ellen.hates movie
     end
     
     db.close()
