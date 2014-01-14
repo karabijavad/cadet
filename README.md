@@ -18,10 +18,10 @@ super simple. you dont even need to download neo4j.
         a.vala = "fooa"
         a.valb = "foob"
     
-        a = db.create_node
-        a.addLabel "Barlabel"
-        a.vala = "bara"
-        a.valb = "barb"
+        b = db.create_node
+        b.addLabel "Barlabel"
+        b.vala = "bara"
+        b.valb = "barb"
     
         a.outgoing b, "foobar"
     end
