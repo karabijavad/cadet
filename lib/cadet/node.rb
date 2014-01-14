@@ -1,11 +1,12 @@
 module Cadet
   class Node
+    include_package "org.neo4j.graphdb"
 
     directions = {
-      "incoming" => org.neo4j.graphdb.Direction[0],
-      "outgoing" => org.neo4j.graphdb.Direction[1],
-      "both"     => org.neo4j.graphdb.Direction[2]
-    } #this is probably not the right order
+      "in"   => Direction[0],
+      "out"  => Direction[1],
+      "both" => Direction[2]
+    }
 
     def initialize(node)
       @node = node
@@ -14,10 +15,11 @@ module Cadet
       @node
     end
     def outgoing(to, type)
-      @node.createRelationshipTo(to.node, org.neo4j.graphdb.DynamicRelationshipType.withName(type))
+      @node.createRelationshipTo(to.node, DynamicRelationshipType.withName(type))
     end
     def addLabel(label)
-      @node.addLabel(org.neo4j.graphdb.DynamicLabel.label(label))
+      @node.addLabel(DynamicLabel.label(label))
+      self
     end
 
     def method_missing(name, *args)
@@ -28,17 +30,17 @@ module Cadet
     end
 
     def get_single_relationship(type, dir="both")
-      @node.getSingleRelationship org.neo4j.graphdb.DynamicRelationshipType.withName(type), @directions[dir]
+      @node.getSingleRelationship DynamicRelationshipType.withName(type), @directions[dir]
     end
 
     def get_all_relationships
       @node.getRelationships()
     end
     def get_all_relationships_of_type(type)
-      @node.getRelationships(org.neo4j.graphdb.DynamicRelationshipType.withName(type))
+      @node.getRelationships(DynamicRelationshipType.withName(type))
     end
     def get_all_relationships_of_type_and_dir(type, dir)
-      @node.getRelationships org.neo4j.graphdb.DynamicRelationshipType.withName(type), @directions[dir]
+      @node.getRelationships DynamicRelationshipType.withName(type), @directions[dir]
     end
 
   end
