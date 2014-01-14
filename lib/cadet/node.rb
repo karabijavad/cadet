@@ -17,7 +17,7 @@ module Cadet
     def outgoing(to, type)
       @node.createRelationshipTo(to.node, DynamicRelationshipType.withName(type))
     end
-    def addLabel(label)
+    def add_label(label)
       @node.addLabel(DynamicLabel.label(label))
       self
     end
@@ -43,5 +43,10 @@ module Cadet
       @node.getRelationships DynamicRelationshipType.withName(type), @directions[dir]
     end
 
+    def set_properties(props)
+      props.each do |k,v|
+        method_missing("#{k}=", v)
+      end
+    end
   end
 end

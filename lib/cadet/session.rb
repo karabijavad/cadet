@@ -14,9 +14,16 @@ module Cadet
       @db.shutdown()
     end
 
-    def create_node(opts = {})
+    def create_empty_node
       Cadet::Node.new(@db.createNode())
     end
+
+    def create_node_with(label, props)
+      n = Cadet::Node.new(@db.createNode())
+      n.add_label label
+      n.set_properties props
+    end
+
     def get_node_by_id(id)
       Cadet::Node.new(@db.getNodeById(id))
     end
