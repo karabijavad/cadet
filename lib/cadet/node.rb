@@ -26,6 +26,8 @@ module Cadet
       if name.to_s.end_with? "="
         property = name.to_s.gsub(/=$/, '')
         set_property(property, args[0])
+      else
+        outgoing(args[0], name.to_s)
       end
     end
 
