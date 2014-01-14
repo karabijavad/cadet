@@ -9,6 +9,7 @@ super simple. you dont even need to download neo4j.
 3. cadet-example.rb
 
     ```ruby
+
 require 'cadet'
 
 db = Cadet::Session.open("neo4j-community-2.0.0/data/graph.db")
@@ -26,5 +27,6 @@ db.transaction do
 end
 
 db.close()
+
     ```
 4. ```bundle exec ruby```
