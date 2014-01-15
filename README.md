@@ -11,22 +11,39 @@ super simple. you dont even need to download neo4j.
     ```ruby
 
     require 'cadet'
+    require 'yaml'
+    
+    data = YAML.load_file('legislators-current.yaml')
     
     db = Cadet::Session.open("neo4j-community-2.0.0/data/graph.db")
     
     db.transaction do
+      begin
+        ["Legislator", "Party", "Gender", "State"].each {|v| db.constraint v, "name"}
+      rescue Exception => e # ignore, probably just saying the constraint already exists
+      end
+    end
     
-      javad = db.create_Person name: "Javad", age: 25
-      ellen = db.create_Person name: "Ellen", age: 25
     
-      movie = db.create_Movie name: "The Secret Life of Walter Mitty", release: 2013
+    data.each do |leg|
     
-      javad.likes ellen
-      javad.likes movie
-      ellen.hates movie
+      db.transaction do
+    
+        l = db.get_a_Legislator "name", leg["name"]["official_full"] || "no name"
+        p = db.get_a_Party "name", leg["terms"].first["party"]
+        g = db.get_a_Gender "name", leg["bio"]["gender"]
+        s = db.get_a_State "name", leg["terms"].first["state"]
+    
+        l.party p
+        l.gender g
+        l.represents s
+    
+      end
     end
     
     db.close()
+
+
 
     ```
 4. ```bundle exec ruby```
