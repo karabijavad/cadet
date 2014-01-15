@@ -58,8 +58,21 @@ module Cadet
 
     def method_missing(name, *args)
       if match = /create_([A-Z][A-Za-z]*)$/.match(name.to_s)
-        create_node_with match.captures.first, args[0]
+        return create_node_with match.captures.first, args[0]
       end
+      if match = /get_a_([A-Z][A-Za-z]*)$/.match(name.to_s)
+        return get_a_node match.captures.first, args[0], args[1]
+      end
+    end
+
+    def get_a_node(label, property, value)
+      n = find_nodes_by_label_and_property(label, property, value).first
+      if n.nil?
+        h = {}
+        h[property] = value
+        n = create_node_with label, h
+      end
+      n
     end
 
   end
