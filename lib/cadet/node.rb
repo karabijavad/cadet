@@ -24,10 +24,9 @@ module Cadet
 
     def method_missing(name, *args)
       if name.to_s.end_with? "="
-        property = name.to_s.gsub(/=$/, '')
-        set_property(property, args[0])
-      else
-        outgoing(args[0], name.to_s)
+        set_property name.to_s.gsub(/=$/, ''), args[0]
+      elsif name.to_s.end_with? "_to"
+        outgoing args[0], name.to_s.gsub(/_to$/, '')
       end
     end
 
