@@ -75,5 +75,9 @@ module Cadet
       n
     end
 
+    def traverser
+      Cadet::Traversal::Description.new(@db.traversalDescription)
+    end
+
   end
 end
