@@ -21,7 +21,9 @@ module Cadet
       end
 
       def traverse(start_node)
-        @description.traverse start_node.node
+        @description.traverse(start_node.node).map do |path|
+          Cadet::Traversal::Path.new path
+        end
       end
     end
   end
