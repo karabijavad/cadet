@@ -8,25 +8,25 @@ module Cadet
     end
 
     def self.open(location)
-      new(GraphDatabaseFactory.new.newEmbeddedDatabase(location))
+      new GraphDatabaseFactory.new.newEmbeddedDatabase(location)
     end
     def close
-      @db.shutdown()
+      @db.shutdown
     end
 
     def create_empty_node
-      Cadet::Node.new(@db.createNode())
+      Cadet::Node.new @db.createNode
     end
 
     def create_node_with(label, props)
-      n = Cadet::Node.new(@db.createNode())
+      n = Cadet::Node.new @db.createNode
       n.add_label label
       n.set_properties props
       n
     end
 
     def get_node_by_id(id)
-      Cadet::Node.new(@db.getNodeById(id))
+      Cadet::Node.new @db.getNodeById(id)
     end
 
     def find_nodes_by_label_and_property(label, key, value)
@@ -40,20 +40,20 @@ module Cadet
     end
 
     def transaction
-      tx = @db.beginTx()
+      tx = @db.beginTx
       begin
         yield tx
-        tx.success()
+        tx.success
       ensure
-        tx.close()
+        tx.close
       end
     end
 
     def constraint(label, property)
-      @db.schema()
-        .constraintFor(DynamicLabel.label(label))
-        .assertPropertyIsUnique(property)
-        .create()
+      @db.schema
+        .constraintFor DynamicLabel.label(label)
+        .assertPropertyIsUnique property
+        .create
     end
 
     def method_missing(name, *args)
@@ -76,7 +76,7 @@ module Cadet
     end
 
     def traverser
-      Cadet::Traversal::Description.new(@db.traversalDescription)
+      Cadet::Traversal::Description.new @db.traversalDescription
     end
 
   end

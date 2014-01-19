@@ -10,7 +10,7 @@ module Cadet
 
       def relationships(relationship_names)
         relationship_names.each do |rel_name|
-          @description = @description.relationships(DynamicRelationshipType.withName(rel_name))
+          @description = @description.relationships DynamicRelationshipType.withName(rel_name)
         end
         self
       end
@@ -21,7 +21,7 @@ module Cadet
       end
 
       def traverse(start_node)
-        @description.traverse(start_node.node)
+        @description.traverse start_node.node
       end
     end
   end
