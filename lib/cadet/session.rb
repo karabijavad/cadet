@@ -18,7 +18,7 @@ module Cadet
       Cadet::Node.new @db.createNode
     end
 
-    def create_node_with(label, props)
+    def create_node_with(label, props = {})
       n = Cadet::Node.new @db.createNode
       n.add_label label
       n.set_properties props
