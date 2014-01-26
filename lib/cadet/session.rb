@@ -31,18 +31,14 @@ module Cadet
 
     def find_nodes_by_label_and_property(label, key, value)
       result = []
-      #findNodesByLabelAndProperty
-      #Returns all nodes having the label, and the wanted property value.
       @db.findNodesByLabelAndProperty(DynamicLabel.label(label), key, value).each do |node|
         result << Cadet::Node.new(node)
       end
       result
     end
     def find_node_by_label_and_property(label, key, value)
-      i = @db.findNodesByLabelAndProperty(DynamicLabel.label(label), key, value).iterator
-      if i.hasNext
-        return Cadet::Node.new(i.next)
-      end
+      node = org.neo4j.helpers.collection.IteratorUtil.firstOrNull @db.findNodesByLabelAndProperty(DynamicLabel.label(label), key, value)
+      node ? Cadet::Node.new(node) : null
     end
 
     def transaction
