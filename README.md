@@ -39,9 +39,9 @@ super simple. you dont even need to download neo4j.
         s = db.get_a_State "name", leg["terms"].first["state"]
     
         # automatically create relationships, where the relationship type is the method's name
-        l.party p
-        l.gender g
-        l.represents s
+        l.party_to p
+        l.gender_to g
+        l.represents_to s
     
       end
     end
