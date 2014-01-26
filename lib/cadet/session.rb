@@ -38,6 +38,12 @@ module Cadet
       end
       result
     end
+    def find_node_by_label_and_property(label, key, value)
+      i = @db.findNodesByLabelAndProperty(DynamicLabel.label(label), key, value).iterator
+      if i.hasNext
+        return Cadet::Node.new(i.next)
+      end
+    end
 
     def transaction
       tx = @db.beginTx
@@ -57,16 +63,13 @@ module Cadet
     end
 
     def method_missing(name, *args)
-      if match = /create_([A-Z][A-Za-z]*)$/.match(name.to_s)
-        return create_node_with match.captures.first, args[0]
-      end
       if match = /get_a_([A-Z][A-Za-z]*)$/.match(name.to_s)
         return get_a_node match.captures.first, args[0], args[1]
       end
     end
 
     def get_a_node(label, property, value)
-      n = find_nodes_by_label_and_property(label, property, value).first
+      n = find_node_by_label_and_property(label, property, value)
       if n.nil?
         h = {}
         h[property] = value

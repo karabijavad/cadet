@@ -14,7 +14,7 @@ module Cadet
     def node
       @node
     end
-    def outgoing(to, type)
+    def create_outgoing(to, type)
       @node.createRelationshipTo(to.node, DynamicRelationshipType.withName(type))
     end
     def add_label(label)
@@ -26,7 +26,7 @@ module Cadet
       if name.to_s.end_with? "="
         set_property name.to_s.gsub(/=$/, ''), args[0]
       elsif name.to_s.end_with? "_to"
-        outgoing args[0], name.to_s.gsub(/_to$/, '')
+        create_outgoing args[0], name.to_s.gsub(/_to$/, '')
       end
     end
 
