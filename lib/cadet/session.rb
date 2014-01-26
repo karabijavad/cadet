@@ -51,8 +51,8 @@ module Cadet
 
     def constraint(label, property)
       @db.schema
-        .constraintFor DynamicLabel.label(label)
-        .assertPropertyIsUnique property
+        .constraintFor(DynamicLabel.label(label))
+        .assertPropertyIsUnique(property)
         .create
     end
 
