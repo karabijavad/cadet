@@ -11,7 +11,7 @@ module Cadet
     end
 
     def constraint(label, property)
-      @db.createDeferredConstraint(org.neo4j.graphdb.DynamicLabel.label(label)).assertPropertyIsUnique(property)
+      @db.createDeferredConstraint(org.neo4j.graphdb.DynamicLabel.label(label)).assertPropertyIsUnique(property).create()
     end
   end
 end
