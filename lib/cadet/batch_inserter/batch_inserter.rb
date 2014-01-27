@@ -6,8 +6,8 @@ module Cadet
 
       def initialize(db)
         @db = db
-        @index_provider = LuceneBatchInserterIndexProviderNewImpl.new(db)
-        @indexes = {}
+        #@index_provider = LuceneBatchInserterIndexProviderNewImpl.new(db)
+        @index_provider = Cadet::IndexProvider.new(db)
       end
 
       def close
@@ -24,12 +24,12 @@ module Cadet
       end
 
       def constraint(label, property)
-        index = @index_provider.nodeIndex label, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")
+        index = @index_provider.nodeIndex label, {"type" => "exact"}
         index.setCacheCapacity property, 100000
       end
 
       def find_node_by_label_and_property(label, property, value)
-        index = @index_provider.nodeIndex label, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")
+        index = @index_provider.nodeIndex label, {"type" => "exact"}
         result = org.neo4j.helpers.collection.IteratorUtil.firstOrNull(index.get(property, value))
         if result
           return Cadet::BatchInserter::Node.new(@db, result)
@@ -41,7 +41,7 @@ module Cadet
       def create_node_with(label, props={})
         n = Cadet::BatchInserter::Node.make @db, props, org.neo4j.graphdb.DynamicLabel.label(label)
 
-        index = @index_provider.nodeIndex label, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")
+        index = @index_provider.nodeIndex label, {"type" => "exact"}
         index.add(n.node, props)
         index.flush
         n
