@@ -1,9 +1,16 @@
 module Cadet
   class BatchInserter < Cadet::Session
     include_package "org.neo4j.unsafe.batchinsert"
+    include_package "org.neo4j.index.impl.lucene"
+
+    def initialize(db)
+      @db = db
+      @index_provider = LuceneBatchInserterIndexProviderNewImpl.new(db)
+      @indexes = {}
+    end
 
     def self.open(location)
-      @db = new BatchInserters.inserter(location)
+      new BatchInserters.inserter(location)
     end
 
     def transaction
@@ -11,7 +18,22 @@ module Cadet
     end
 
     def constraint(label, property)
-      @db.createDeferredConstraint(org.neo4j.graphdb.DynamicLabel.label(label)).assertPropertyIsUnique(property).create()
+      index = @index_provider.nodeIndex label, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")
+      index.setCacheCapacity property, 100000
+    end
+
+    def find_node_by_label_and_property(label, property, value)
+      index = @index_provider.nodeIndex label, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")
+      results = index.get(property, value)
+      if results.size > 0
+        return Cadet::Node.new(results.first)
+      else
+        return nil
+      end
+    end
+
+    def create_node_with(label, props={})
+      Cadet::Node.new @db.createNode props, org.neo4j.graphdb.DynamicLabel.label(label)
     end
   end
 end
