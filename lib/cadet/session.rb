@@ -65,12 +65,12 @@ module Cadet
       end
     end
 
-    def get_a_node(label, property, value)
+    def get_a_node(label, property, value, default_values = {})
       n = find_node_by_label_and_property(label, property, value)
       if n.nil?
         h = {}
         h[property] = value
-        n = create_node_with label, h
+        n = create_node_with label, h.merge(default_values)
       end
       n
     end
