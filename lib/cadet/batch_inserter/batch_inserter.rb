@@ -43,7 +43,6 @@ module Cadet
 
         index = @index_provider.nodeIndex label, {"type" => "exact"}
         index.add(n.node, props)
-        index.flush
         n
       end
     end
