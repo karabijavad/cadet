@@ -2,13 +2,14 @@ module Cadet
   class Session
     include_package "org.neo4j.graphdb"
     include_package "org.neo4j.graphdb.factory"
+    include_package "org.neo4j.unsafe.batchinsert"
 
     def initialize(db)
       @db = db
     end
 
-    def self.open(location)
-      new GraphDatabaseFactory.new.newEmbeddedDatabase(location)
+    def self.open(location, batchinsert = false)
+      batchinsert ? new BatchInserter.new.newEmbeddedDatabase(location) : new GraphDatabaseFactory.new.newEmbeddedDatabase(location)
     end
     def close
       @db.shutdown
