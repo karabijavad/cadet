@@ -10,6 +10,11 @@ module Cadet
         @indexes = {}
       end
 
+      def close
+        @index_provider.shutdown
+        super
+      end
+
       def self.open(location)
         new BatchInserters.inserter(location)
       end
@@ -25,9 +30,9 @@ module Cadet
 
       def find_node_by_label_and_property(label, property, value)
         index = @index_provider.nodeIndex label, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")
-        results = index.get(property, value)
-        if results.size > 0
-          return Cadet::BatchInserter::Node.new(@db, results.first)
+        result = org.neo4j.helpers.collection.IteratorUtil.firstOrNull(index.get(property, value))
+        if result
+          return Cadet::BatchInserter::Node.new(@db, result)
         else
           return nil
         end
@@ -38,6 +43,7 @@ module Cadet
 
         index = @index_provider.nodeIndex label, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")
         index.add(n.node, props)
+        index.flush
         n
       end
     end
