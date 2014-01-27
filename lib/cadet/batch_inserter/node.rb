@@ -9,7 +9,7 @@ module Cadet
       end
 
       def self.make(db, props = {}, label = '')
-        node = db.createNode props, label
+        node = db.createNode props, org.neo4j.graphdb.DynamicLabel.label(label)
         new db, node
       end
 

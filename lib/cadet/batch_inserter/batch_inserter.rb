@@ -39,7 +39,7 @@ module Cadet
       end
 
       def create_node_with(label, props={})
-        n = Cadet::BatchInserter::Node.make @db, props, org.neo4j.graphdb.DynamicLabel.label(label)
+        n = Cadet::BatchInserter::Node.make @db, props, label
 
         index = @index_provider.nodeIndex label, {"type" => "exact"}
         index.add(n.node, props)
