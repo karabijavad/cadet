@@ -1,3 +1,7 @@
+new! support for batchinsert mode!
+just open the database with Cadet::BatchInserter::BatchInserter.open() instead of Cadet::Session.open()!
+this no-ops transaction, simply yielding to the supplied block.
+
 super simple. you dont even need to download neo4j.
 
 1. Gemfile
