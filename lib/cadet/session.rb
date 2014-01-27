@@ -8,8 +8,8 @@ module Cadet
       @db = db
     end
 
-    def self.open(location, batchinsert = false)
-      batchinsert ? new BatchInserter.new.newEmbeddedDatabase(location) : new GraphDatabaseFactory.new.newEmbeddedDatabase(location)
+    def self.open(location)
+      new GraphDatabaseFactory.new.newEmbeddedDatabase(location)
     end
     def close
       @db.shutdown
