@@ -1,5 +1,6 @@
 module Cadet
   class Node
+    attr_accessor :node
     include_package "org.neo4j.graphdb"
 
     directions = {
@@ -10,9 +11,6 @@ module Cadet
 
     def initialize(node)
       @node = node
-    end
-    def node
-      @node
     end
     def create_outgoing(to, type)
       @node.createRelationshipTo(to.node, DynamicRelationshipType.withName(type))

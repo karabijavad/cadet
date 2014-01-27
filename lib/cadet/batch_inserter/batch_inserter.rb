@@ -27,14 +27,18 @@ module Cadet
         index = @index_provider.nodeIndex label, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")
         results = index.get(property, value)
         if results.size > 0
-            return Cadet::BatchInserter::Node.new(results.first)
+          return Cadet::BatchInserter::Node.new(@db, results.first)
         else
-            return nil
+          return nil
         end
       end
 
       def create_node_with(label, props={})
-        Cadet::BatchInserter::Node.new @db, props, org.neo4j.graphdb.DynamicLabel.label(label)
+        n = Cadet::BatchInserter::Node.make @db, props, org.neo4j.graphdb.DynamicLabel.label(label)
+
+        index = @index_provider.nodeIndex label, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")
+        index.add(n.node, props)
+        n
       end
     end
   end
