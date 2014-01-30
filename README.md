@@ -8,7 +8,7 @@ super simple. you dont even need to download neo4j.
 1. Gemfile
 
     ```ruby
-    gem 'cadet', git: 'https://github.com/karabijavad/cadet'
+    gem 'cadet'
     ```
 2. ``` bundle install ```
 3. cadet-example.rb

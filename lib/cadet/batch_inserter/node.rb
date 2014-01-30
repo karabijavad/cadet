@@ -17,6 +17,9 @@ module Cadet
         rel_type = org.neo4j.graphdb.DynamicRelationshipType.withName(type)
         @db.createRelationship(@node, to.node, rel_type, properties)
       end
+      def set_properties(props)
+        @db.setNodeProperties(@node, props)
+      end
     end
   end
 end
