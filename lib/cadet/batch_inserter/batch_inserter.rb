@@ -6,7 +6,7 @@ module Cadet
 
       def initialize(db)
         @db = db
-        @index_provider = Cadet::IndexProvider.new(db)
+        @index_provider = Cadet::CadetIndex::IndexProvider.new(db)
       end
 
       def close
