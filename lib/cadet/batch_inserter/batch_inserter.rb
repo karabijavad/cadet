@@ -24,7 +24,6 @@ module Cadet
 
       def constraint(label, property)
         index = @index_provider.nodeIndex label, {"type" => "exact"}
-        index.setCacheCapacity property, 100000
       end
 
       def find_node_by_label_and_property(label, property, value)

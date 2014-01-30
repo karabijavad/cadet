@@ -1,6 +1,6 @@
 module Cadet
   module CadetIndex
-    class IndexProvider
+    class Index
       def initialize(lucene_index, name, type)
         @name = name
         @type = type

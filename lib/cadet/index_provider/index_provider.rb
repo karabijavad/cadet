@@ -1,4 +1,4 @@
-require 'index/index'
+require_relative 'index/index'
 
 module Cadet
   module CadetIndex
@@ -9,7 +9,7 @@ module Cadet
         @lucene_index = org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProviderNewImpl.new(db)
       end
       def nodeIndex(name, type)
-        @indexes[name] ||= Cadet::IndexProvider::Index.new(@lucene_index, name, type)
+        @indexes[name] ||= Cadet::CadetIndex::Index.new(@lucene_index, name, type)
       end
       def shutdown
         @indexes.each do |name, index|
