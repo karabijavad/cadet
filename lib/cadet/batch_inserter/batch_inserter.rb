@@ -1,12 +1,11 @@
 module Cadet
   module BatchInserter
-    class BatchInserter < Cadet::Session
+    class Session < Cadet::Session
       include_package "org.neo4j.unsafe.batchinsert"
       include_package "org.neo4j.index.impl.lucene"
 
       def initialize(db)
         @db = db
-        #@index_provider = LuceneBatchInserterIndexProviderNewImpl.new(db)
         @index_provider = Cadet::IndexProvider.new(db)
       end
 
