@@ -1,4 +1,4 @@
-require_relative 'index/index'
+require_relative './index'
 
 module Cadet
   module CadetIndex
