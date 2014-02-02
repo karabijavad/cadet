@@ -38,15 +38,15 @@ super simple. you dont even need to download neo4j.
 
         #get_a_X(property, value) will find a node labeled 'X', with a property of key 'property', and value 'value'
         #if the node is not found, it will create it and return it.
-        l = db.get_a_Legislator "name", leg["name"]["official_full"] || "no name"
-        p = db.get_a_Party "name", leg["terms"].first["party"]
-        g = db.get_a_Gender "name", leg["bio"]["gender"]
-        s = db.get_a_State "name", leg["terms"].first["state"]
+        l = db.get_a_Legislator_by_name leg["name"]["official_full"]
+        p = db.get_a_Party_by_name      leg["terms"].first["party"]
+        g = db.get_a_Gender_by_name     leg["bio"]["gender"]
+        s = db.get_a_State_by_name      leg["terms"].first["state"]
     
         # automatically create relationships, where the relationship type is the method's name
-        l.party_to p
-        l.gender_to g
-        l.represents_to s
+        l.outgoing(:party)      << p
+        l.outgoing(:gender)     << g
+        l.outgoing(:represents) << s
     
       end
     end
