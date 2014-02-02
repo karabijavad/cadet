@@ -22,6 +22,7 @@ require 'java'
 
 require 'cadet/session'
 require 'cadet/node'
+require 'cadet/relationship_traverser'
 require 'cadet/batch_inserter/batch_inserter'
 require 'cadet/batch_inserter/node'
 require 'cadet/cadet_index/index_provider'

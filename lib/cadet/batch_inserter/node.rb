@@ -22,6 +22,8 @@ module Cadet
       def set_properties(props)
         @db.setNodeProperties(@node, props)
       end
+      def get_relationships(direction, type)
+      end
     end
   end
 end

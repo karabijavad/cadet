@@ -3,12 +3,6 @@ module Cadet
     attr_accessor :node
     include_package "org.neo4j.graphdb"
 
-    directions = {
-      "in"   => Direction[0],
-      "out"  => Direction[1],
-      "both" => Direction[2]
-    }
-
     def initialize(node)
       @node = node
     end
@@ -35,6 +29,17 @@ module Cadet
       props.each do |k,v|
         set_property(k.to_s, v)
       end
+    end
+
+    def get_relationships(direction, type)
+      @node.getRelationships(direction, type)
+    end
+
+    def outgoing(type)
+      Cadet::RelationshipTraverser.new(self, Direction::OUTGOING, type)
+    end
+    def incoming(type)
+      Cadet::RelationshipTraverser.new(self, Direction::INCOMING, type)
     end
   end
 end
