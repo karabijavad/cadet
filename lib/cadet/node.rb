@@ -28,20 +28,6 @@ module Cadet
       end
     end
 
-    def get_single_relationship(type, dir="both")
-      @node.getSingleRelationship DynamicRelationshipType.withName(type), @directions[dir]
-    end
-
-    def get_all_relationships
-      @node.getRelationships()
-    end
-    def get_all_relationships_of_type(type)
-      @node.getRelationships(DynamicRelationshipType.withName(type))
-    end
-    def get_all_relationships_of_type_and_dir(type, dir)
-      @node.getRelationships DynamicRelationshipType.withName(type), @directions[dir]
-    end
-
     def set_property(property, value)
       @node.setProperty(property, value)
     end

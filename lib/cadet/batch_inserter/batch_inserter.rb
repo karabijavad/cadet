@@ -3,6 +3,7 @@ module Cadet
     class Session < Cadet::Session
       include_package "org.neo4j.unsafe.batchinsert"
       include_package "org.neo4j.index.impl.lucene"
+      include_package "org.neo4j.helpers.collection"
 
       def initialize(db)
         @db = db
@@ -28,16 +29,16 @@ module Cadet
 
       def find_node_by_label_and_property(label, property, value)
         index = @index_provider.nodeIndex label, {"type" => "exact"}
-        result = org.neo4j.helpers.collection.IteratorUtil.firstOrNull(index.get(property, value))
+        result = IteratorUtil.firstOrNull(index.get(property, value))
         if result
-          return Cadet::BatchInserter::Node.new(@db, result)
+          return Node.new(@db, result)
         else
           return nil
         end
       end
 
       def create_node_with(label, props={})
-        n = Cadet::BatchInserter::Node.make @db, props, label
+        n = Node.make @db, props, label
 
         index = @index_provider.nodeIndex label, {"type" => "exact"}
         index.add(n.node, props)

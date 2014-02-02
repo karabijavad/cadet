@@ -3,6 +3,7 @@ module Cadet
     include_package "org.neo4j.graphdb"
     include_package "org.neo4j.graphdb.factory"
     include_package "org.neo4j.unsafe.batchinsert"
+    include_package "org.neo4j.helpers.collection"
 
     def initialize(db)
       @db = db
@@ -15,10 +16,6 @@ module Cadet
       @db.shutdown
     end
 
-    def create_empty_node
-      Cadet::Node.new @db.createNode
-    end
-
     def create_node_with(label, props = {})
       n = Cadet::Node.new @db.createNode
       n.add_label label
@@ -26,19 +23,8 @@ module Cadet
       n
     end
 
-    def get_node_by_id(id)
-      Cadet::Node.new @db.getNodeById(id)
-    end
-
-    def find_nodes_by_label_and_property(label, key, value)
-      result = []
-      @db.findNodesByLabelAndProperty(DynamicLabel.label(label), key, value).each do |node|
-        result << Cadet::Node.new(node)
-      end
-      result
-    end
     def find_node_by_label_and_property(label, key, value)
-      node = org.neo4j.helpers.collection.IteratorUtil.firstOrNull @db.findNodesByLabelAndProperty(DynamicLabel.label(label), key, value)
+      node = IteratorUtil.firstOrNull @db.findNodesByLabelAndProperty(DynamicLabel.label(label), key, value)
       node ? Cadet::Node.new(node) : null
     end
 
@@ -73,10 +59,6 @@ module Cadet
         n = create_node_with label, h.merge(default_values)
       end
       n
-    end
-
-    def traverser
-      Cadet::Traversal::Description.new @db.traversalDescription
     end
 
   end

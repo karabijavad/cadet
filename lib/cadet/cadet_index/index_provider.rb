@@ -1,10 +1,11 @@
 module Cadet
   module CadetIndex
-      class IndexProvider
+    class IndexProvider
+      include_package "org.neo4j.index.impl.lucene"
       def initialize(db)
         @db = db
         @indexes = {}
-        @lucene_index = org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProviderNewImpl.new(db)
+        @lucene_index = LuceneBatchInserterIndexProviderNewImpl.new(db)
       end
       def nodeIndex(name, type)
         @indexes[name] ||= Cadet::CadetIndex::Index.new(@lucene_index, name, type)
