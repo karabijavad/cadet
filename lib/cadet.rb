@@ -21,7 +21,6 @@ require 'java'
 "server-api-2.0.0.jar"].each { |file| require "neo4j/#{file}" }
 
 require 'cadet/session'
-require 'cadet/property_container'
 require 'cadet/node'
 require 'cadet/relationship_traverser'
 require 'cadet/batch_inserter/batch_inserter'
