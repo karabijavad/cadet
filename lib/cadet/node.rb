@@ -3,7 +3,8 @@ module Cadet
     attr_accessor :underlying
     include_package "org.neo4j.graphdb"
 
-    def initialize(node)
+    def initialize(db, node)
+      @db = db
       @underlying = node
     end
 

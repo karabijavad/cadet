@@ -1,6 +1,7 @@
 module Cadet
   module BatchInserter
     class Session < Cadet::Session
+      include_package "org.neo4j.graphdb"
       include_package "org.neo4j.unsafe.batchinsert"
       include_package "org.neo4j.index.impl.lucene"
       include_package "org.neo4j.helpers.collection"
@@ -38,7 +39,9 @@ module Cadet
       end
 
       def create_node(label, prop, value)
-        n = Node.make @db, props, label
+        node = @db.createNode props, DynamicLabel.label(label)
+        n = Node.new @db, node
+
         index = @index_provider.nodeIndex label, {"type" => "exact"}
         index.add(n.underlying, prop, value)
         n

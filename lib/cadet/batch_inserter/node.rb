@@ -8,11 +8,6 @@ module Cadet
         @underlying = node
       end
 
-      def self.make(db, props = {}, label = '')
-        node = db.createNode props, DynamicLabel.label(label)
-        new db, node
-      end
-
       def create_outgoing(to, type, properties = {})
         rel_type = DynamicRelationshipType.withName(type)
         @db.createRelationship(@underlying, to.underlying, rel_type, properties)
