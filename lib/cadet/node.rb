@@ -18,7 +18,7 @@ module Cadet
     def set_property(property, value)
       @node.setProperty(property, value)
     end
-    def [] (key)
+    def [] (property)
       @node.getProperty(property.to_s)
     end
     def get_property(property)
