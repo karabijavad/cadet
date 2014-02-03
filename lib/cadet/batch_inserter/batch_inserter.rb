@@ -32,7 +32,7 @@ module Cadet
         index = @index_provider.nodeIndex label, {"type" => "exact"}
         result = IteratorUtil.firstOrNull(index.get(property, value))
         if result
-          return Node.new(@db, result)
+          return Node.new(result, @db)
         else
           return nil
         end
@@ -40,7 +40,7 @@ module Cadet
 
       def create_node(label, prop, value)
         node = @db.createNode props, DynamicLabel.label(label)
-        n = Node.new @db, node
+        n = Node.new node, @db
 
         index = @index_provider.nodeIndex label, {"type" => "exact"}
         index.add(n.underlying, prop, value)
