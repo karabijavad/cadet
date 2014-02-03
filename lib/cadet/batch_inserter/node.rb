@@ -18,7 +18,6 @@ module Cadet
         @db.createRelationship(@node, to.node, rel_type, properties)
       end
 
-
       def set_property(prop, val)
         data = {}
         data[prop.to_s] = val

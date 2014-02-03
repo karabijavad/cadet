@@ -12,11 +12,17 @@ module Cadet
       self
     end
 
-    def []= (key, value)
+    def []= (property, value)
+      set_property property, value
+    end
+    def set_property(property, value)
       @node.setProperty(property, value)
     end
     def [] (key)
       @node.getProperty(property.to_s)
+    end
+    def get_property(property)
+      @node.getProperty(property)
     end
 
     def get_relationships(direction, type)
