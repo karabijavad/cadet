@@ -20,7 +20,7 @@ module Cadet
 
       def set_property(prop, val)
         data = {}
-        data[prop.to_s] = val
+        data[prop] = val
         @db.setNodeProperties(@node, data)
       end
 

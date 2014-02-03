@@ -55,7 +55,7 @@ module Cadet
     end
 
     def method_missing(name, *args)
-      if match = /^get_a_([A-Z][A-Za-z]*)_by_([A-z]*)/.match(name.to_s)
+      if match = /^get_a_([A-Z][A-Za-z]*)_by_([A-z]*)/.match(name)
         return goc_node match.captures[0], match.captures[1], args[0]
       end
     end

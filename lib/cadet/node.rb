@@ -19,7 +19,7 @@ module Cadet
       @node.setProperty(property, value)
     end
     def [] (property)
-      @node.getProperty(property.to_s)
+      @node.getProperty(property)
     end
     def get_property(property)
       @node.getProperty(property)
