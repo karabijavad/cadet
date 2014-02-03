@@ -13,15 +13,15 @@ module Cadet
 
     def each
       @relationships.each do |rel|
-        yield rel.getOtherNode(@node.node)
+        yield Node.new rel.getOtherNode(@node.node)
       end
     end
 
     def << (othernode)
       if @direction == Direction::OUTGOING
-        @node.createRelationshipTo othernode
+        @node.create_outgoing othernode, @type
       elsif @direction == Direction::INCOMING
-        othernode.createRelationshipTo @node
+        othernode.create_outgoing @node, @type
       end
     end
   end

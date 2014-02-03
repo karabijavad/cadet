@@ -27,7 +27,7 @@ module Cadet
         index = @index_provider.nodeIndex label, {"type" => "exact"}
       end
 
-      def find_node_by_label_and_property(label, property, value)
+      def find_node(label, property, value)
         index = @index_provider.nodeIndex label, {"type" => "exact"}
         result = IteratorUtil.firstOrNull(index.get(property, value))
         if result
@@ -37,11 +37,10 @@ module Cadet
         end
       end
 
-      def create_node_with(label, props={})
+      def create_node(label, prop, value)
         n = Node.make @db, props, label
-
         index = @index_provider.nodeIndex label, {"type" => "exact"}
-        index.add(n.node, props)
+        index.add(n.underlying, prop, value)
         n
       end
     end

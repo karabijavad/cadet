@@ -7,9 +7,9 @@ module Cadet
         @index = {}
         @lucene_index = lucene_index
       end
-      def add(node, prop)
-        @index[prop.first[0]] ||= {}
-        @index[prop.first[0]][prop.first[1]] = node
+      def add(node, prop, value)
+        @index[prop] ||= {}
+        @index[prop][value] = node
       end
       def get(property, value)
         @index[property] ||= {}

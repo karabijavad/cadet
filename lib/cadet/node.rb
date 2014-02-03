@@ -1,38 +1,24 @@
 module Cadet
-  class Node
-    attr_accessor :node
+  class Node < PropertyContainer
     include_package "org.neo4j.graphdb"
 
     def initialize(node)
-      @node = node
+      @underlying = node
     end
     def create_outgoing(to, type)
-      @node.createRelationshipTo(to.node, DynamicRelationshipType.withName(type))
+      @underlying.createRelationshipTo(to.node, DynamicRelationshipType.withName(type))
     end
     def add_label(label)
-      @node.addLabel(DynamicLabel.label(label))
+      @underlying.addLabel(DynamicLabel.label(label))
       self
     end
 
-    def method_missing(name, *args)
-      if name.to_s.end_with? "="
-        set_property name.to_s.gsub(/=$/, ''), args[0]
-      elsif name.to_s.end_with? "_to"
-        create_outgoing args[0], name.to_s.gsub(/_to$/, '')
-      end
-    end
-
     def set_property(property, value)
-      @node.setProperty(property, value)
-    end
-    def set_properties(props)
-      props.each do |k,v|
-        set_property(k.to_s, v)
-      end
+      @underlying.setProperty(property, value)
     end
 
     def get_relationships(direction, type)
-      @node.getRelationships(direction, type)
+      @underlying.getRelationships(direction, type)
     end
 
     def outgoing(type)

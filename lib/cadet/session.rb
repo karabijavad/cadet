@@ -16,16 +16,25 @@ module Cadet
       @db.shutdown
     end
 
-    def create_node_with(label, props = {})
-      n = Cadet::Node.new @db.createNode
+    def create_node(label, property, value)
+      n = Node.new @db.createNode
       n.add_label label
-      n.set_properties props
+      n.set_property property, value
       n
     end
 
-    def find_node_by_label_and_property(label, key, value)
+    def find_node(label, key, value)
       node = IteratorUtil.firstOrNull @db.findNodesByLabelAndProperty(DynamicLabel.label(label), key, value)
-      node ? Cadet::Node.new(node) : null
+      node ? Node.new(node) : null
+    end
+
+    def goc_node(label, property, value)
+      n = find_node label, property, value
+      if n.nil?
+        n = create_node label, property, value
+        n[property] = value
+      end
+      n
     end
 
     def transaction
@@ -46,19 +55,9 @@ module Cadet
     end
 
     def method_missing(name, *args)
-      if match = /get_a_([A-Z][A-Za-z]*)$/.match(name.to_s)
-        return get_a_node match.captures.first, args[0], args[1]
+      if match = /^get_a_([A-Z][A-Za-z]*)_by_([A-z]*)/.match(name.to_s)
+        return goc_node match.captures[0], match.captures[1], args[0]
       end
-    end
-
-    def get_a_node(label, property, value, default_values = {})
-      n = find_node_by_label_and_property(label, property, value)
-      if n.nil?
-        h = {}
-        h[property] = value
-        n = create_node_with label, h.merge(default_values)
-      end
-      n
     end
 
   end

@@ -1,12 +1,13 @@
 module Cadet
   module BatchInserter
     class Node < Cadet::Node
+      attr_accessor :underlying
+
       include_package "org.neo4j.graphdb"
-      attr_accessor :node
 
       def initialize(db, node)
         @db = db
-        @node = node
+        @underlying = node
       end
 
       def self.make(db, props = {}, label = '')
@@ -16,12 +17,15 @@ module Cadet
 
       def create_outgoing(to, type, properties = {})
         rel_type = DynamicRelationshipType.withName(type)
-        @db.createRelationship(@node, to.node, rel_type, properties)
+        @db.createRelationship(@underlying, to.underlying, rel_type, properties)
       end
 
-      def set_properties(props)
-        @db.setNodeProperties(@node, props)
+      def set_property(prop, val)
+        data = {}
+        data[prop.to_s] = val
+        @db.setNodeProperties(@underlying, data)
       end
+
       def get_relationships(direction, type)
       end
     end
