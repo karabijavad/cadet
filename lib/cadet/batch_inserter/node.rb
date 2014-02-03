@@ -5,7 +5,7 @@ module Cadet
 
       def initialize(db, node)
         @db = db
-        @node = node
+        @underlying = node
       end
 
       def self.make(db, props = {}, label = '')
@@ -15,13 +15,11 @@ module Cadet
 
       def create_outgoing(to, type, properties = {})
         rel_type = DynamicRelationshipType.withName(type)
-        @db.createRelationship(@node, to.node, rel_type, properties)
+        @db.createRelationship(@underlying, to.underlying, rel_type, properties)
       end
 
       def set_property(prop, val)
-        data = {}
-        data[prop] = val
-        @db.setNodeProperties(@node, data)
+        @db.setNodeProperties @underlying, {prop => val}
       end
 
       def get_relationships(direction, type)

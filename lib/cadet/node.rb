@@ -1,35 +1,29 @@
 module Cadet
-  class Node
-    attr_accessor :node
+  class Node < PropertyContainer
+    attr_accessor :underlying
     include_package "org.neo4j.graphdb"
 
     def initialize(node)
-      @node = node
+      @underlying = node
     end
 
     def add_label(label)
-      @node.addLabel(DynamicLabel.label(label))
+      @underylying.addLabel(DynamicLabel.label(label))
       self
     end
 
-    def []= (property, value)
-      set_property property, value
-    end
     def set_property(property, value)
-      @node.setProperty(property, value)
-    end
-    def [] (property)
-      @node.getProperty(property)
+      @underylying.setProperty(property, value)
     end
     def get_property(property)
-      @node.getProperty(property)
+      @underylying.getProperty(property)
     end
 
     def get_relationships(direction, type)
-      @node.getRelationships(direction, type)
+      @underylying.getRelationships(direction, type)
     end
     def create_outgoing(to, type)
-      @node.createRelationshipTo(to.node, DynamicRelationshipType.withName(type))
+      @underylying.createRelationshipTo(to.node, DynamicRelationshipType.withName(type))
     end
     def outgoing(type)
       Cadet::RelationshipTraverser.new(self, Direction::OUTGOING, type)

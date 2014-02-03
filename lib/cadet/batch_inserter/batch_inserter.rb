@@ -40,7 +40,7 @@ module Cadet
       def create_node(label, prop, value)
         n = Node.make @db, props, label
         index = @index_provider.nodeIndex label, {"type" => "exact"}
-        index.add(n.node, prop, value)
+        index.add(n.underlying, prop, value)
         n
       end
     end
