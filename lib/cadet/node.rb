@@ -6,25 +6,25 @@ module Cadet
     def initialize(node)
       @node = node
     end
-    def create_outgoing(to, type)
-      @node.createRelationshipTo(to.node, DynamicRelationshipType.withName(type))
-    end
+
     def add_label(label)
       @node.addLabel(DynamicLabel.label(label))
       self
     end
 
-    def set_property(property, value)
+    def []= (key, value)
       @node.setProperty(property, value)
     end
-    def get_property(property)
+    def [] (key)
       @node.getProperty(property.to_s)
     end
 
     def get_relationships(direction, type)
       @node.getRelationships(direction, type)
     end
-
+    def create_outgoing(to, type)
+      @node.createRelationshipTo(to.node, DynamicRelationshipType.withName(type))
+    end
     def outgoing(type)
       Cadet::RelationshipTraverser.new(self, Direction::OUTGOING, type)
     end
@@ -32,11 +32,5 @@ module Cadet
       Cadet::RelationshipTraverser.new(self, Direction::INCOMING, type)
     end
 
-    def []= (key, value)
-      set_property key, value
-    end
-    def [] (key)
-      get_property key
-    end
   end
 end
