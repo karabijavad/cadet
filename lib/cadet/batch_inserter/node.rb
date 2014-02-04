@@ -3,8 +3,7 @@ module Cadet
     class Node < Cadet::Node
       include_package "org.neo4j.graphdb"
       def create_outgoing(to, type, properties = {})
-        rel_type = DynamicRelationshipType.withName(type)
-        @db.createRelationship(@underlying, to.underlying, rel_type, properties)
+        @db.createRelationship(@underlying, to.underlying, DynamicRelationshipType.withName(type), properties)
       end
 
       def set_property(prop, val)
