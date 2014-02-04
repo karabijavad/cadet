@@ -39,8 +39,7 @@ module Cadet
       end
 
       def create_node(label, property, value)
-        node = @db.createNode({property => value}, DynamicLabel.label(label))
-        n = Node.new node, @db
+        n = Node.new(@db.createNode({property => value}, DynamicLabel.label(label)), @db)
         index = @index_provider.nodeIndex label, {"type" => "exact"}
         index.add(n.underlying, prop, value)
         n
