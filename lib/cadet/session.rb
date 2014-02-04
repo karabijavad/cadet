@@ -28,12 +28,8 @@ module Cadet
       node ? Node.new(node) : null
     end
 
-    def goc_node(label, property, value)
-      n = find_node label, property, value
-      if n.nil?
-        n = create_node label, property, value
-      end
-      n
+    def get_node(label, property, value)
+      create_node(label, property, value) unless find_node(label, property, value)
     end
 
     def transaction
@@ -55,7 +51,7 @@ module Cadet
 
     def method_missing(name, *args)
       if match = /^get_a_([A-Z][A-Za-z]*)_by_([A-z]*)/.match(name)
-        return goc_node match.captures[0], match.captures[1], args[0]
+        return get_node match.captures[0], match.captures[1], args[0]
       end
     end
 
