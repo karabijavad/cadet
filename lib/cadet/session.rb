@@ -19,12 +19,12 @@ module Cadet
     def create_node(label, property, value)
       n = Node.new @db.createNode
       n.add_label label
-      n.set_property property, value
+      n[property] = value
       n
     end
 
-    def find_node(label, key, value)
-      node = IteratorUtil.firstOrNull @db.findNodesByLabelAndProperty(DynamicLabel.label(label), key, value)
+    def find_node(label, property, value)
+      node = IteratorUtil.firstOrNull @db.findNodesByLabelAndProperty(DynamicLabel.label(label), property, value)
       node ? Node.new(node) : null
     end
 
@@ -32,7 +32,6 @@ module Cadet
       n = find_node label, property, value
       if n.nil?
         n = create_node label, property, value
-        n[property] = value
       end
       n
     end
