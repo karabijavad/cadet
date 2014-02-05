@@ -50,7 +50,7 @@ module Cadet
       @db.schema
         .constraintFor(DynamicLabel.label(label))
         .assertPropertyIsUnique(property)
-        .create
+        .create()
     end
 
     def method_missing(name, *args)

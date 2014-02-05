@@ -25,7 +25,9 @@ module Cadet
       end
 
       def constraint(label, property)
-        index = @index_provider.nodeIndex label, {"type" => "exact"}
+        @db.createDeferredConstraint(DynamicLabel.label(label))
+          .assertPropertyIsUnique(property)
+          .create()
       end
 
       def find_node(label, property, value)
