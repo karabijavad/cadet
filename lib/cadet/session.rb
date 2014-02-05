@@ -29,7 +29,11 @@ module Cadet
     end
 
     def get_node(label, property, value)
-      create_node(label, property, value) unless find_node(label, property, value)
+      n = find_node(label, property, value)
+      if n.nil?
+        n = create_node(label, property, value)
+      end
+      n
     end
 
     def transaction
