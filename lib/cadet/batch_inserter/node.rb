@@ -6,8 +6,12 @@ module Cadet
         @db.createRelationship(@underlying, to.underlying, DynamicRelationshipType.withName(type), properties)
       end
 
-      def set_property(prop, val)
-        @db.setNodeProperty @underlying, prop, val
+      def set_property(property, val)
+        @db.setNodeProperty @underlying, property, val
+      end
+
+      def get_property(property)
+        @db.getNodeProperties(@underlying)[property]
       end
 
       def get_relationships(direction, type)

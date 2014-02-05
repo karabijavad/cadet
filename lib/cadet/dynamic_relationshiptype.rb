@@ -2,7 +2,6 @@ module Cadet
   class DynamicRelationshipType
     @dynamic_relationship_types = {}
 
-
     def self.withName(name)
       r = @dynamic_relationship_types[name]
       unless r
