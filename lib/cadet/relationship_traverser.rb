@@ -7,12 +7,10 @@ module Cadet
       @node = node
       @type = type
       @direction = direction
-
-      @relationships = node.get_relationships(direction, DynamicRelationshipType.withName(type))
     end
 
     def each
-      @relationships.each do |rel|
+      node.get_relationships(direction, DynamicRelationshipType.withName(type)).each do |rel|
         yield Node.new rel.getOtherNode(@node.node)
       end
     end
