@@ -3,8 +3,7 @@ module Cadet
     @dynamic_relationship_types = {}
 
     def self.withName(name)
-      name = name.to_s
-      @dynamic_relationship_types[name] ||= org.neo4j.graphdb.DynamicRelationshipType.withName(name)
+      @dynamic_relationship_types[name] ||= org.neo4j.graphdb.DynamicRelationshipType.withName(name.to_s)
     end
   end
 end

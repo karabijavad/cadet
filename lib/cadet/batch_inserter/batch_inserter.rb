@@ -25,7 +25,7 @@ module Cadet
       end
 
       def constraint(label, property)
-        @db.createDeferredConstraint(DynamicLabel.label(label.to_s))
+        @db.createDeferredConstraint(DynamicLabel.label(label))
           .assertPropertyIsUnique(property.to_s)
           .create()
       end
