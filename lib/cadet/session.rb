@@ -17,12 +17,9 @@ module Cadet
     end
 
     def create_node(label, property, value)
-      label    = label.to_s
-      property = property.to_s
-
       Node.new(@db.createNode).tap do |n|
-        n.add_label label
-        n[property] = value
+        n.add_label label.to_s
+        n[property.to_s] = value
       end
     end
 
@@ -37,9 +34,10 @@ module Cadet
 
       n = find_node(label, property, value)
       if n.nil?
-        n = create_node(label, property, value)
+        return create_node(label, property, value)
+      else
+        return n
       end
-      n
     end
 
     def transaction
