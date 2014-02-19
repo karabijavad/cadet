@@ -24,7 +24,7 @@ module Cadet
     end
 
     def find_node(label, property, value)
-      node = IteratorUtil.firstOrNull(@db.findNodesByLabelAndProperty(DynamicLabel.label(label), property, value)) ?
+      ( node = IteratorUtil.firstOrNull(@db.findNodesByLabelAndProperty(DynamicLabel.label(label), property, value)) ) ?
         Node.new(node) : nil
     end
 
