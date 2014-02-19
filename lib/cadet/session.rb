@@ -17,10 +17,13 @@ module Cadet
     end
 
     def create_node(label, property, value)
-      n = Node.new @db.createNode
-      n.add_label label
-      n[property] = value
-      n
+      label    = label.to_s
+      property = property.to_s
+
+      Node.new(@db.createNode).tap do |n|
+        n.add_label label
+        n[property] = value
+      end
     end
 
     def find_node(label, property, value)
@@ -29,6 +32,9 @@ module Cadet
     end
 
     def get_node(label, property, value)
+      label    = label.to_s
+      property = property.to_s
+
       n = find_node(label, property, value)
       if n.nil?
         n = create_node(label, property, value)
@@ -48,8 +54,8 @@ module Cadet
 
     def constraint(label, property)
       @db.schema
-        .constraintFor(DynamicLabel.label(label))
-        .assertPropertyIsUnique(property)
+        .constraintFor(DynamicLabel.label(label.to_s))
+        .assertPropertyIsUnique(property.to_s)
         .create()
     end
 

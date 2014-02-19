@@ -32,19 +32,18 @@ module Cadet
 
       def find_node(label, property, value)
         index = @index_provider.nodeIndex label, {"type" => "exact"}
-        result = IteratorUtil.firstOrNull(index.get(property, value))
-        if result
-          return Node.new(result, @db)
-        else
-          return nil
-        end
+        IteratorUtil.firstOrNull(index.get(property, value)) ?
+          Node.new(result, @db) : nil
       end
 
       def create_node(label, property, value)
-        n = Node.new(@db.createNode({property => value}, DynamicLabel.label(label)), @db)
-        index = @index_provider.nodeIndex label, {"type" => "exact"}
-        index.add(n.underlying, property, value)
-        n
+        label    = label.to_s
+        property = property.to_s
+
+        Node.new(@db.createNode({property => value}, DynamicLabel.label(label)), @db).tap do |n|
+          index = @index_provider.nodeIndex label, {"type" => "exact"}
+          index.add(n.underlying, property, value)
+        end
       end
     end
   end
