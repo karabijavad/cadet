@@ -32,12 +32,8 @@ module Cadet
 
       def find_node(label, property, value)
         index = @index_provider.nodeIndex(label)
-        node = IteratorUtil.firstOrNull(index.get(property, value))
-        if node.nil?
-          return nil
-        else
-          return Node.new(node)
-        end
+        (node = IteratorUtil.firstOrNull(index.get(property, value))) ?
+          Node.new(node) : nil
       end
 
       def create_node(label, property, value)
