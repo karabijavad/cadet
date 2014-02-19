@@ -5,7 +5,7 @@ module Cadet
 
     def initialize(node, direction, type)
       @node = node
-      @type = type.to_s
+      @type = type
       @direction = direction
     end
 
@@ -16,11 +16,7 @@ module Cadet
     end
 
     def << (othernode)
-      if @direction == Direction::OUTGOING
-        @node.create_outgoing othernode, @type
-      else
-        othernode.create_outgoing @node, @type
-      end
+      @direction == Direction::OUTGOING ? @node.create_outgoing(othernode, @type) : othernode.create_outgoing(@node, @type)
     end
   end
 end

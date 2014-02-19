@@ -8,17 +8,16 @@ module Cadet
         @lucene_index = lucene_index
       end
       def add(node, property, value)
-        property = property.to_sym
         @index[property] ||= {}
         @index[property][value] = node
       end
       def get(property, value)
-        property = property.to_sym
         @index[property] ||= {}
         [@index[property][value]]
       end
       def flush
-        index = @lucene_index.nodeIndex @name, @type
+        index = @lucene_index.nodeIndex(@name, @type)
+
         @index.each do |property, mappings|
           mappings.each do |value, node|
             index.add(node, {property.to_s => value})

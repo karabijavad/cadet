@@ -14,14 +14,14 @@ module Cadet
     end
 
     def set_property(property, value)
-      @underlying.setProperty(property, value)
+      @underlying.setProperty(property.to_s, value)
     end
     def get_property(property)
-      @underlying.getProperty(property)
+      @underlying.getProperty(property.to_s)
     end
 
     def get_relationships(direction, type)
-      @underlying.getRelationships(direction, type)
+      @underlying.getRelationships(direction, type.to_s)
     end
     def create_outgoing(to, type)
       @underlying.createRelationshipTo(to.underlying, DynamicRelationshipType.withName(type))

@@ -7,11 +7,11 @@ module Cadet
       end
 
       def set_property(property, val)
-        @db.setNodeProperty @underlying, property, val
+        @db.setNodeProperty @underlying, property.to_s, val
       end
 
       def get_property(property)
-        @db.getNodeProperties(@underlying)[property]
+        @db.getNodeProperties(@underlying)[property.to_s]
       end
 
       def get_relationships(direction, type)

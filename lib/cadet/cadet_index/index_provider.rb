@@ -7,7 +7,7 @@ module Cadet
         @indexes = {}
         @lucene_index = LuceneBatchInserterIndexProviderNewImpl.new(db)
       end
-      def nodeIndex(name, type)
+      def nodeIndex(name, type = {"type" => "exact"})
         @indexes[name] ||= Cadet::CadetIndex::Index.new(@lucene_index, name, type)
       end
       def shutdown
