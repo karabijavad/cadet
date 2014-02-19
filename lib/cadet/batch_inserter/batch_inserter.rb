@@ -31,9 +31,9 @@ module Cadet
       end
 
       def find_node(label, property, value)
-        index = @index_provider.nodeIndex label, {"type" => "exact"}
-        IteratorUtil.firstOrNull(index.get(property, value)) ?
-          Node.new(node, @db) : nil
+        index = @index_provider.nodeIndex(label, {"type" => "exact"})
+        node = IteratorUtil.firstOrNull(index.get(property, value))
+        node ? Node.new(node, @db) : nil
       end
 
       def create_node(label, property, value)

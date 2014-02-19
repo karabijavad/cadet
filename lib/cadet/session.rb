@@ -24,20 +24,12 @@ module Cadet
     end
 
     def find_node(label, property, value)
-      node = IteratorUtil.firstOrNull @db.findNodesByLabelAndProperty(DynamicLabel.label(label), property, value)
-      node ? Node.new(node) : null
+      node = IteratorUtil.firstOrNull(@db.findNodesByLabelAndProperty(DynamicLabel.label(label), property, value)) ?
+        Node.new(node) : nil
     end
 
     def get_node(label, property, value)
-      label    = label.to_s
-      property = property.to_s
-
-      n = find_node(label, property, value)
-      if n.nil?
-        return create_node(label, property, value)
-      else
-        return n
-      end
+      find_node(label.to_s, property.to_s, value) || create_node(label.to_s, property.to_s, value)
     end
 
     def transaction

@@ -3,12 +3,8 @@ module Cadet
     @dynamic_labels = {}
 
     def self.label(name)
-      l = @dynamic_labels[name]
-      unless l
-        l = org.neo4j.graphdb.DynamicLabel.label(name)
-        @dynamic_labels[name] = l
-      end
-      l
+      name = name.to_s
+      @dynamic_labels[name] ||= org.neo4j.graphdb.DynamicLabel.label(name)
     end
   end
 end
