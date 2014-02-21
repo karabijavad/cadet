@@ -28,7 +28,7 @@ describe Cadet do
     end
   end
 
-  it "should enforce unique constraints" do
+  xit "should enforce unique constraints" do
     test_neo4j do |db|
       db.transaction do
         db.constraint :Person, :name
