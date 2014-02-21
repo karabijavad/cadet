@@ -2,7 +2,7 @@
 
 Use neo4j via jruby! Nothing else needed, simply add this gem to get the power of embedded neo4j!
 
-* Batchinsert mode supported. This gem even includes a ruby based indexer, which emulates the lucene index that a regular neo4j session uses. The reason I implement the ruby based indexer is because batch insert mode does not support the lucene index. So: with this gem, you can have batch insert mode _with_ index look ups!
+* Batchinsert mode supported. 
 
 
 super simple. you dont even need to download neo4j.
