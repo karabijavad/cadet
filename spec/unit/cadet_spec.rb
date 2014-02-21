@@ -34,8 +34,7 @@ describe Cadet do
         db.constraint :Person, :name
       end
       db.transaction do
-        javad = db.get_node :Person, :name, "Javad"
-        ellen = db.get_node :Person, :name, "Ellen"
+        db.create_node :Person, :name, "Javad"
 
         expect { db.create_node :Person, :name, "Javad" }.to raise_error(org.neo4j.graphdb.ConstraintViolationException)
       end
