@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'tmpdir'
 
 describe Cadet do
 
@@ -28,5 +27,4 @@ describe Cadet do
         javad.outgoing(:knows).to_a.should == [ellen]
     end
   end
-
 end
