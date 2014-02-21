@@ -1,18 +1,17 @@
 require 'spec_helper'
 require 'tmpdir'
-require 'java'
 
 describe Cadet do
 
   it "should set a node's property" do
-    tmp_neo4j do |db|
+    quick_neo4j do |db|
         javad = db.get_node :Person, :name, "Javad"
         javad[:name].should == "Javad"
     end
   end
 
   it "should set a node's label" do
-    tmp_neo4j do |db|
+    quick_neo4j do |db|
         javad = db.get_node :Person, :name, "Javad"
         javad.add_label "Member"
         javad.labels.should == ["Person", "Member"]
@@ -20,7 +19,7 @@ describe Cadet do
   end
 
   it "should add outgoing relationship's to a node" do
-    tmp_neo4j do |db|
+    quick_neo4j do |db|
         javad = db.get_node :Person, :name, "Javad"
         ellen = db.get_node :Person, :name, "Ellen"
 
