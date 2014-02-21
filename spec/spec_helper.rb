@@ -1,17 +1,9 @@
 require 'cadet'
 
 def quick_neo4j
-  tmp_neo4j do |db|
-    db.transaction do
-      yield db
+  db = Cadet::Test::Session.open
+    db.transaction do |tx|
+      yield db, tx
     end
-  end
-end
-
-def tmp_neo4j
-  Dir.mktmpdir do |tmpdir|
-    db = Cadet::Test::Session.open
-      yield db
-    db.close
-  end
+  db.close
 end
