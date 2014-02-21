@@ -27,3 +27,6 @@ end
 db.close
 
 ```
+
+Batch insert mode can be used by simply using Cadet::BatchInserter::Session instead of Cadet::Session!
+None of your code needs to change.
