@@ -27,4 +27,18 @@ describe Cadet do
         javad.outgoing(:knows).to_a.should == [ellen]
     end
   end
+
+  it "should enforce unique constraints" do
+    test_neo4j do |db|
+      db.transaction do
+        db.constraint :Person, :name
+      end
+      db.transaction do
+        javad = db.get_node :Person, :name, "Javad"
+        ellen = db.get_node :Person, :name, "Ellen"
+
+        expect { db.create_node :Person, :name, "Javad" }.to raise_error(org.neo4j.graphdb.ConstraintViolationException)
+      end
+    end
+  end
 end
