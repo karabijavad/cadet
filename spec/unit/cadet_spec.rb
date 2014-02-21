@@ -5,32 +5,22 @@ require 'java'
 describe Cadet do
 
   it "should set a node's property" do
-    Dir.mktmpdir do |tmpdir|
-      db = Cadet::Session.open(tmpdir)
-      db.transaction do
+    tmp_neo4j do |db|
         javad = db.get_node :Person, :name, "Javad"
         javad[:name].should == "Javad"
-      end
-      db.close
     end
   end
 
   it "should set a node's label" do
-    Dir.mktmpdir do |tmpdir|
-      db = Cadet::Session.open(tmpdir)
-      db.transaction do
+    tmp_neo4j do |db|
         javad = db.get_node :Person, :name, "Javad"
         javad.add_label "Member"
         javad.labels.should == ["Person", "Member"]
-      end
-      db.close
     end
   end
 
   it "should add outgoing relationship's to a node" do
-    Dir.mktmpdir do |tmpdir|
-      db = Cadet::Session.open(tmpdir)
-      db.transaction do
+    tmp_neo4j do |db|
         javad = db.get_node :Person, :name, "Javad"
         ellen = db.get_node :Person, :name, "Ellen"
 
@@ -39,8 +29,6 @@ describe Cadet do
 
         ellen.outgoing(:knows).to_a.should == [javad]
         javad.outgoing(:knows).to_a.should == [ellen]
-      end
-      db.close
     end
   end
 
