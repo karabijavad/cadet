@@ -11,7 +11,6 @@ require 'java'
 ].each { |file| require "neo4j/#{file}" }
 
 require 'cadet/session'
-require 'cadet/property_container'
 require 'cadet/node'
 require 'cadet/relationship_traverser'
 require 'cadet/batch_inserter/batch_inserter'

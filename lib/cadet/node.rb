@@ -1,5 +1,5 @@
 module Cadet
-  class Node < PropertyContainer
+  class Node
     attr_accessor :underlying
     include_package "org.neo4j.graphdb"
 
@@ -16,10 +16,11 @@ module Cadet
       @underlying.getLabels().map(&:name)
     end
 
-    def set_property(property, value)
+    def []= (property, value)
       @underlying.setProperty(property.to_s, value)
     end
-    def get_property(property)
+
+    def [] (property)
       @underlying.getProperty(property.to_s)
     end
 
