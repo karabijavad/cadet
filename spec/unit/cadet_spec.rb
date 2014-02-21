@@ -12,7 +12,7 @@ describe Cadet do
   it "should set a node's label" do
     quick_neo4j do |db|
         javad = db.get_node :Person, :name, "Javad"
-        javad.add_label "Member"
+        javad.add_label :Member
         javad.labels.should == ["Person", "Member"]
     end
   end
@@ -25,6 +25,15 @@ describe Cadet do
         javad.outgoing(:knows) << ellen
 
         javad.outgoing(:knows).to_a.should == [ellen]
+    end
+  end
+
+  it "it should accept multiple relationships" do
+    quick_neo4j do |db|
+      javad = db.get_a_Person_by_name "Javad"
+      javad.outgoing(:lives_in) << db.get_a_City_by_name("Chicago")
+      javad.outgoing(:lives_in) << db.get_a_City_by_name("Houston")
+      javad.outgoing(:lives_in).to_a.should == [db.get_a_City_by_name("Chicago"), db.get_a_City_by_name("Houston")]
     end
   end
 

@@ -25,5 +25,4 @@ describe Cadet::BatchInserter do
       db.close
     end
   end
-
 end
