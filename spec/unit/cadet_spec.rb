@@ -24,9 +24,7 @@ describe Cadet do
         ellen = db.get_node :Person, :name, "Ellen"
 
         javad.outgoing(:knows) << ellen
-        ellen.outgoing(:knows) << javad
 
-        ellen.outgoing(:knows).to_a.should == [javad]
         javad.outgoing(:knows).to_a.should == [ellen]
     end
   end

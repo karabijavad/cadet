@@ -10,7 +10,7 @@ end
 
 def tmp_neo4j
   Dir.mktmpdir do |tmpdir|
-    db = Cadet::Session.open(tmpdir)
+    db = Cadet::Test::Session.open
       yield db
     db.close
   end
