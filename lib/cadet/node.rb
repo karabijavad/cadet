@@ -12,6 +12,9 @@ module Cadet
       @underlying.addLabel(DynamicLabel.label(label))
       self
     end
+    def labels
+      @underlying.getLabels().map(&:name)
+    end
 
     def set_property(property, value)
       @underlying.setProperty(property.to_s, value)

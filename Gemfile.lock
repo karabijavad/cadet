@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cadet (0.0.1-java)
+    cadet (0.0.6-java)
 
 GEM
   remote: http://rubygems.org/

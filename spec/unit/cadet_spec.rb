@@ -1,18 +1,26 @@
 require 'spec_helper'
+require 'tmpdir'
+require 'java'
 
 describe Cadet do
 
-  it "should create a node, (and also test that transaction works in the process)" do
-    db = Cadet::Session.open("./tmp")
+  it "should set a node's property" do
+    db = Cadet::Session.open(Dir.tmpdir)
     db.transaction do
-      n = db.create_node
+      person = db.get_node :Person, :name, "Javad"
+      person[:name].should == "Javad"
     end
     db.close
   end
 
-  it "should _not_ create a node, as we are not in a transaction" do
-    db = Cadet::Session.open("./tmp")
-    expect { db.create_node }.to raise_error(org.neo4j.graphdb.NotInTransactionException)
+  it "should set a node's label" do
+    db = Cadet::Session.open(Dir.tmpdir)
+    db.transaction do
+      person = db.get_node :Person, :name, "Javad"
+      person.add_label "Member"
+      person.labels.should == ["Person", "Member"]
+    end
     db.close
   end
+
 end
