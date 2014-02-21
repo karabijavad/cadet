@@ -10,8 +10,8 @@ module Cadet
     end
 
     def each
-      @node.underlying.get_relationships(@direction, DynamicRelationshipType.withName(@type)).each do |rel|
-        yield Node.new rel.getOtherNode(@node.underlying)
+      @node.get_relationships(@direction, @type).each do |rel|
+        yield Node.new(rel.getOtherNode(@node.underlying))
       end
     end
 

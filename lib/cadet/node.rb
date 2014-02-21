@@ -25,7 +25,7 @@ module Cadet
     end
 
     def get_relationships(direction, type)
-      @underlying.getRelationships(direction, type.to_s)
+      @underlying.getRelationships(direction, DynamicRelationshipType.withName(type))
     end
     def create_outgoing(to, type)
       @underlying.createRelationshipTo(to.underlying, DynamicRelationshipType.withName(type))
@@ -37,5 +37,8 @@ module Cadet
       Cadet::RelationshipTraverser.new(self, Direction::INCOMING, type)
     end
 
+    def == other_node
+      @underlying.getId == other_node.underlying.getId
+    end
   end
 end

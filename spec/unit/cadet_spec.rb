@@ -5,22 +5,43 @@ require 'java'
 describe Cadet do
 
   it "should set a node's property" do
-    db = Cadet::Session.open(Dir.tmpdir)
-    db.transaction do
-      person = db.get_node :Person, :name, "Javad"
-      person[:name].should == "Javad"
+    Dir.mktmpdir do |tmpdir|
+      db = Cadet::Session.open(tmpdir)
+      db.transaction do
+        javad = db.get_node :Person, :name, "Javad"
+        javad[:name].should == "Javad"
+      end
+      db.close
     end
-    db.close
   end
 
   it "should set a node's label" do
-    db = Cadet::Session.open(Dir.tmpdir)
-    db.transaction do
-      person = db.get_node :Person, :name, "Javad"
-      person.add_label "Member"
-      person.labels.should == ["Person", "Member"]
+    Dir.mktmpdir do |tmpdir|
+      db = Cadet::Session.open(tmpdir)
+      db.transaction do
+        javad = db.get_node :Person, :name, "Javad"
+        javad.add_label "Member"
+        javad.labels.should == ["Person", "Member"]
+      end
+      db.close
     end
-    db.close
+  end
+
+  it "should add outgoing relationship's to a node" do
+    Dir.mktmpdir do |tmpdir|
+      db = Cadet::Session.open(tmpdir)
+      db.transaction do
+        javad = db.get_node :Person, :name, "Javad"
+        ellen = db.get_node :Person, :name, "Ellen"
+
+        javad.outgoing(:knows) << ellen
+        ellen.outgoing(:knows) << javad
+
+        ellen.outgoing(:knows).to_a.should == [javad]
+        javad.outgoing(:knows).to_a.should == [ellen]
+      end
+      db.close
+    end
   end
 
 end
