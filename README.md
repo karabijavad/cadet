@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/karabijavad/cadet.png?branch=master)](https://travis-ci.org/karabijavad/cadet)
+
 - batchinsert mode ruby based index provider
 - support for batchinsert mode!
 just open the database with Cadet::BatchInserter::Session.open() instead of Cadet::Session.open()!
