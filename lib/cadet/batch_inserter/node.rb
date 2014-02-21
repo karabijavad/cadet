@@ -8,7 +8,7 @@ module Cadet
       end
 
       def []= (property, value)
-        @db.setNodeProperty @underlying, property.to_s, val
+        @db.setNodeProperty @underlying, property.to_s, value
       end
 
       def [] (property)
