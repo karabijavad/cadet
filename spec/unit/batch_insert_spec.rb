@@ -9,6 +9,7 @@ describe Cadet::BatchInserter do
       db.transaction do
         javad     = db.get_a_Person_by_name "Javad"
         ellen     = db.get_a_Person_by_name "Ellen"
+        javad[:age] = 25
 
         javad.outgoing(:lives_in) << db.get_a_City_by_name("Chicago")
         ellen.outgoing(:lives_in) << db.get_a_City_by_name("Chicago")
@@ -21,6 +22,7 @@ describe Cadet::BatchInserter do
         ellen     = db.get_a_Person_by_name "Ellen"
 
         javad.outgoing(:lives_in).to_a.should == ellen.outgoing(:lives_in).to_a
+        javad[:age].should == 25
       end
       db.close
     end
