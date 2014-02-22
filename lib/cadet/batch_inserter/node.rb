@@ -8,11 +8,11 @@ module Cadet
       end
 
       def []= (property, value)
-        @db.setNodeProperty @underlying, property.to_s, value
+        @db.setNodeProperty @underlying, property.to_java_string, value
       end
 
       def [] (property)
-        @db.getNodeProperties(@underlying)[property.to_s]
+        @db.getNodeProperties(@underlying)[property.to_java_string]
       end
 
     end

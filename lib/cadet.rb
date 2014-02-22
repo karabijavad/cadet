@@ -4,6 +4,7 @@ require "neo4j/neo4j-lucene-index-2.0.1.jar"
 require "neo4j/neo4j-shell-2.0.1.jar"
 require "neo4j/neo4j-kernel-2.0.1-tests.jar"
 
+require 'cadet/helpers'
 require 'cadet/session'
 require 'cadet/node'
 require 'cadet/relationship_traverser'

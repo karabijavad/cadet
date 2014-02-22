@@ -20,7 +20,7 @@ module Cadet
 
         @index.each do |property, mappings|
           mappings.each do |value, node|
-            index.add(node, {property.to_s => value})
+            index.add(node, {property.to_java_string => value})
           end
         end
       end

@@ -17,11 +17,11 @@ module Cadet
     end
 
     def []= (property, value)
-      @underlying.setProperty(property.to_s, value)
+      @underlying.setProperty(property.to_java_string, value)
     end
 
     def [] (property)
-      @underlying.getProperty(property.to_s)
+      @underlying.getProperty(property.to_java_string)
     end
 
     def get_relationships(direction, type)
