@@ -30,10 +30,10 @@ describe Cadet do
 
   it "it should accept multiple relationships" do
     quick_normal_neo4j do |db|
-      javad = db.get_a_Person_by_name "Javad"
-      javad.outgoing(:lives_in) << db.get_a_City_by_name("Chicago")
-      javad.outgoing(:lives_in) << db.get_a_City_by_name("Houston")
-      javad.outgoing(:lives_in).to_a.should == [db.get_a_City_by_name("Chicago"), db.get_a_City_by_name("Houston")]
+      javad = db.get_node(:Person, :name, "Javad")
+      javad.outgoing(:lives_in) << db.get_node(:City, :name, "Chicago")
+      javad.outgoing(:lives_in) << db.get_node(:City, :name, "Houston")
+      javad.outgoing(:lives_in).to_a.should == [db.get_node(:City, :name, "Chicago"), db.get_node(:City, :name, "Houston")]
     end
   end
 
