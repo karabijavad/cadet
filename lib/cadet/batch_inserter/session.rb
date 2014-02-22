@@ -26,7 +26,7 @@ module Cadet
 
       def constraint(label, property)
         @db.createDeferredConstraint(DynamicLabel.label(label))
-          .assertPropertyIsUnique(property.to_s)
+          .assertPropertyIsUnique(property)
           .create()
       end
 
@@ -38,7 +38,7 @@ module Cadet
       end
 
       def create_node(label, property, value)
-        Node.new(@db.createNode({property.to_s => value}, DynamicLabel.label(label)), @db).tap do |n|
+        Node.new(@db.createNode({property => value}, DynamicLabel.label(label)), @db).tap do |n|
           index = @index_provider.nodeIndex(label).add(n.underlying, property, value)
         end
       end
