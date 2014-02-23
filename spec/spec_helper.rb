@@ -36,9 +36,7 @@ def quick_batch_neo4j(at = nil)
   at ||= Dir.mktmpdir
 
   batch_neo4j(at) do |db|
-    db.transaction do
-      yield db
-    end
+    yield db
   end
   at
 end

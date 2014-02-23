@@ -19,6 +19,23 @@ module Cadet
         @underlying == other_node
       end
 
+      def get_relationships(direction, type)
+        @db.getRelationships(@underlying).map do |rel|
+          Relationship.new(rel, @db)
+        end
+      end
+
+      def == other_node
+        @underlying == other_node.underlying
+      end
+
+      def outgoing(type)
+        NodeRelationships.new(self, Cadet::Direction::OUTGOING, type)
+      end
+      def incoming(type)
+        NodeRelationships.new(self, Cadet::Direction::INCOMING, type)
+      end
+
     end
   end
 end

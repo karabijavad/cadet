@@ -60,4 +60,21 @@ describe Cadet::BatchInserter do
       javad.outgoing(:lives_in).should == ellen.outgoing(:lives_in)
     end
   end
+
+  it "should work" do
+    tmpdir = quick_batch_neo4j do |db|
+      javad       = db.get_node :Person,  :name, "Javad"
+      ellen       = db.get_node :Person,  :name, "Ellen"
+      trunkclub   = db.get_node :Company, :name, "Trunkclub"
+      chicago     = db.get_node :City,    :name, "Chicago"
+      us          = db.get_node :Country, :name, "United States"
+
+      javad.outgoing(:works_at) << trunkclub
+      trunkclub.outgoing(:located_in) << chicago
+      ellen.outgoing(:lives_in) << chicago
+      chicago.outgoing(:country) << us
+
+      javad.outgoing(:works_at).should == [trunkclub]
+    end
+  end
 end
