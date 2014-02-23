@@ -15,6 +15,24 @@ module Cadet
         @db.getNodeProperties(@underlying)[property.to_java_string]
       end
 
+      def get_relationships(direction, type)
+        @db.getRelationships(@underlying).select {|r| r.getType == DynamicRelationshipType.withName(type).name }.map do |rel|
+          Relationship.new(rel)
+        end
+      end
+
+      def == other_node
+        @underlying == other_node
+      end
+
+      def outgoing(type)
+        NodeRelationships.new(self, Direction::OUTGOING, type)
+      end
+      def incoming(type)
+        NodeRelationships.new(self, Direction::INCOMING, type)
+      end
+
+
     end
   end
 end

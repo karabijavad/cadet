@@ -25,16 +25,19 @@ module Cadet
     end
 
     def get_relationships(direction, type)
-      @underlying.getRelationships(direction, DynamicRelationshipType.withName(type))
+      @underlying.getRelationships(direction, DynamicRelationshipType.withName(type)).map do |rel|
+        Relationship.new(rel)
+      end
     end
+
     def create_outgoing(to, type)
       @underlying.createRelationshipTo(to.underlying, DynamicRelationshipType.withName(type))
     end
     def outgoing(type)
-      Cadet::NodeRelationships.new(self, Direction::OUTGOING, type)
+      NodeRelationships.new(self, Direction::OUTGOING, type)
     end
     def incoming(type)
-      Cadet::NodeRelationships.new(self, Direction::INCOMING, type)
+      NodeRelationships.new(self, Direction::INCOMING, type)
     end
 
     def == other_node
