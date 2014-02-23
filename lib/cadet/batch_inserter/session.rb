@@ -38,10 +38,17 @@ module Cadet
       end
 
       def create_node(label, property, value)
-        java_string = java.lang.String
-        Node.new(@db.createNode({property.to_java_string => value}, DynamicLabel.label(label)), @db).tap do |n|
-          index = @index_provider.nodeIndex(label).add(n.underlying, property, value)
+        n = Node.new(@db.createNode({property.to_java_string => value}, DynamicLabel.label(label)), @db)
+        @index_provider.nodeIndex(label).add(n.underlying, property, value)
+        n
+      end
+
+      def create_node_with(label, properties, indexing_property = nil)
+        n = Node.new(@db.createNode(properties.inject({}){|result,(k,v)| result[k.to_java_string] = v; result}, DynamicLabel.label(label)), @db)
+        if indexing_property
+          @index_provider.nodeIndex(label).add(n.underlying, indexing_property, properties[indexing_property])
         end
+        n
       end
     end
   end
