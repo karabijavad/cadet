@@ -24,7 +24,7 @@ describe Cadet do
 
         javad.outgoing(:knows) << ellen
 
-        javad.outgoing(:knows).to_a.should == [ellen]
+        javad.outgoing(:knows).should == [ellen]
     end
   end
 
@@ -33,7 +33,7 @@ describe Cadet do
       javad = db.get_node(:Person, :name, "Javad")
       javad.outgoing(:lives_in) << db.get_node(:City, :name, "Chicago")
       javad.outgoing(:lives_in) << db.get_node(:City, :name, "Houston")
-      javad.outgoing(:lives_in).to_a.should == [db.get_node(:City, :name, "Chicago"), db.get_node(:City, :name, "Houston")]
+      javad.outgoing(:lives_in).should == [db.get_node(:City, :name, "Chicago"), db.get_node(:City, :name, "Houston")]
     end
   end
 
@@ -51,9 +51,9 @@ describe Cadet do
       ellen.outgoing(:lives_in) << chicago
       chicago.outgoing(:country) << us
 
-      javad.outgoing(:works_at).outgoing(:located_in).outgoing(:country).to_a.should == [us]
-      chicago.incoming(:located_in).incoming(:works_at).to_a.should == [javad]
-      javad.outgoing(:works_at).outgoing(:located_in).incoming(:lives_in).to_a.should == [ellen]
+      javad.outgoing(:works_at).outgoing(:located_in).outgoing(:country).should == [us]
+      chicago.incoming(:located_in).incoming(:works_at).should == [javad]
+      javad.outgoing(:works_at).outgoing(:located_in).incoming(:lives_in).should == [ellen]
 
     end
   end

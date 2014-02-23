@@ -27,7 +27,7 @@ describe Cadet::BatchInserter do
       javad = db.get_node(:Person, :name, "Javad")
       ellen = db.get_node(:Person, :name, "Ellen")
 
-      javad.outgoing(:knows).to_a.should == [ellen]
+      javad.outgoing(:knows).should == [ellen]
     end
   end
 
@@ -57,7 +57,7 @@ describe Cadet::BatchInserter do
       javad = db.get_node(:Person, :name, "Javad")
       ellen = db.get_node(:Person, :name, "Ellen")
 
-      javad.outgoing(:lives_in).to_a.should == ellen.outgoing(:lives_in).to_a
+      javad.outgoing(:lives_in).should == ellen.outgoing(:lives_in)
     end
   end
 end

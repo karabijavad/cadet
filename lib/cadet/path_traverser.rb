@@ -32,5 +32,8 @@ module Cadet
       PathTraverser.new(to_a, Direction::INCOMING, type)
     end
 
+    def ==(other)
+      self.to_a == other.to_a
+    end
   end
 end
