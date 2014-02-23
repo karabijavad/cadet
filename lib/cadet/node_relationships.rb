@@ -3,7 +3,7 @@ module Cadet
     include Enumerable
     include_package "org.neo4j.graphdb"
 
-    def initialize(nodes, direction, type)
+    def initialize(node, direction, type)
       @node = node
       @type = type
       @direction = direction
@@ -17,6 +17,13 @@ module Cadet
 
     def << (othernode)
       @direction == Direction::OUTGOING ? @node.create_outgoing(othernode, @type) : othernode.create_outgoing(@node, @type)
+    end
+
+    def outgoing(type)
+      PathTraverser.new to_a, Direction::OUTGOING, type
+    end
+    def incoming(type)
+      PathTraverser.new to_a, Direction::INCOMING, type
     end
 
   end
