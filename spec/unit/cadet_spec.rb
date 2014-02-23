@@ -37,6 +37,19 @@ describe Cadet do
     end
   end
 
+  it "each on each" do
+    quick_test_neo4j do |db|
+      javad = db.get_a_Person_by_name  "Javad"
+      trunkclub = db.get_a_Company_by_name "Trunkclub"
+      chicago = db.get_a_City_by_name    "Chicago"
+
+      javad.outgoing(:works_at) << trunkclub
+      trunkclub.outgoing(:located_in) << chicago
+
+      javad.outgoing(:works_at).outgoing(:located_in).to_a.should == [chicago]
+    end
+  end
+
   xit "should enforce unique constraints" do
     test_neo4j do |db|
       db.transaction do

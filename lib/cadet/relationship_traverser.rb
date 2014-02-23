@@ -18,5 +18,15 @@ module Cadet
     def << (othernode)
       @direction == Direction::OUTGOING ? @node.create_outgoing(othernode, @type) : othernode.create_outgoing(@node, @type)
     end
+
+    def outgoing(type)
+      result = []
+      each do |n|
+        n.outgoing(type).each do |o|
+          result << o
+        end
+      end
+      result
+    end
   end
 end
