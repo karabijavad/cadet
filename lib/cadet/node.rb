@@ -34,10 +34,10 @@ module Cadet
       @underlying.createRelationshipTo(to.underlying, DynamicRelationshipType.withName(type))
     end
     def outgoing(type)
-      NodeRelationships.new(self, Direction::OUTGOING, type)
+      NodeRelationships.new(self, Cadet::Direction::OUTGOING, type)
     end
     def incoming(type)
-      NodeRelationships.new(self, Direction::INCOMING, type)
+      NodeRelationships.new(self, Cadet::Direction::INCOMING, type)
     end
 
     def == other_node

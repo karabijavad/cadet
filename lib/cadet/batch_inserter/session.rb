@@ -7,8 +7,8 @@ module Cadet
       include_package "org.neo4j.helpers.collection"
 
       def initialize(db)
-        @db = db
-        @index_provider = Cadet::CadetIndex::IndexProvider.new(db)
+        @index_provider = CadetIndex::IndexProvider.new(db)
+        super db
       end
 
       def close
@@ -45,9 +45,7 @@ module Cadet
 
       def create_node_with(label, properties, indexing_property = nil)
         n = Node.new(@db.createNode(properties.inject({}){|result,(k,v)| result[k.to_java_string] = v; result}, DynamicLabel.label(label)), @db)
-        if indexing_property
-          @index_provider.nodeIndex(label).add(n.underlying, indexing_property, properties[indexing_property])
-        end
+        @index_provider.nodeIndex(label).add(n.underlying, indexing_property, properties[indexing_property]) if indexing_property
         n
       end
     end

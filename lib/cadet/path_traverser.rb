@@ -10,7 +10,7 @@ module Cadet
     end
 
     def each
-      if @direction == Direction::OUTGOING
+      if @direction == Cadet::Direction::OUTGOING
         @nodes.each do |n|
           n.outgoing(@type).each do |o|
             yield o
@@ -26,10 +26,10 @@ module Cadet
     end
 
     def outgoing(type)
-      PathTraverser.new(to_a, Direction::OUTGOING, type)
+      PathTraverser.new(to_a, Cadet::Direction::OUTGOING, type)
     end
     def incoming(type)
-      PathTraverser.new(to_a, Direction::INCOMING, type)
+      PathTraverser.new(to_a, Cadet::Direction::INCOMING, type)
     end
 
     def ==(other)
