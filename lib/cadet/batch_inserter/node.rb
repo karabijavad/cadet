@@ -24,6 +24,7 @@ module Cadet
           Relationship.new(rel, @db)
         }.select { |rel|
           rel.type == DynamicRelationshipType.withName(type)
+          rel.direction(self) == direction
         }
       end
 
