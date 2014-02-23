@@ -37,16 +37,21 @@ describe Cadet do
     end
   end
 
-  it "each on each" do
+  xit "should allow for outgoing to be chained" do
     quick_test_neo4j do |db|
-      javad = db.get_a_Person_by_name  "Javad"
-      trunkclub = db.get_a_Company_by_name "Trunkclub"
-      chicago = db.get_a_City_by_name    "Chicago"
+      javad       = db.get_a_Person_by_name  "Javad"
+      ellen       = db.get_a_Person_by_name  "Ellen"
+      trunkclub   = db.get_a_Company_by_name "Trunkclub"
+      chicago     = db.get_a_City_by_name    "Chicago"
+      springfield = db.get_a_City_by_name    "Springfield"
 
       javad.outgoing(:works_at) << trunkclub
       trunkclub.outgoing(:located_in) << chicago
 
       javad.outgoing(:works_at).outgoing(:located_in).to_a.should == [chicago]
+      chicago.incoming(:located_in).incoming(:works_at).to_a.should == [javad]
+
+      # javad.outgoing(:works_at).outgoing(:located_in).incoming(:lives_in).should == [ellen]
     end
   end
 

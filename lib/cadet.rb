@@ -7,7 +7,7 @@ require "neo4j/neo4j-kernel-2.0.1-tests.jar"
 require 'cadet/helpers'
 require 'cadet/session'
 require 'cadet/node'
-require 'cadet/relationship_traverser'
+require 'cadet/node_relationships'
 require 'cadet/batch_inserter/session'
 require 'cadet/batch_inserter/node'
 require 'cadet/cadet_index/index_provider'

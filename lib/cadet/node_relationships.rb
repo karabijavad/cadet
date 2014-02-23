@@ -1,9 +1,9 @@
 module Cadet
-  class RelationshipTraverser
+  class NodeRelationships
     include Enumerable
     include_package "org.neo4j.graphdb"
 
-    def initialize(node, direction, type)
+    def initialize(nodes, direction, type)
       @node = node
       @type = type
       @direction = direction
@@ -19,14 +19,5 @@ module Cadet
       @direction == Direction::OUTGOING ? @node.create_outgoing(othernode, @type) : othernode.create_outgoing(@node, @type)
     end
 
-    def outgoing(type)
-      result = []
-      each do |n|
-        n.outgoing(type).each do |o|
-          result << o
-        end
-      end
-      result
-    end
   end
 end
