@@ -23,6 +23,12 @@ module Cadet
         NodeRelationships.new(self, Cadet::Direction::OUTGOING, type)
       end
 
+      def get_relationships(direction, type)
+        # not implemented in batch inserter mode. though, it could be done.
+        # the assumption is that this shouldnt be necessary in
+        raise NotImplementedError
+      end
+
     end
   end
 end

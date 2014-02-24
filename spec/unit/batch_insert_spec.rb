@@ -110,4 +110,20 @@ describe Cadet::BatchInserter do
     end
   end
 
+  it "should not allow for get_relationships" do
+    tmpdir = quick_batch_neo4j do |db|
+      javad       = db.get_node :Person,  :name, "Javad"
+      ellen       = db.get_node :Person,  :name, "Ellen"
+      trunkclub   = db.get_node :Company, :name, "Trunkclub"
+      chicago     = db.get_node :City,    :name, "Chicago"
+      us          = db.get_node :Country, :name, "United States"
+
+      javad.outgoing(:lives_in) << chicago
+      chicago.outgoing(:country) << us
+
+      expect {javad.outgoing(:lives_in).outgoing(:country)}.to raise_error(NotImplementedError)
+    end
+
+  end
+
 end

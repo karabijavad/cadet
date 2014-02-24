@@ -48,12 +48,13 @@ describe Cadet do
 
       javad.outgoing(:works_at) << trunkclub
       trunkclub.outgoing(:located_in) << chicago
+      javad.outgoing(:lives_in) << chicago
       ellen.outgoing(:lives_in) << chicago
       chicago.outgoing(:country) << us
 
       javad.outgoing(:works_at).outgoing(:located_in).outgoing(:country).should == [us]
       chicago.incoming(:located_in).incoming(:works_at).should == [javad]
-      javad.outgoing(:works_at).outgoing(:located_in).incoming(:lives_in).should == [ellen]
+      javad.outgoing(:works_at).outgoing(:located_in).incoming(:lives_in).should == [javad, ellen]
 
     end
   end
