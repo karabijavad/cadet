@@ -91,7 +91,7 @@ describe Cadet::BatchInserter do
       ellen.outgoing(:lives_in) << chicago
       chicago.outgoing(:country) << us
 
-      javad.outgoing(:works_at).outgoing(:located_in).to_a.should == [chicago]
+      javad.outgoing(:works_at).outgoing(:located_in).should == [chicago]
     end
   end
 
