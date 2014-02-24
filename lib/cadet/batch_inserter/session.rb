@@ -16,8 +16,8 @@ module Cadet
         super
       end
 
-      def self.open(location)
-        new BatchInserters.inserter(location)
+      def self.open(location, config = {})
+        new BatchInserters.inserter(location, config)
       end
 
       def transaction

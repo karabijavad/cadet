@@ -123,7 +123,11 @@ describe Cadet::BatchInserter do
 
       expect {javad.outgoing(:lives_in).outgoing(:country)}.to raise_error(NotImplementedError)
     end
+  end
 
+  it "should accept database configs" do
+    db = Cadet::BatchInserter::Session.open(Dir.mktmpdir, {"use_memory_mapped_buffers" => "true"})
+    db.close
   end
 
 end
