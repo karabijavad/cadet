@@ -19,24 +19,8 @@ module Cadet
         @underlying == other_node
       end
 
-      def get_relationships(direction, type)
-        @db.getRelationships(@underlying).map { |rel|
-          Relationship.new(rel, @db)
-        }.select { |rel|
-          rel.type == DynamicRelationshipType.withName(type)
-          rel.direction(self) == direction
-        }
-      end
-
-      def == other_node
-        @underlying == other_node.underlying
-      end
-
       def outgoing(type)
-        NodeRelationships.new(self, Cadet::Direction::OUTGOING, type, @db)
-      end
-      def incoming(type)
-        NodeRelationships.new(self, Cadet::Direction::INCOMING, type, @db)
+        NodeRelationships.new(self, Cadet::Direction::OUTGOING, type)
       end
 
     end

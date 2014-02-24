@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'tmpdir'
 
 describe Cadet::BatchInserter do
-
   it "should set a nodes property" do
     tmpdir = quick_batch_neo4j do |db|
       javad = db.get_node(:Person, :name, "Javad")
@@ -73,9 +72,18 @@ describe Cadet::BatchInserter do
       trunkclub.outgoing(:located_in) << chicago
       ellen.outgoing(:lives_in) << chicago
       chicago.outgoing(:country) << us
+    end
+
+    quick_normal_neo4j(tmpdir) do |db|
+      javad       = db.get_node :Person,  :name, "Javad"
+      ellen       = db.get_node :Person,  :name, "Ellen"
+      trunkclub   = db.get_node :Company, :name, "Trunkclub"
+      chicago     = db.get_node :City,    :name, "Chicago"
+      us          = db.get_node :Country, :name, "United States"
 
       javad.outgoing(:works_at).should == [trunkclub]
     end
+
   end
 
   it "should work" do
@@ -86,12 +94,19 @@ describe Cadet::BatchInserter do
       chicago     = db.get_node :City,    :name, "Chicago"
       us          = db.get_node :Country, :name, "United States"
 
-      javad.outgoing(:works_at) << trunkclub
-      trunkclub.outgoing(:located_in) << chicago
+      javad.outgoing(:lives_in) << chicago
       ellen.outgoing(:lives_in) << chicago
-      chicago.outgoing(:country) << us
+    end
 
-      javad.outgoing(:works_at).outgoing(:located_in).should == [chicago]
+    quick_normal_neo4j(tmpdir) do |db|
+      javad       = db.get_node :Person,  :name, "Javad"
+      ellen       = db.get_node :Person,  :name, "Ellen"
+      trunkclub   = db.get_node :Company, :name, "Trunkclub"
+      chicago     = db.get_node :City,    :name, "Chicago"
+      us          = db.get_node :Country, :name, "United States"
+
+      javad.outgoing(:lives_in).should == [chicago]
+      ellen.outgoing(:lives_in).should == [chicago]
     end
   end
 
