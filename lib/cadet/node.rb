@@ -25,8 +25,8 @@ module Cadet
     end
 
     def get_relationships(direction, type)
-      @underlying.getRelationships(direction, DynamicRelationshipType.withName(type)).map do |rel|
-        Relationship.new(rel)
+      @underlying.getRelationships(direction, DynamicRelationshipType.withName(type)).each do |rel|
+        yield Relationship.new(rel)
       end
     end
 
