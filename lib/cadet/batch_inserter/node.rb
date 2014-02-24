@@ -25,7 +25,8 @@ module Cadet
 
       def get_relationships(direction, type)
         # not implemented in batch inserter mode. though, it could be done.
-        # the assumption is that this shouldnt be necessary in
+        # the assumption is that this shouldnt be necessary, as batch inserter mode
+        # should be about inserting data, not querying data
         raise NotImplementedError
       end
 
