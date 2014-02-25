@@ -1,6 +1,6 @@
 module Cadet
-  class Direction
-    OUTGOING = org.neo4j.graphdb.Direction::OUTGOING
-    INCOMING = org.neo4j.graphdb.Direction::INCOMING
-  end
+  Directions = {
+    outgoing: org.neo4j.graphdb.Direction::OUTGOING,
+    incoming: org.neo4j.graphdb.Direction::INCOMING
+  }
 end

@@ -25,7 +25,7 @@ module Cadet
     end
 
     def each_relationship(direction, type)
-      @underlying.getRelationships(direction, DynamicRelationshipType.withName(type)).each do |rel|
+      @underlying.getRelationships(Directions[direction], DynamicRelationshipType.withName(type)).each do |rel|
         yield Relationship.new(rel)
       end
     end
@@ -34,14 +34,21 @@ module Cadet
       @underlying.createRelationshipTo(to.underlying, DynamicRelationshipType.withName(type))
     end
     def outgoing(type)
-      NodeRelationships.new(self, Cadet::Direction::OUTGOING, type)
+      NodeRelationships.new(self, :outgoing, type)
     end
     def incoming(type)
-      NodeRelationships.new(self, Cadet::Direction::INCOMING, type)
+      NodeRelationships.new(self, :incoming, type)
     end
 
     def == other_node
       @underlying.getId == other_node.underlying.getId
     end
+
+    def method_missing(name, *args)
+      if match = /([A-z_]*)_to$/.match(name)
+        return create_outgoing(args[0], match.captures[0])
+      end
+    end
+
   end
 end
