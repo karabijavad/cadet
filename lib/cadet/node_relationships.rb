@@ -10,7 +10,7 @@ module Cadet
     end
 
     def each
-      @node.get_relationships(@direction, @type) do |rel|
+      @node.each_relationship(@direction, @type) do |rel|
         yield Node.new(rel.get_other_node(@node))
       end
     end

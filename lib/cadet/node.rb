@@ -24,7 +24,7 @@ module Cadet
       @underlying.getProperty(property.to_java_string)
     end
 
-    def get_relationships(direction, type)
+    def each_relationship(direction, type)
       @underlying.getRelationships(direction, DynamicRelationshipType.withName(type)).each do |rel|
         yield Relationship.new(rel)
       end
