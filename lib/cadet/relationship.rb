@@ -3,8 +3,7 @@ module Cadet
     attr_accessor :underlying
     include_package "org.neo4j.graphdb"
 
-    def initialize(relationship, db = nil)
-      @db = db
+    def initialize(relationship)
       @underlying = relationship
     end
 

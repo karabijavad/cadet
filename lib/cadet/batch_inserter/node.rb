@@ -4,7 +4,7 @@ module Cadet
       include_package "org.neo4j.graphdb"
 
       def create_outgoing(to, type, properties = {})
-        @db.createRelationship(@underlying, to.underlying, DynamicRelationshipType.withName(type), properties)
+        Relationship.new @db.createRelationship(@underlying, to.underlying, DynamicRelationshipType.withName(type), properties)
       end
 
       def []= (property, value)

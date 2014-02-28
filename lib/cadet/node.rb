@@ -31,7 +31,7 @@ module Cadet
     end
 
     def create_outgoing(to, type)
-      @underlying.createRelationshipTo(to.underlying, DynamicRelationshipType.withName(type))
+      Relationship.new @underlying.createRelationshipTo(to.underlying, DynamicRelationshipType.withName(type))
     end
     def outgoing(type)
       NodeRelationships.new(self, :outgoing, type)
