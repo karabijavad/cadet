@@ -9,21 +9,8 @@ module Cadet
       @direction = direction
     end
 
-    def each
-      @node.each_relationship(@direction, @type) do |rel|
-        yield Node.new(rel.get_other_node(@node))
-      end
-    end
-
-    def << (othernode)
-      @direction == :outgoing ? @node.create_outgoing(othernode, @type) : othernode.create_outgoing(@node, @type)
-    end
-
-    def outgoing(type)
-      PathTraverser.new to_a, :outgoing, type
-    end
-    def incoming(type)
-      PathTraverser.new to_a, :incoming, type
+    def each &block
+      @node.each_relationship(@direction, @type, &block)
     end
 
     def ==(other)

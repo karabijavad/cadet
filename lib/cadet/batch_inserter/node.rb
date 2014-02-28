@@ -20,7 +20,7 @@ module Cadet
       end
 
       def outgoing(type)
-        NodeRelationships.new(self, :outgoing, type)
+        NodeTraverser.new(self, :outgoing, type)
       end
 
       def each_relationship(direction, type)

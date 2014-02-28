@@ -59,6 +59,19 @@ describe Cadet do
     end
   end
 
+  it "should allow for node relationship's to be accessed" do
+    quick_test_neo4j do |db|
+      javad       = db.get_a_Person_by_name  "Javad"
+      ellen       = db.get_a_Person_by_name  "Ellen"
+      javad.outgoing(:knows) << ellen
+      javad.incoming(:also_knows) << ellen
+
+      javad.outgoing_rels(:knows).map{ |rel| rel.get_other_node(javad)}.should == [ellen]
+      javad.incoming_rels(:also_knows).map{ |rel| rel.get_other_node(javad)}.should == [ellen]
+    end
+  end
+
+
   xit "should enforce unique constraints" do
     test_neo4j do |db|
       db.transaction do

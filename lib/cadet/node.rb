@@ -34,9 +34,16 @@ module Cadet
       Relationship.new @underlying.createRelationshipTo(to.underlying, DynamicRelationshipType.withName(type))
     end
     def outgoing(type)
-      NodeRelationships.new(self, :outgoing, type)
+      NodeTraverser.new(self, :outgoing, type)
     end
     def incoming(type)
+      NodeTraverser.new(self, :incoming, type)
+    end
+
+    def outgoing_rels(type)
+      NodeRelationships.new(self, :outgoing, type)
+    end
+    def incoming_rels(type)
       NodeRelationships.new(self, :incoming, type)
     end
 

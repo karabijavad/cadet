@@ -12,7 +12,7 @@ module Cadet
     end
 
     def get_other_node(node)
-      @underlying.getOtherNode(node.underlying)
+      Node.new @underlying.getOtherNode(node.underlying)
     end
   end
 end
