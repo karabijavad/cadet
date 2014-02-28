@@ -53,7 +53,7 @@ module Cadet
 
     def method_missing(name, *args)
       if match = /([A-z_]*)_to$/.match(name)
-        self.class.class_eval "
+        self.class_eval "
           def #{name}(value)
             create_outgoing(value, :#{match.captures[0]})
           end
