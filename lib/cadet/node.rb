@@ -46,8 +46,14 @@ module Cadet
 
     def method_missing(name, *args)
       if match = /([A-z_]*)_to$/.match(name)
-        return create_outgoing(args[0], match.captures[0])
+        self.instance_eval "
+          def #{name}(value)
+            create_outgoing(value, :#{match.captures[0]})
+          end
+        "
+        self.send(name, *args)
       end
+
     end
 
   end
