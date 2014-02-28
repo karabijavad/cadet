@@ -51,7 +51,7 @@ module Cadet
 
     def method_missing(name, *args)
       if match = /^get_a_([A-z]*)_by_([A-z]*)/.match(name)
-        self.instance_eval "
+        self.class.class_eval "
           def #{name}(value)
             get_node :#{match.captures[0]}, :#{match.captures[1]}, value
           end
