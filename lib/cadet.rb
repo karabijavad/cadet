@@ -16,6 +16,7 @@ require 'cadet/transaction'
 
 require 'cadet/batch_inserter/session'
 require 'cadet/batch_inserter/node'
+require 'cadet/batch_inserter/transaction'
 
 require 'cadet/test/session'
 

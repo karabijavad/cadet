@@ -32,10 +32,14 @@ module Cadet
       find_node(label, property, value) || create_node(label, property, value)
     end
 
+    def get_transaction
+      Transaction.new(self)
+    end
+
     def transaction(&block)
-      tx = @db.beginTx
+      tx = get_transaction
       begin
-        Transaction.new(tx, self).instance_eval &block
+        tx.instance_eval &block
         tx.success
       ensure
         tx.close
@@ -50,15 +54,18 @@ module Cadet
     end
 
     def method_missing(name, *args)
-      if match = /^get_a_([A-z]*)_by_([A-z]*)/.match(name)
+      if match = /^(get_a_)?([A-z_]*)_by_([A-z_]*)/.match(name)
         self.class.class_eval "
           def #{name}(value)
-            get_node :#{match.captures[0]}, :#{match.captures[1]}, value
+            get_node :#{match.captures[1]}, :#{match.captures[2]}, value
           end
         "
         self.send(name, *args)
       end
     end
 
+    def begin_tx
+      @db.beginTx
+    end
   end
 end

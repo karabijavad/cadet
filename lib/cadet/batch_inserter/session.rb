@@ -20,10 +20,6 @@ module Cadet
         new BatchInserters.inserter(location, config)
       end
 
-      def transaction
-        yield
-      end
-
       def constraint(label, property)
         @db.createDeferredConstraint(DynamicLabel.label(label))
           .assertPropertyIsUnique(property)
@@ -47,6 +43,10 @@ module Cadet
         Node.new(@db.createNode(properties.inject({}){|result,(k,v)| result[k.to_java_string] = v; result}, DynamicLabel.label(label)), @db).tap do |n|
           @index_provider.nodeIndex(label).add(n.underlying, indexing_property.to_sym, properties[indexing_property]) if indexing_property
         end
+      end
+
+      def get_transaction
+        Cadet::BatchInserter::Transaction.new(self)
       end
     end
   end

@@ -97,4 +97,27 @@ describe Cadet do
 
     db.close
   end
+
+  it 'should have a working dsl' do
+    db = Cadet::Test::Session.open
+
+    db.transaction do |tx|
+      Person_by_name("Javad").knows_to Person_by_name("Ellen")
+    end
+
+    db.close
+  end
+
+  it 'should have a working dsl' do
+    db = Cadet::Test::Session.open
+
+    db.transaction do |tx|
+      Person_by_name("Javad").lives_in_to City_by_name("Chicago")
+
+      Person_by_name("Javad").outgoing(:lives_in).should == [City_by_name("Chicago")]
+    end
+
+    db.close
+  end
+
 end
