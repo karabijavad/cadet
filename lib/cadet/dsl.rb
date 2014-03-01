@@ -1,10 +1,5 @@
 module Cadet
   class DSL
-    include_package "org.neo4j.graphdb"
-    include_package "org.neo4j.graphdb.factory"
-    include_package "org.neo4j.unsafe.batchinsert"
-    include_package "org.neo4j.helpers.collection"
-
     def initialize(db)
       @db = db
     end

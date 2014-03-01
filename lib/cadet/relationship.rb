@@ -1,7 +1,6 @@
 module Cadet
   class Relationship
     attr_accessor :underlying
-    include_package "org.neo4j.graphdb"
 
     def initialize(relationship)
       @underlying = relationship

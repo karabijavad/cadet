@@ -1,7 +1,6 @@
 module Cadet
   class PathTraverser
     include Enumerable
-    include_package "org.neo4j.graphdb"
 
     def initialize(nodes, direction, type)
       @nodes = nodes

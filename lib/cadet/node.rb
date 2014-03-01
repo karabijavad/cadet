@@ -1,7 +1,6 @@
 module Cadet
   class Node
     attr_accessor :underlying
-    include_package "org.neo4j.graphdb"
 
     def initialize(node, db = nil)
       @db = db

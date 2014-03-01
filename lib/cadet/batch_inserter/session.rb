@@ -1,10 +1,6 @@
 module Cadet
   module BatchInserter
     class Session < Cadet::Session
-      include_package "org.neo4j.graphdb"
-      include_package "org.neo4j.unsafe.batchinsert"
-      include_package "org.neo4j.index.impl.lucene"
-      include_package "org.neo4j.helpers.collection"
 
       def initialize(db)
         @index_provider = CadetIndex::IndexProvider.new(db)
@@ -17,7 +13,7 @@ module Cadet
       end
 
       def self.open(location, config = {})
-        new BatchInserters.inserter(location, config)
+        new org.neo4j.unsafe.batchinsert.BatchInserters.inserter(location, config)
       end
 
       def constraint(label, property)

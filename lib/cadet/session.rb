@@ -1,16 +1,11 @@
 module Cadet
   class Session
-    include_package "org.neo4j.graphdb"
-    include_package "org.neo4j.graphdb.factory"
-    include_package "org.neo4j.unsafe.batchinsert"
-    include_package "org.neo4j.helpers.collection"
-
     def initialize(db)
       @db = db
     end
 
     def self.open(location)
-      new GraphDatabaseFactory.new.newEmbeddedDatabase(location)
+      new org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location)
     end
     def close
       @db.shutdown
@@ -24,7 +19,7 @@ module Cadet
     end
 
     def find_node(label, property, value)
-      ( node = IteratorUtil.firstOrNull(@db.findNodesByLabelAndProperty(DynamicLabel.label(label), property, value)) ) ?
+      ( node = org.neo4j.helpers.collection.IteratorUtil.firstOrNull(@db.findNodesByLabelAndProperty(DynamicLabel.label(label), property, value)) ) ?
         Node.new(node) : nil
     end
 

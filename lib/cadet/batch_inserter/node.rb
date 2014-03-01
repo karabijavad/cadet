@@ -1,7 +1,6 @@
 module Cadet
   module BatchInserter
     class Node < Cadet::Node
-      include_package "org.neo4j.graphdb"
 
       def create_outgoing(to, type, properties = {})
         Relationship.new @db.createRelationship(@underlying, to.underlying, DynamicRelationshipType.withName(type), properties)
