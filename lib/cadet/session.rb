@@ -36,10 +36,15 @@ module Cadet
       Transaction.new(self)
     end
 
-    def transaction(&block)
+    def dsl(&block)
+      DSL.new(self).instance_exec(self, &block)
+      self
+    end
+
+    def transaction
       tx = get_transaction
       begin
-        tx.instance_eval &block
+        yield tx
         tx.success
       ensure
         tx.close
@@ -51,25 +56,6 @@ module Cadet
         .constraintFor(DynamicLabel.label(label))
         .assertPropertyIsUnique(property)
         .create()
-    end
-
-    def method_missing(name, *args)
-      if match = /^(get_a_)?([A-z_]*)_by_([A-z_]*)/.match(name)
-        self.class.class_eval "
-          def #{name}(value)
-            get_node :#{match.captures[1]}, :#{match.captures[2]}, value
-          end
-        "
-        return self.send(name, *args)
-      elsif match = /^create_([A-z_]*)_on_([A-z_]*)/.match(name)
-        self.class.class_eval "
-          def #{name}(value)
-            create_node_with :#{match.captures[0]}, value, :#{match.captures[1]}
-          end
-        "
-        return self.send(name, *args)
-      end
-
     end
 
     def begin_tx

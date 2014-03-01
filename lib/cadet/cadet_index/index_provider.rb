@@ -11,7 +11,6 @@ module Cadet
         @indexes[name.to_sym] ||= CadetIndex::Index.new(@lucene_index, name.to_sym, type)
       end
       def shutdown
-        puts "shutdown called"
         @indexes.each do |name, index|
           index.flush
         end

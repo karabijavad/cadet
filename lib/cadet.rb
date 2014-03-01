@@ -14,6 +14,8 @@ require 'cadet/path_traverser'
 require 'cadet/node_relationships'
 require 'cadet/transaction'
 
+require 'cadet/dsl'
+
 require 'cadet/batch_inserter/session'
 require 'cadet/batch_inserter/node'
 require 'cadet/batch_inserter/transaction'

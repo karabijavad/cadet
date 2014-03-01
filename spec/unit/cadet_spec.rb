@@ -39,35 +39,39 @@ describe Cadet do
 
   it "should allow for outgoing to be chained" do
     quick_test_neo4j do |db|
-      javad       = db.get_a_Person_by_name  "Javad"
-      ellen       = db.get_a_Person_by_name  "Ellen"
-      trunkclub   = db.get_a_Company_by_name "Trunkclub"
-      chicago     = db.get_a_City_by_name    "Chicago"
-      us          = db.get_a_Country_by_name "United States"
-      springfield = db.get_a_City_by_name    "Springfield"
+      db.dsl do |db|
+        javad       = get_a_Person_by_name  "Javad"
+        ellen       = get_a_Person_by_name  "Ellen"
+        trunkclub   = get_a_Company_by_name "Trunkclub"
+        chicago     = get_a_City_by_name    "Chicago"
+        us          = get_a_Country_by_name "United States"
+        springfield = get_a_City_by_name    "Springfield"
 
-      javad.outgoing(:works_at) << trunkclub
-      trunkclub.outgoing(:located_in) << chicago
-      javad.outgoing(:lives_in) << chicago
-      ellen.outgoing(:lives_in) << chicago
-      chicago.outgoing(:country) << us
 
-      javad.outgoing(:works_at).outgoing(:located_in).outgoing(:country).should == [us]
-      chicago.incoming(:located_in).incoming(:works_at).should == [javad]
-      javad.outgoing(:works_at).outgoing(:located_in).incoming(:lives_in).should == [javad, ellen]
+        javad.outgoing(:works_at) << trunkclub
+        trunkclub.outgoing(:located_in) << chicago
+        javad.outgoing(:lives_in) << chicago
+        ellen.outgoing(:lives_in) << chicago
+        chicago.outgoing(:country) << us
 
+        javad.outgoing(:works_at).outgoing(:located_in).outgoing(:country).should == [us]
+        chicago.incoming(:located_in).incoming(:works_at).should == [javad]
+        javad.outgoing(:works_at).outgoing(:located_in).incoming(:lives_in).should == [javad, ellen]
+      end
     end
   end
 
   it "should allow for node relationship's to be accessed" do
     quick_test_neo4j do |db|
-      javad       = db.get_a_Person_by_name  "Javad"
-      ellen       = db.get_a_Person_by_name  "Ellen"
-      javad.outgoing(:knows) << ellen
-      javad.incoming(:also_knows) << ellen
+      db.dsl do |db|
+        javad       = get_a_Person_by_name  "Javad"
+        ellen       = get_a_Person_by_name  "Ellen"
+        javad.outgoing(:knows) << ellen
+        javad.incoming(:also_knows) << ellen
 
-      javad.outgoing_rels(:knows).map{ |rel| rel.get_other_node(javad)}.should == [ellen]
-      javad.incoming_rels(:also_knows).map{ |rel| rel.get_other_node(javad)}.should == [ellen]
+        javad.outgoing_rels(:knows).map{ |rel| rel.get_other_node(javad)}.should == [ellen]
+        javad.incoming_rels(:also_knows).map{ |rel| rel.get_other_node(javad)}.should == [ellen]
+      end
     end
   end
 
@@ -86,38 +90,13 @@ describe Cadet do
   end
 
   it 'should have a working dsl' do
-    db = Cadet::Test::Session.open
+    db = Cadet::Test::Session.open.dsl do
+      transaction do |tx|
+        Person_by_name("Javad").lives_in_to City_by_name("Chicago")
 
-    db.transaction do |tx|
-      a = db.get_a_Person_by_name "Javad"
-      b = Person_by_name "Javad"
-
-      a.should == b
+        Person_by_name("Javad").outgoing(:lives_in).should == [City_by_name("Chicago")]
+      end
     end
-
-    db.close
-  end
-
-  it 'should have a working dsl' do
-    db = Cadet::Test::Session.open
-
-    db.transaction do |tx|
-      Person_by_name("Javad").knows_to Person_by_name("Ellen")
-    end
-
-    db.close
-  end
-
-  it 'should have a working dsl' do
-    db = Cadet::Test::Session.open
-
-    db.transaction do |tx|
-      Person_by_name("Javad").lives_in_to City_by_name("Chicago")
-
-      Person_by_name("Javad").outgoing(:lives_in).should == [City_by_name("Chicago")]
-    end
-
-    db.close
   end
 
 end
