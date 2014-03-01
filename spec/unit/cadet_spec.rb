@@ -40,12 +40,12 @@ describe Cadet do
   it "should allow for outgoing to be chained" do
     quick_test_neo4j do |db|
       db.dsl do |db|
-        javad       = get_a_Person_by_name  "Javad"
-        ellen       = get_a_Person_by_name  "Ellen"
-        trunkclub   = get_a_Company_by_name "Trunkclub"
-        chicago     = get_a_City_by_name    "Chicago"
-        us          = get_a_Country_by_name "United States"
-        springfield = get_a_City_by_name    "Springfield"
+        javad       = Person_by_name  "Javad"
+        ellen       = Person_by_name  "Ellen"
+        trunkclub   = Company_by_name "Trunkclub"
+        chicago     = City_by_name    "Chicago"
+        us          = Country_by_name "United States"
+        springfield = City_by_name    "Springfield"
 
 
         javad.outgoing(:works_at) << trunkclub
@@ -64,8 +64,8 @@ describe Cadet do
   it "should allow for node relationship's to be accessed" do
     quick_test_neo4j do |db|
       db.dsl do |db|
-        javad       = get_a_Person_by_name  "Javad"
-        ellen       = get_a_Person_by_name  "Ellen"
+        javad       = Person_by_name  "Javad"
+        ellen       = Person_by_name  "Ellen"
         javad.outgoing(:knows) << ellen
         javad.incoming(:also_knows) << ellen
 

@@ -10,31 +10,31 @@ module Cadet
     end
 
     def method_missing(name, *args, &block)
-      if match = /^(get_a_)?([A-z_]*)_by_([A-z_]*)/.match(name)
-        self.class.class_eval "
-          def #{name}(value)
-            @db.get_node :#{match.captures[1]}, :#{match.captures[2]}, value
-          end
-        "
-        return self.send(name, *args, &block)
-      elsif match = /^create_([A-z_]*)_on_([A-z_]*)/.match(name)
-        self.class.class_eval "
-          def #{name}(value)
-            @db.create_node :#{match.captures[0]}, value, :#{match.captures[1]}
-          end
-        "
-        return self.send(name, *args, &block)
-      elsif match = /^create_([A-z_]*)/.match(name)
-        self.class.class_eval "
-          def #{name}(value)
-            @db.create_node :#{match.captures[0]}, value
-          end
-        "
-        return self.send(name, *args, &block)
-      else
-        return @db.send(name, *args, &block)
-      end
+      case name
+        when /^([A-z_]*)_by_([A-z_]*)/
+          self.class.class_eval "
+            def #{name}(value)
+              @db.get_node :#{$1}, :#{$2}, value
+            end"
+          return self.send(name, *args, &block)
 
+        when /^create_([A-z_]*)_on_([A-z_]*)/.match(name)
+          self.class.class_eval "
+            def #{name}(value)
+              @db.create_node :#{$1}, value, :#{$2}
+            end"
+          return self.send(name, *args, &block)
+
+        when /^create_([A-z_]*)/
+          self.class.class_eval "
+            def #{name}(value = {})
+              @db.create_node :#{$1}, value
+            end"
+          return self.send(name, *args, &block)
+
+        else
+          return @db.send(name, *args, &block)
+      end
     end
 
   end
