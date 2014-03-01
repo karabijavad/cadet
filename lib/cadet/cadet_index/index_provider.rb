@@ -8,7 +8,7 @@ module Cadet
         @lucene_index = LuceneBatchInserterIndexProviderNewImpl.new(db)
       end
       def nodeIndex(name, type = {"type" => "exact"})
-        @indexes[name] ||= CadetIndex::Index.new(@lucene_index, name, type)
+        @indexes[name.to_sym] ||= CadetIndex::Index.new(@lucene_index, name.to_sym, type)
       end
       def shutdown
         @indexes.each do |name, index|

@@ -8,12 +8,12 @@ module Cadet
         @lucene_index = lucene_index
       end
       def add(node, property, value)
-        @index[property] ||= {}
-        @index[property][value] = node
+        @index[property.to_sym] ||= {}
+        @index[property.to_sym][value] = node
       end
       def get(property, value)
-        @index[property] ||= {}
-        [@index[property][value]]
+        @index[property.to_sym] ||= {}
+        [@index[property.to_sym][value]]
       end
       def flush
         index = @lucene_index.nodeIndex(@name, @type)

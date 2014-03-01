@@ -29,7 +29,7 @@ module Cadet
       def find_node(label, property, value)
         index = @index_provider.nodeIndex(label)
 
-        ( node = IteratorUtil.firstOrNull(index.get(property, value)) ) ?
+        (node = index.get(property, value).first) ?
           Node.new(node, @db) : nil
       end
 
