@@ -60,8 +60,16 @@ module Cadet
             get_node :#{match.captures[1]}, :#{match.captures[2]}, value
           end
         "
-        self.send(name, *args)
+        return self.send(name, *args)
+      elsif match = /^create_([A-z_]*)_on_([A-z_]*)/.match(name)
+        self.class.class_eval "
+          def #{name}(value)
+            create_node_with :#{match.captures[0]}, value, :#{match.captures[1]}
+          end
+        "
+        return self.send(name, *args)
       end
+
     end
 
     def begin_tx

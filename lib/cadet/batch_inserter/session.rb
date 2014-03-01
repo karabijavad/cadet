@@ -48,6 +48,7 @@ module Cadet
       def get_transaction
         Cadet::BatchInserter::Transaction.new(self)
       end
+
     end
   end
 end

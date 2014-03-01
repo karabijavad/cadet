@@ -11,7 +11,6 @@ module Cadet
 
       def close
       end
-
     end
   end
 end

@@ -60,7 +60,6 @@ module Cadet
         "
         self.send(name, *args)
       end
-
     end
 
   end
