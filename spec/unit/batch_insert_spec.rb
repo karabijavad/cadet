@@ -32,7 +32,7 @@ describe Cadet::BatchInserter do
 
   it "should create a node with a set of properties, and index that node on a specified property" do
     tmpdir = quick_batch_neo4j do |db|
-      javad = db.create_node_with(:Person, {name: "Javad", age: 25}, :name)
+      javad = db.create_node(:Person, {name: "Javad", age: 25})
     end
 
     quick_normal_neo4j(tmpdir) do |db|

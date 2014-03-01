@@ -16,19 +16,10 @@ module Cadet
       @db.shutdown
     end
 
-    def create_node(label, property, value)
+    def create_node(label, properties, indexing_property = nil)
       Node.new(@db.createNode).tap do |n|
         n.add_label label
-        n[property] = value
-      end
-    end
-
-    def create_node_with(label, properties, indexing_property=nil)
-      Node.new(@db.createNode).tap do |n|
-          n.add_label label
-          properties.each do |prop, val|
-            n[prop] = val
-          end
+        properties.each { |prop, val| n[prop] = val }
       end
     end
 
@@ -38,7 +29,7 @@ module Cadet
     end
 
     def get_node(label, property, value)
-      find_node(label, property, value) || create_node(label, property, value)
+      find_node(label, property, value) || create_node(label, {property.to_sym => value}, property)
     end
 
     def get_transaction

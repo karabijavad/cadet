@@ -20,7 +20,14 @@ module Cadet
       elsif match = /^create_([A-z_]*)_on_([A-z_]*)/.match(name)
         self.class.class_eval "
           def #{name}(value)
-            @db.create_node_with :#{match.captures[0]}, value, :#{match.captures[1]}
+            @db.create_node :#{match.captures[0]}, value, :#{match.captures[1]}
+          end
+        "
+        return self.send(name, *args, &block)
+      elsif match = /^create_([A-z_]*)/.match(name)
+        self.class.class_eval "
+          def #{name}(value)
+            @db.create_node :#{match.captures[0]}, value
           end
         "
         return self.send(name, *args, &block)

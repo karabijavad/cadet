@@ -29,17 +29,11 @@ module Cadet
       def find_node(label, property, value)
         index = @index_provider.nodeIndex(label)
 
-        (node = index.get(property, value).first) ?
+        (node = index.get(property.to_sym, value).first) ?
           Node.new(node, @db) : nil
       end
 
-      def create_node(label, property, value)
-        Node.new(@db.createNode({property.to_java_string => value}, DynamicLabel.label(label)), @db).tap do |n|
-          @index_provider.nodeIndex(label).add(n.underlying, property.to_sym, value)
-        end
-      end
-
-      def create_node_with(label, properties, indexing_property = nil)
+      def create_node(label, properties, indexing_property = nil)
         Node.new(@db.createNode(properties.inject({}){|result,(k,v)| result[k.to_java_string] = v; result}, DynamicLabel.label(label)), @db).tap do |n|
           @index_provider.nodeIndex(label).add(n.underlying, indexing_property.to_sym, properties[indexing_property]) if indexing_property
         end
