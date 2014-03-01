@@ -23,6 +23,15 @@ module Cadet
       end
     end
 
+    def create_node_with(label, properties, indexing_property=nil)
+      Node.new(@db.createNode).tap do |n|
+          n.add_label label
+          properties.each do |prop, val|
+            n[prop] = val
+          end
+      end
+    end
+
     def find_node(label, property, value)
       ( node = IteratorUtil.firstOrNull(@db.findNodesByLabelAndProperty(DynamicLabel.label(label), property, value)) ) ?
         Node.new(node) : nil

@@ -8,12 +8,12 @@ module Cadet
       @underlying = @session.begin_tx
     end
 
-    def method_missing(name, *args)
+    def method_missing(name, *args, &block)
       # for the "dsl".
       # the transaction block is instance_eval'd by this class,
       # so any missing methods are then sent to the session
       # essentially means that session.blah can then be writen blah
-      @session.send(name, *args)
+      @session.send(name, *args, &block)
 
     end
 

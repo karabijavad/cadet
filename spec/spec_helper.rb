@@ -46,3 +46,7 @@ def batch_neo4j(at)
   yield db
   db.close
 end
+
+def quick_batch_dsl_neo4j
+  yield quick_batch_neo4j.dsl
+end

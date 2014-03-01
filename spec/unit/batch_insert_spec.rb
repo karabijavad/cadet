@@ -130,4 +130,15 @@ describe Cadet::BatchInserter do
     db.close
   end
 
+  xit "should not allow for get_relationships" do
+    quick_batch_dsl_neo4j do
+      transaction do
+        Person_by_name("Javad").lives_in_to City_by_name("Chicago")
+
+        Person_by_name("Javad").outgoing(:lives_in).should == [City_by_name("Chicago")]
+      end
+    end
+  end
+
+
 end

@@ -51,14 +51,14 @@ module Cadet
       @underlying.getId == other_node.underlying.getId
     end
 
-    def method_missing(name, *args)
+    def method_missing(name, *args, &block)
       if match = /([A-z_]*)_to$/.match(name)
         self.class.class_eval "
           def #{name}(value)
             create_outgoing(value, :#{match.captures[0]})
           end
         "
-        self.send(name, *args)
+        self.send(name, *args, &block)
       end
     end
 
