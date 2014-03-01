@@ -12,6 +12,7 @@ require 'cadet/direction'
 require 'cadet/node_traverser'
 require 'cadet/path_traverser'
 require 'cadet/node_relationships'
+require 'cadet/transaction'
 
 require 'cadet/batch_inserter/session'
 require 'cadet/batch_inserter/node'

@@ -32,10 +32,10 @@ module Cadet
       find_node(label, property, value) || create_node(label, property, value)
     end
 
-    def transaction
+    def transaction(&block)
       tx = @db.beginTx
       begin
-        yield tx
+        Transaction.new(tx, self).instance_eval &block
         tx.success
       ensure
         tx.close

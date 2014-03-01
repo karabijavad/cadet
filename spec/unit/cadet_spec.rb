@@ -84,4 +84,17 @@ describe Cadet do
       end
     end
   end
+
+  it 'should have a working dsl' do
+    db = Cadet::Test::Session.open
+
+    db.transaction do |tx|
+      a = db.get_a_Person_by_name "Javad"
+      b = Person_by_name "Javad"
+
+      a.should == b
+    end
+
+    db.close
+  end
 end
