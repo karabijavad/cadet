@@ -2,28 +2,28 @@ module Cadet
   module CadetIndex
     class Index
       def initialize(lucene_index, name, type)
-        @name = name
+        @name = name.to_sym
         @type = type
-        @index = {}
+        @property_index = {}
         @lucene_index = lucene_index
       end
 
       def add(node, property, value)
-        @index[property] ||= {}
-        @index[property][value] = node
+        @property_index[property.to_sym] ||= {}
+        @property_index[property.to_sym][value] = node
       end
 
       def get(property, value)
-        @index[property] ||= {}
-        [@index[property][value]]
+        @property_index[property.to_sym] ||= {}
+        [@property_index[property.to_sym][value]]
       end
 
       def flush
-        index = @lucene_index.nodeIndex(@name, @type)
+        lucene_node_index = @lucene_index.nodeIndex(@name, @type)
 
-        @index.each do |property, mappings|
-          mappings.each do |value, node|
-            index.add(node, {property.to_java_string => value})
+        @property_index.each do |property, propval_to_node_mappings|
+          propval_to_node_mappings.each do |value, node|
+            lucene_node_index.add(node, {property.to_java_string => value})
           end
         end
       end

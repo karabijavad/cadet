@@ -12,16 +12,12 @@ super simple. you dont even need to download neo4j.
 
 require 'cadet'
 
-#open the database
-db = Cadet::Session.open("neo4j-community-2.0.0/data/graph.db").dsl do
-  #begin a transaction. the transaction will automatically finish at the end of the provided block
+Cadet::Session.open("neo4j-community-2.0.0/data/graph.db") do |db|
   transaction do
     Person_by_name("Javad").lives_in_to City_by_name("Chicago")
   end
 end
 
-#close the database
-db.close
 
 ```
 
