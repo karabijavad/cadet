@@ -7,8 +7,6 @@ module Cadet
     def self.open(location, &block)
       session = new org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location)
       if block_given?
-        #if a block is provided, then run the block setting "self" to this session object,
-        #then close the database after the block is ran
         session.dsl(&block)
         session.close
       end

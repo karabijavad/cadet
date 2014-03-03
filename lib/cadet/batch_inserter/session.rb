@@ -12,8 +12,13 @@ module Cadet
         super
       end
 
-      def self.open(location, config = {})
-        new org.neo4j.unsafe.batchinsert.BatchInserters.inserter(location, config)
+      def self.open(location, &block)
+        session = new org.neo4j.unsafe.batchinsert.BatchInserters.inserter(location)
+        if block_given?
+          session.dsl(&block)
+          session.close
+        end
+        session
       end
 
       def constraint(label, property)
