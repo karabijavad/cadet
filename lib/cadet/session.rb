@@ -4,9 +4,17 @@ module Cadet
       @db = db
     end
 
-    def self.open(location)
-      new org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location)
+    def self.open(location, &block)
+      session = new org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location)
+      if block_given?
+        #if a block is provided, then run the block setting "self" to this session object,
+        #then close the database after the block is ran
+        session.dsl(&block)
+        session.close
+      end
+      session
     end
+
     def close
       @db.shutdown
     end
@@ -32,8 +40,7 @@ module Cadet
     end
 
     def dsl(&block)
-      DSL.new(self).instance_exec(self, &block)
-      self
+      instance_eval &block
     end
 
     def transaction
@@ -56,5 +63,24 @@ module Cadet
     def begin_tx
       @db.beginTx
     end
+
+    def method_missing(name, *args, &block)
+      case name
+        when /^([A-z_]*)_by_([A-z_]*)$/
+            self.class.class_eval "
+              def #{name}(value)
+                get_node :#{$1}, :#{$2}, value
+              end"
+            return self.send(name, *args, &block)
+
+        when /^create_([A-z_]*)$/
+          self.class.class_eval "
+            def #{name}(value, indexing_property = nil)
+              create_node :#{$1}, value, indexing_property
+            end"
+          return self.send(name, *args, &block)
+      end
+    end
+
   end
 end

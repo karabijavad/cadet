@@ -26,6 +26,13 @@ def quick_normal_neo4j(at = nil)
   at
 end
 
+def quick_normal_neo4j_dsl(at = nil, &block)
+  at ||= Dir.mktmpdir
+
+  Cadet::Session.open(at, &block)
+  at
+end
+
 def normal_neo4j(at)
   db = Cadet::Session.open(at)
   yield db

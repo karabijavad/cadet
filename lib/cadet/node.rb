@@ -55,6 +55,7 @@ module Cadet
         self.class.class_eval "
           def #{name}(value)
             create_outgoing(value, :#{match.captures[0]})
+            value
           end
         "
         self.send(name, *args, &block)
