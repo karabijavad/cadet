@@ -12,7 +12,7 @@ super simple. you dont even need to download neo4j.
 
 require 'cadet'
 
-Cadet::Session.open "path/to/graph.db/") do
+Cadet::Session.open "path/to/graph.db/" do
   transaction do
     Person_by_name("Javad").lives_in_to City_by_name("Chicago")
   end
