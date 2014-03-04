@@ -13,13 +13,12 @@ module Cadet
       end
 
       def self.open(location, &block)
-        session = new(org.neo4j.unsafe.batchinsert.BatchInserters.inserter(location))
-
-        if block_given?
-          session.instance_exec(session, &block)
-          session.close
+        new(org.neo4j.unsafe.batchinsert.BatchInserters.inserter(location)).tap do |session|
+          if block_given?
+            session.dsl(&block)
+            session.close
+          end
         end
-        session
       end
 
       def constraint(label, property)

@@ -5,21 +5,19 @@ module Cadet
     end
 
     def self.open(location = nil, &block)
-      if location
-        session = new(org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location))
-      else
-        session = new(org.neo4j.test.TestGraphDatabaseFactory.new.newImpermanentDatabase)
+      (location ?
+        new(org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location)) :
+        new(org.neo4j.test.TestGraphDatabaseFactory.new.newImpermanentDatabase))
+      .tap do |session|
+        if block_given?
+          session.dsl(&block)
+          session.close
+        end
       end
-
-      if block_given?
-        session.instance_exec(session, &block)
-        session.close
-      end
-      session
     end
 
     def dsl(&block)
-      instance_eval(&block)
+      instance_exec(self, &block)
     end
 
     def close
