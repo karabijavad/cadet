@@ -1,5 +1,7 @@
 module Cadet
   class Session
+    attr_accessor :db
+
     def initialize(db)
       @db = db
     end

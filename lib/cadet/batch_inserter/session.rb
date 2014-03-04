@@ -4,7 +4,7 @@ module Cadet
 
       def initialize(db)
         @index_provider = CadetIndex::IndexProvider.new(db)
-        super db
+        @db = db
       end
 
       def close
@@ -42,7 +42,7 @@ module Cadet
       end
 
       def get_transaction
-        Cadet::BatchInserter::Transaction.new(self)
+        Transaction.new(self)
       end
 
     end
