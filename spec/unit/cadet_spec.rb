@@ -132,12 +132,11 @@ describe Cadet do
     end
   end
 
-
-  # commented out, as neo4j is writing to disk,
-  # even with an impermanent database
-  xit "should enforce unique constraints" do
+  # being opened in temporary directory as, when begin used as an
+  # impermanent database, neo4j is writing to disk, even though it shouldnt be.
+  it "should enforce unique constraints" do
     expect {
-      Cadet::Session.open do
+      Cadet::Session.open(Dir.mktmpdir) do
         transaction do
           constraint :Person, :name
         end
