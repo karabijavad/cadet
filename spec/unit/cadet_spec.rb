@@ -61,6 +61,19 @@ describe Cadet do
     end
   end
 
+  it "should add outgoing relationship's to a node" do
+    Cadet::Session.open do
+      transaction do
+        javad = Person_by_name("Javad")
+        ellen = Person_by_name("Ellen")
+
+        javad.knows_to ellen
+
+        javad.outgoing(:knows).should == [ellen]
+      end
+    end
+  end
+
   it "it should accept multiple relationships" do
     Cadet::Session.open do
       transaction do
@@ -68,8 +81,8 @@ describe Cadet do
         chicago = City_by_name("Chicago")
         houston = City_by_name("Houston")
 
-        javad.outgoing(:lives_in) << chicago
-        javad.outgoing(:lives_in) << houston
+        javad.lives_in_to chicago
+        javad.lives_in_to houston
         javad.outgoing(:lives_in).should == [chicago, houston]
       end
     end
@@ -86,11 +99,11 @@ describe Cadet do
         springfield = City_by_name    "Springfield"
 
 
-        javad.outgoing(:works_at) << trunkclub
-        trunkclub.outgoing(:located_in) << chicago
-        javad.outgoing(:lives_in) << chicago
-        ellen.outgoing(:lives_in) << chicago
-        chicago.outgoing(:country) << us
+        javad.works_at_to       trunkclub
+        trunkclub.located_in_to chicago
+        javad.lives_in_to       chicago
+        ellen.lives_in_to       chicago
+        chicago.country_to      us
 
         javad.outgoing(:works_at).outgoing(:located_in).outgoing(:country).should == [us]
         chicago.incoming(:located_in).incoming(:works_at).should == [javad]
@@ -104,8 +117,8 @@ describe Cadet do
       transaction do
         javad       = Person_by_name  "Javad"
         ellen       = Person_by_name  "Ellen"
-        javad.outgoing(:knows) << ellen
-        javad.incoming(:also_knows) << ellen
+        javad.knows_to      ellen
+        ellen.also_knows_to javad
 
         javad.outgoing_rels(:knows).map{ |rel| rel.get_other_node(javad)}.should == [ellen]
         javad.incoming_rels(:also_knows).map{ |rel| rel.get_other_node(javad)}.should == [ellen]

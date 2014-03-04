@@ -17,8 +17,8 @@ describe Cadet::BatchInserter do
         chicago = City_by_name("Chicago")
         houston = City_by_name("Houston")
 
-        javad.outgoing(:lives_in) << chicago
-        javad.outgoing(:lives_in) << houston
+        javad.lives_in_to chicago
+        javad.lives_in_to houston
       end
     end
 
