@@ -18,8 +18,6 @@ require 'cadet/batch_inserter/session'
 require 'cadet/batch_inserter/node'
 require 'cadet/batch_inserter/transaction'
 
-require 'cadet/test/session'
-
 require 'cadet/cadet_index/index_provider'
 require 'cadet/cadet_index/index'
 

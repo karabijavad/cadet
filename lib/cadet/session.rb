@@ -4,13 +4,22 @@ module Cadet
       @db = db
     end
 
-    def self.open(location, &block)
-      session = new org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location)
+    def self.open(location = nil, &block)
+      if location
+        session = new(org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location))
+      else
+        session = new(org.neo4j.test.TestGraphDatabaseFactory.new.newImpermanentDatabase)
+      end
+
       if block_given?
-        session.dsl(&block)
+        session.instance_exec(session, &block)
         session.close
       end
       session
+    end
+
+    def dsl(&block)
+      instance_eval(&block)
     end
 
     def close
@@ -35,10 +44,6 @@ module Cadet
 
     def get_transaction
       Transaction.new(self)
-    end
-
-    def dsl(&block)
-      instance_eval &block
     end
 
     def transaction
@@ -77,6 +82,8 @@ module Cadet
               create_node :#{$1}, value, indexing_property
             end"
           return self.send(name, *args, &block)
+        else
+          raise NotImplementedError
       end
     end
 

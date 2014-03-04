@@ -13,9 +13,10 @@ module Cadet
       end
 
       def self.open(location, &block)
-        session = new org.neo4j.unsafe.batchinsert.BatchInserters.inserter(location)
+        session = new(org.neo4j.unsafe.batchinsert.BatchInserters.inserter(location))
+
         if block_given?
-          session.dsl(&block)
+          session.instance_exec(session, &block)
           session.close
         end
         session

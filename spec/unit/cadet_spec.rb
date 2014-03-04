@@ -1,45 +1,83 @@
 require 'spec_helper'
+require 'tmpdir'
 
 describe Cadet do
 
-  it "should set a node's property" do
-    quick_normal_neo4j do |db|
-        javad = db.get_node :Person, :name, "Javad"
-        javad[:name].should == "Javad"
+  it "should create an instance of cadet session, for test and normal sessions" do
+    Cadet::Session.open(Dir.mktmpdir).class.should == Cadet::Session
+    Cadet::Session.open.class.should               == Cadet::Session #test session
+  end
+
+  it "should yield to transactions" do
+    has_block_ran = false
+    Cadet::Session.open do
+      transaction do
+        has_block_ran = true
+      end
+    end
+    has_block_ran.should == true
+  end
+
+  it "should return the same result between get_node and Label_by_prop" do
+    Cadet::Session.open do
+      transaction do
+        get_node(:Person, :name, "Javad").should == Person_by_name("Javad")
+      end
     end
   end
 
   it "should set a node's label" do
-    quick_normal_neo4j do |db|
-        javad = db.get_node :Person, :name, "Javad"
+    Cadet::Session.open do
+      transaction do
+        javad = Person_by_name("Javad")
+        javad[:age] = 25
+
+        javad[:age].should == 25
+      end
+    end
+  end
+
+  it "should set a node's label" do
+    Cadet::Session.open do
+      transaction do
+        javad = Person_by_name("Javad")
         javad.add_label :Member
+
         javad.labels.should == ["Person", "Member"]
+      end
     end
   end
 
   it "should add outgoing relationship's to a node" do
-    quick_normal_neo4j do |db|
-        javad = db.get_node :Person, :name, "Javad"
-        ellen = db.get_node :Person, :name, "Ellen"
+    Cadet::Session.open do
+      transaction do
+        javad = Person_by_name("Javad")
+        ellen = Person_by_name("Ellen")
 
         javad.outgoing(:knows) << ellen
 
         javad.outgoing(:knows).should == [ellen]
+      end
     end
   end
 
   it "it should accept multiple relationships" do
-    quick_normal_neo4j do |db|
-      javad = db.get_node(:Person, :name, "Javad")
-      javad.outgoing(:lives_in) << db.get_node(:City, :name, "Chicago")
-      javad.outgoing(:lives_in) << db.get_node(:City, :name, "Houston")
-      javad.outgoing(:lives_in).should == [db.get_node(:City, :name, "Chicago"), db.get_node(:City, :name, "Houston")]
+    Cadet::Session.open do
+      transaction do
+        javad   = Person_by_name("Javad")
+        chicago = City_by_name("Chicago")
+        houston = City_by_name("Houston")
+
+        javad.outgoing(:lives_in) << chicago
+        javad.outgoing(:lives_in) << houston
+        javad.outgoing(:lives_in).should == [chicago, houston]
+      end
     end
   end
 
   it "should allow for outgoing to be chained" do
-    quick_test_neo4j do |db|
-      db.dsl do |db|
+    Cadet::Session.open do
+      transaction do
         javad       = Person_by_name  "Javad"
         ellen       = Person_by_name  "Ellen"
         trunkclub   = Company_by_name "Trunkclub"
@@ -62,8 +100,8 @@ describe Cadet do
   end
 
   it "should allow for node relationship's to be accessed" do
-    quick_test_neo4j do |db|
-      db.dsl do |db|
+    Cadet::Session.open do
+      transaction do
         javad       = Person_by_name  "Javad"
         ellen       = Person_by_name  "Ellen"
         javad.outgoing(:knows) << ellen
@@ -75,39 +113,27 @@ describe Cadet do
     end
   end
 
+  it "should enforce unique constraints" do
+    Cadet::Session.open do |session|
+      session.class.should == Cadet::Session
+    end
+  end
 
+
+  # commented out, as neo4j is writing to disk,
+  # even with an impermanent database
   xit "should enforce unique constraints" do
-    test_neo4j do |db|
-      db.transaction do
-        db.constraint :Person, :name
+    expect {
+      Cadet::Session.open do
+        transaction do
+          constraint :Person, :name
+        end
+        transaction do
+          create_node(:Person, {name: "Javad"})
+          create_node(:Person, {name: "Javad"})
+        end
       end
-      db.transaction do
-        db.create_node :Person, :name, "Javad"
-
-        expect { db.create_node :Person, :name, "Javad" }.to raise_error(org.neo4j.graphdb.ConstraintViolationException)
-      end
-    end
-  end
-
-  it 'should have a working dsl' do
-    db = Cadet::Test::Session.open.dsl do
-      transaction do |tx|
-        Person_by_name("Javad").lives_in_to City_by_name("Chicago")
-
-        Person_by_name("Javad").outgoing(:lives_in).should == [City_by_name("Chicago")]
-      end
-    end
-  end
-
-
-  it 'should have a working dsl 2' do
-    Cadet::Test::Session.open do
-      transaction do
-        Person_by_name("Javad").lives_in_to City_by_name("Chicago")
-
-        Person_by_name("Javad").outgoing(:lives_in).should == [City_by_name("Chicago")]
-      end
-    end
+    }.to raise_error(org.neo4j.graphdb.ConstraintViolationException)
   end
 
 end
