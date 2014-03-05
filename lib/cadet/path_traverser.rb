@@ -9,18 +9,8 @@ module Cadet
     end
 
     def each
-      if @direction == :outgoing
-        @nodes.each do |n|
-          n.outgoing(@type).each do |o|
-            yield o
-          end
-        end
-      else
-        @nodes.each do |n|
-          n.incoming(@type).each do |o|
-            yield o
-          end
-        end
+      @nodes.each do |n|
+        n.send(@direction, @type).each { |o| yield o }
       end
     end
 
