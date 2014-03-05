@@ -83,7 +83,6 @@ describe Cadet do
 
         javad.lives_in_to chicago
         javad.lives_in_to houston
-        #javad.outgoing(:lives_in).should == [chicago, houston]
         javad.outgoing(:lives_in).to_a & [houston, chicago] == javad.outgoing(:lives_in)
       end
     end
