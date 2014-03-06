@@ -148,4 +148,28 @@ describe Cadet do
     }.to raise_error(org.neo4j.graphdb.ConstraintViolationException)
   end
 
+  it "it should allow =~ to compare a set of nodes to a NodeRelationships, indifferent to order" do
+    Cadet::Session.open do
+      transaction do
+        javad   = Person_by_name("Javad")
+        chicago = City_by_name("Chicago")
+        houston = City_by_name("Houston")
+        memphis = City_by_name("Memphis")
+
+        javad.lives_in_to chicago
+        javad.lives_in_to houston
+
+        javad.outgoing(:lives_in).send("=~", [houston, chicago]).should == true
+        javad.outgoing(:lives_in).send("=~", [chicago, houston]).should == true
+        javad.outgoing(:lives_in).send("=~", [chicago, houston, memphis]).should_not == true
+        javad.outgoing(:lives_in).should =~ [chicago, houston]
+        javad.outgoing(:lives_in).should =~ [houston, chicago]
+        javad.outgoing(:lives_in).should_not =~ [houston, chicago, memphis]
+
+        javad.outgoing(:lives_in).should     == [chicago, houston]
+        javad.outgoing(:lives_in).should_not == [houston, chicago]
+      end
+    end
+  end
+
 end
