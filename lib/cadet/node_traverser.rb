@@ -29,5 +29,9 @@ module Cadet
       self.to_a == other.to_a
     end
 
+    def =~(other)
+      self.to_a.sort_by {|n| n.underlying.getId} == other.to_a.sort_by {|n| n.underlying.getId}
+    end
+
   end
 end
