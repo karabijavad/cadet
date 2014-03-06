@@ -132,8 +132,8 @@ describe Cadet do
     end
   end
 
-  # being opened in temporary directory as, when begin used as an
-  # impermanent database, neo4j is writing to disk, even though it shouldnt be.
+  # when using an impermanent database, neo4j is writing to disk in this test (it shouldnt).
+  # so using a tmp dir instead
   it "should enforce unique constraints" do
     expect {
       Cadet::Session.open(Dir.mktmpdir) do
