@@ -25,8 +25,5 @@ module Cadet
       self.to_a == other.to_a
     end
 
-    def ooo_test(other)
-      self.to_a.sort == other.to_a.sort
-    end
   end
 end
