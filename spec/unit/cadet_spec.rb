@@ -88,7 +88,6 @@ describe Cadet do
 	javad_set = Set.new(javad.outgoing(:lives_in))
 	city_set = Set.new([houston, chicago])
 	javad_set == city_set
-        #javad.outgoing(:lives_in).to_a & [houston, chicago] == javad.outgoing(:lives_in)
       end
     end
   end
