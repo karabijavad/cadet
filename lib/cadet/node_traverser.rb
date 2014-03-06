@@ -30,12 +30,13 @@ module Cadet
     end
 
     def =~(other)
-      self.to_a.sort == other.to_a.sort
-    end
-
-
-    def oootest(other)
-      self.to_a.sort == other.to_a.sort
+      self.to_a.each do |i|
+        puts i
+      end
+      other.to_a.each do |i|
+	puts i
+      end
+      #self.to_a.sort == other.to_a.sort
     end
   end
 end
