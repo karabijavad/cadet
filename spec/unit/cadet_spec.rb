@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'tmpdir'
+require 'set'
 
 describe Cadet do
 
@@ -83,7 +84,11 @@ describe Cadet do
 
         javad.lives_in_to chicago
         javad.lives_in_to houston
-        javad.outgoing(:lives_in).to_a & [houston, chicago] == javad.outgoing(:lives_in)
+
+	javad_set = Set.new(javad.outgoing(:lives_in))
+	city_set = Set.new([houston, chicago])
+	javad_set == city_set
+        #javad.outgoing(:lives_in).to_a & [houston, chicago] == javad.outgoing(:lives_in)
       end
     end
   end
