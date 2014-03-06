@@ -75,19 +75,18 @@ describe Cadet do
     end
   end
 
-  it "it should accept multiple relationships" do
+  it "should accept multiple relationships" do
     Cadet::Session.open do
       transaction do
         javad   = Person_by_name("Javad")
         chicago = City_by_name("Chicago")
-        houston = City_by_name("Houston")
+	houston = City_by_name("Houston")
 
         javad.lives_in_to chicago
         javad.lives_in_to houston
 
-	javad_set = Set.new(javad.outgoing(:lives_in))
-	city_set = Set.new([houston, chicago])
-	javad_set == city_set
+	javad.outgoing(:lives_in).to_a.should =~ [houston, chicago]
+	javad.outgoing(:lives_in).to_a.should =~ [chicago, houston]
       end
     end
   end
