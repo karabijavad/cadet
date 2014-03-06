@@ -24,5 +24,6 @@ module Cadet
     def ==(other)
       self.to_a == other.to_a
     end
+
   end
 end

@@ -29,5 +29,14 @@ module Cadet
       self.to_a == other.to_a
     end
 
+    def =~(other)
+      self.to_a.each do |i|
+        puts i
+      end
+      other.to_a.each do |i|
+	puts i
+      end
+      #self.to_a.sort == other.to_a.sort
+    end
   end
 end
