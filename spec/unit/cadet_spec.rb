@@ -213,7 +213,7 @@ describe Cadet do
         houston = City_by_name   "Houston"
 
         rel = javad.home_city_to(houston)
-        rel[:birth_year]        == 1988
+        rel[:birth_year]        =  1988
         rel[:birth_year].should == 1988
       end
     end
