@@ -206,4 +206,18 @@ describe Cadet do
     end
   end
 
+  it "should return the relationship created when ..._to is called on a node" do
+    Cadet::Session.open do |session|
+      transaction do
+        javad   = Person_by_name "Javad"
+        houston = City_by_name   "Houston"
+
+        rel = javad.home_city_to(houston)
+        rel[:birth_year]        == 1988
+        rel[:birth_year].should == 1988
+      end
+    end
+  end
+
+
 end

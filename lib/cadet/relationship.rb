@@ -10,6 +10,14 @@ module Cadet
       @underlying.getId == other_rel.underlying.getId
     end
 
+    def []= (property, value)
+      @underlying.setProperty(property.to_java_string, value)
+    end
+
+    def [] (property)
+      @underlying.getProperty(property.to_java_string)
+    end
+
     def get_other_node(node)
       Node.new @underlying.getOtherNode(node.underlying)
     end
