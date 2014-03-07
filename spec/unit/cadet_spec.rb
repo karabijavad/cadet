@@ -174,7 +174,7 @@ describe Cadet do
   end
 
   it "should return the relationship created when ..._to is called on a node" do
-    Cadet::Session.open do |session|
+    Cadet::Session.open do
       transaction do
         javad   = Person_by_name "Javad"
         houston = City_by_name   "Houston"
@@ -192,7 +192,7 @@ describe Cadet do
   end
 
   it "should allow chaining of relationship creation" do
-    Cadet::Session.open do |session|
+    Cadet::Session.open do
       transaction do
         javad   = Person_by_name "Javad"
         houston = City_by_name   "Houston"
@@ -207,7 +207,7 @@ describe Cadet do
   end
 
   it "should return the relationship created when ..._to is called on a node" do
-    Cadet::Session.open do |session|
+    Cadet::Session.open do
       transaction do
         javad   = Person_by_name "Javad"
         houston = City_by_name   "Houston"
