@@ -8,6 +8,12 @@ describe Cadet do
     Cadet::Session.open.class.should               == Cadet::Session #test session
   end
 
+  it "should create an instance of cadet session, for test and normal sessions" do
+    Cadet::Session.open do |session|
+      self.should == session
+    end
+  end
+
   it "should yield to transactions" do
     has_block_ran = false
     Cadet::Session.open do
