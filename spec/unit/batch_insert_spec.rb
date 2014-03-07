@@ -23,12 +23,8 @@ describe Cadet::BatchInserter do
     end
 
     Cadet::Session.open(at) do
-      self.class.should == Cadet::Session
-
       transaction do
-        # the order matters here, unfortunately.
-        # TODO: find a way for [chicago, houston] to also work
-        Person_by_name("Javad").outgoing(:lives_in).should == [City_by_name("Houston"), City_by_name("Chicago")]
+        Person_by_name("Javad").outgoing(:lives_in).should =~ [City_by_name("Houston"), City_by_name("Chicago")]
       end
     end
   end
