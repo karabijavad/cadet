@@ -173,4 +173,37 @@ describe Cadet do
     end
   end
 
+  it "should return the relationship created when ..._to is called on a node" do
+    Cadet::Session.open do |session|
+      transaction do
+        javad   = Person_by_name "Javad"
+        houston = City_by_name   "Houston"
+
+        rel = javad.home_city_to(houston)
+
+        rel.class.should == Cadet::Relationship
+
+        rel.start_node.should == javad
+        rel.end_node.should == houston
+
+        javad.outgoing(:home_city).should == [houston]
+      end
+    end
+  end
+
+  it "should allow chaining of relationship creation" do
+    Cadet::Session.open do |session|
+      transaction do
+        javad   = Person_by_name "Javad"
+        houston = City_by_name   "Houston"
+        texas   = State_by_name  "Texas"
+
+        javad.home_city_to(houston).city_of_to(texas)
+
+        javad.outgoing(:home_city).should == [houston]
+        houston.outgoing(:city_of).should == [texas]
+      end
+    end
+  end
+
 end
