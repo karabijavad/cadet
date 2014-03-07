@@ -25,6 +25,7 @@ describe Cadet::BatchInserter do
     Cadet::Session.open(at) do
       transaction do
         Person_by_name("Javad").outgoing(:lives_in).should =~ [City_by_name("Houston"), City_by_name("Chicago")]
+        Person_by_name("Javad").outgoing(:lives_in).should =~ [City_by_name("Chicago"), City_by_name("Houston")]
       end
     end
   end
