@@ -11,6 +11,7 @@ describe Cadet do
   it "should create an instance of cadet session, for test and normal sessions" do
     Cadet::Session.open do |session|
       self.should == session
+      self.class.should == Cadet::Session
     end
   end
 
@@ -129,12 +130,6 @@ describe Cadet do
         javad.outgoing_rels(:knows).map{ |rel| rel.get_other_node(javad)}.should == [ellen]
         javad.incoming_rels(:also_knows).map{ |rel| rel.get_other_node(javad)}.should == [ellen]
       end
-    end
-  end
-
-  it "should enforce unique constraints" do
-    Cadet::Session.open do |session|
-      session.class.should == Cadet::Session
     end
   end
 
