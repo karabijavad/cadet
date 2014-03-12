@@ -15,7 +15,7 @@ module Cadet
       def self.open(location, &block)
         new(org.neo4j.unsafe.batchinsert.BatchInserters.inserter(location)).tap do |session|
           if block_given?
-            session.dsl(&block)
+            session.instance_exec(session, &block)
             session.close
           end
         end

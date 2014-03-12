@@ -10,14 +10,10 @@ module Cadet
         new(org.neo4j.test.TestGraphDatabaseFactory.new.newImpermanentDatabase))
       .tap do |session|
         if block_given?
-          session.dsl(&block)
+          session.instance_exec(session, &block)
           session.close
         end
       end
-    end
-
-    def dsl(&block)
-      instance_exec(self, &block)
     end
 
     def close
