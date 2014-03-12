@@ -7,7 +7,7 @@ Use neo4j via jruby! Nothing else needed, simply add this gem to get the power o
 
 super simple. you dont even need to download neo4j.
 
-
+##Open a session
 ```ruby
 
 require 'cadet'
@@ -21,8 +21,15 @@ Cadet::Session.open "path/to/graph.db/" do
   end
 end
 
-
 ```
+
+## beginning a transaction
+```ruby
+transaction do
+  #...
+end
+```
+Note: transaction effictively does nothing in a BatchInserter session, as transactions are not supported in neo4j's BatchInserter (for performance reasons)
 
 ## Getting/creating a node, using label-property-value
 A node can be retrieved (and implicitly created if it does not exist) via the following syntax:
@@ -66,5 +73,5 @@ chicago.incoming(:lives_in).each do |rel|
   #rel is a Cadet#Relationship
 end
 ```
-Note: this does not work in a batch inserter session, atleast not yet.
+Note: this (relationship traversal) does not work in a batch inserter session, atleast not yet.
 The idea is a batch inserter session is used for writing data, as opposed to reading data
