@@ -21,5 +21,38 @@ end
 
 ```
 
+## Getting/creating a node, using label-property-value
+A node can be retrieved (and implicitly created if it does not exist) via the following syntax:
+```ruby
+javad = Person_by_name("Javad")
+```
+This will search for a node with the label "Person", and with the a "name" property set to "Javad".
+If a "Person" node with "name" "Javad" is not found, it will create the node, add the label "Person", and set the "name" to "javad".
+
+## Setting / retrieving a nodes properties
+A node's properties can be accessed and modified just as if the node was a hash:
+```ruby
+javad[:age] = 25
+puts javad[:age] # 25
+```
+
+## Creating a relationship between 2 nodes
+A relationship can be added between 2 nodes via the following syntax:
+```ruby
+javad.lives_in_to City_by_name("Chicago")
+```
+This returns a Cadet#Relationship object, which can then have its properties set just like a hash:
+```ruby
+new_relationship = javad.lives_in_to City_by_name("Chicago")
+new_relationship[:from] = "2012"
+new_relationship[:to]   = "ongoing"
+```
+
+Relationship creation can also be chained:
+```ruby
+Person_by_name("Javad").lives_in_to(City_by_name("Chicago")).city_of_to(State_by_name("Illinois")).state_of_to(Country_by_name("United States"))
+```
+
+
 Batch insert mode can be used by simply using Cadet::BatchInserter::Session instead of Cadet::Session!
 None of your code needs to change.
