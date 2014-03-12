@@ -13,6 +13,8 @@ super simple. you dont even need to download neo4j.
 require 'cadet'
 
 Cadet::Session.open "path/to/graph.db/" do
+#for a batch inserter session:
+#Cadet::BatchInserter::Session.open "path/to/graph.db/" do
   transaction do
     Person_by_name("Javad").lives_in_to City_by_name("Chicago")
   end
@@ -53,6 +55,13 @@ Relationship creation can also be chained:
 Person_by_name("Javad").lives_in_to(City_by_name("Chicago")).city_of_to(State_by_name("Illinois")).state_of_to(Country_by_name("United States"))
 ```
 
+A node's relationships can be iterated over via:
+```ruby
+javad.outgoing(:lives_in).each do |rel|
+  #rel is a Cadet#Relationship
+end
 
-Batch insert mode can be used by simply using Cadet::BatchInserter::Session instead of Cadet::Session!
-None of your code needs to change.
+chicago.incoming(:lives_in).each do |rel|
+  #rel is a Cadet#Relationship
+end
+```
