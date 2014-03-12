@@ -15,6 +15,7 @@ require 'cadet'
 Cadet::Session.open "path/to/graph.db/" do
 #for a batch inserter session:
 #Cadet::BatchInserter::Session.open "path/to/graph.db/" do
+#bear in mind that, the database directory needs to be clean before establishing a BatchInserter session.
   transaction do
     Person_by_name("Javad").lives_in_to City_by_name("Chicago")
   end
@@ -65,3 +66,5 @@ chicago.incoming(:lives_in).each do |rel|
   #rel is a Cadet#Relationship
 end
 ```
+Note: this does not work in a batch inserter session, atleast not yet.
+The idea is a batch inserter session is used for writing data, as opposed to reading data
