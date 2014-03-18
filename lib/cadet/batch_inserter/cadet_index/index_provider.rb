@@ -9,7 +9,7 @@ module Cadet
         end
 
         def [](label)
-          @indexes[label.to_sym] ||= CadetIndex::Index.new(@lucene_index, label.to_sym, {"type" => "exact"})
+          @indexes[label.to_sym] ||= CadetIndex::Index.new(@lucene_index, label.to_sym)
         end
         def shutdown
           @indexes.each { |label, index| index.flush }

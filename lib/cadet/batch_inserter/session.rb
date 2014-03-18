@@ -7,6 +7,10 @@ module Cadet
         @db = db
       end
 
+      def index_on(label, property, node)
+        @index_provider[label].add(node.underlying, property.to_sym, node[property])
+      end
+
       def close
         @index_provider.shutdown
         super
@@ -32,10 +36,12 @@ module Cadet
           Node.new(node, @db) : nil
       end
 
-      def create_node(label, properties, indexing_property = nil)
-        Node.new(@db.createNode(properties.inject({}){|result,(k,v)| result[k.to_java_string] = v; result}, DynamicLabel.label(label)), @db).tap do |n|
-          @index_provider[label].add(n.underlying, indexing_property.to_sym, properties[indexing_property]) if indexing_property
-        end
+      def create_node(label, properties)
+        Node.new(@db.createNode(properties.inject({}){|result,(k,v)| result[k.to_java_string] = v; result}, DynamicLabel.label(label)), @db)
+      end
+
+      def get_node(label, property, value)
+        find_node(label, property, value) || create_node(label, {property.to_sym => value}).tap { |n|  index_on(label, property, n) }
       end
 
       def get_transaction

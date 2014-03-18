@@ -2,9 +2,8 @@ module Cadet
   module BatchInserter
     module CadetIndex
       class Index
-        def initialize(lucene_index, name, type)
+        def initialize(lucene_index, name)
           @name = name.to_sym
-          @type = type
           @property_index = {}
           @lucene_index = lucene_index
         end
@@ -21,7 +20,7 @@ module Cadet
         end
 
         def flush
-          lucene_node_index = @lucene_index.nodeIndex(@name, @type)
+          lucene_node_index = @lucene_index.nodeIndex(@name, {"type" => "exact"})
 
           @property_index.each do |property, propval_to_node_mappings|
             propval_to_node_mappings.each do |value, nodes|

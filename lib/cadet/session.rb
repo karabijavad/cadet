@@ -33,7 +33,7 @@ module Cadet
     end
 
     def get_node(label, property, value)
-      find_node(label, property, value) || create_node(label, {property.to_sym => value}, property)
+      find_node(label, property, value) || create_node(label, {property.to_sym => value})
     end
 
     def get_transaction
@@ -72,8 +72,8 @@ module Cadet
 
         when /^create_([A-z_]*)$/
           self.class.class_eval "
-            def #{name}(value, indexing_property = nil)
-              create_node :#{$1}, value, indexing_property
+            def #{name}(value)
+              create_node :#{$1}, value
             end"
           return self.send(name, *args, &block)
         else
