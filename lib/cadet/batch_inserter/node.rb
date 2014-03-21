@@ -3,7 +3,7 @@ module Cadet
     class Node < Cadet::Node
 
       def create_outgoing(to, type, properties = {})
-        Relationship.new @db.createRelationship(@underlying, to.underlying, DynamicRelationshipType.withName(type), properties)
+        Relationship.new @db.createRelationship(@underlying, to.underlying, DynamicRelationshipType.withName(type), properties), @db
       end
 
       def []= (property, value)

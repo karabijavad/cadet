@@ -2,8 +2,9 @@ module Cadet
   class Relationship
     attr_accessor :underlying
 
-    def initialize(relationship)
+    def initialize(relationship, db = nil)
       @underlying = relationship
+      @db = db
     end
 
     def == other_rel
