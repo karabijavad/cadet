@@ -16,8 +16,13 @@ module Cadet
         super
       end
 
+      def self.current_session
+        @@current_session
+      end
+
       def self.open(location, &block)
         new(org.neo4j.unsafe.batchinsert.BatchInserters.inserter(location)).tap do |session|
+          @@current_session = session
           if block_given?
             session.instance_exec(session, &block)
             session.close

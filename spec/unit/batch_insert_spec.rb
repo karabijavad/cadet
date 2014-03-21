@@ -29,4 +29,10 @@ describe Cadet::BatchInserter do
       end
     end
   end
+
+  it "" do
+    Cadet::BatchInserter::Session.open(Dir.mktmpdir) do |session|
+      session.should == Cadet::BatchInserter::Session.current_session
+    end
+  end
 end

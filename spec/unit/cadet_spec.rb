@@ -220,5 +220,13 @@ describe Cadet do
     end
   end
 
+  it "should allow access to the cadet database session singleton object" do
+    Cadet::Session.open do |session|
+      transaction do
+        Cadet::Session.current_session.should == session
+      end
+    end
+  end
+
 
 end
