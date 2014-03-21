@@ -30,7 +30,7 @@ describe Cadet::BatchInserter do
     end
   end
 
-  it "" do
+  it "should allow access to the cadet database session singleton object" do
     Cadet::BatchInserter::Session.open(Dir.mktmpdir) do |session|
       session.should == Cadet::BatchInserter::Session.current_session
     end
