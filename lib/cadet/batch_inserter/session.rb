@@ -38,7 +38,7 @@ module Cadet
       end
 
       def create_node(label, properties)
-        Node.new(@underlying.createNode(properties.inject({}){|result,(k,v)| result[k.to_java_string] = v; result}, DynamicLabel.label(label)))
+        Node.new(@underlying.createNode(Hash[properties.map { |k,v| [k.to_java_string, v] }], DynamicLabel.label(label)))
       end
 
       def get_node(label, property, value)
