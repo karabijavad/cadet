@@ -1,14 +1,11 @@
 module Cadet
-
-  def self.s
-    @@current_session
-  end
-
-  def self.s=(session)
-    @@current_session = session
-  end
-
   class Session
+    @@current_session = nil
+
+    def self.current_session
+      @@current_session
+    end
+
     def initialize(db)
       @db = db
     end
@@ -18,7 +15,7 @@ module Cadet
         new(org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location)) :
         new(org.neo4j.test.TestGraphDatabaseFactory.new.newImpermanentDatabase))
       .tap do |session|
-        Cadet::s = session
+        @@current_session = session
         if block_given?
           session.instance_exec(session, &block)
           session.close

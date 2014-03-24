@@ -223,7 +223,7 @@ describe Cadet do
   it "should allow access to the cadet database session singleton object" do
     Cadet::Session.open do |session|
       transaction do
-        Cadet::s.should == session
+        Cadet::Session.current_session.should == session
       end
     end
   end
