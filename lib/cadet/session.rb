@@ -6,12 +6,8 @@ module Cadet
       @@current_session
     end
 
-    def initialize(db)
-      @db = db
-    end
-
-    def db
-      @db
+    def initialize(underlying)
+      @underlying = underlying
     end
 
     def self.open(location = nil, &block)
@@ -28,18 +24,18 @@ module Cadet
     end
 
     def close
-      @db.shutdown
+      @underlying.shutdown
     end
 
     def create_node(label, properties, indexing_property = nil)
-      Node.new(@db.createNode).tap do |n|
+      Node.new(@underlying.createNode).tap do |n|
         n.add_label label
         properties.each { |prop, val| n[prop] = val }
       end
     end
 
     def find_node(label, property, value)
-      ( node = org.neo4j.helpers.collection.IteratorUtil.firstOrNull(@db.findNodesByLabelAndProperty(DynamicLabel.label(label), property, value)) ) ?
+      ( node = org.neo4j.helpers.collection.IteratorUtil.firstOrNull(@underlying.findNodesByLabelAndProperty(DynamicLabel.label(label), property, value)) ) ?
         Node.new(node) : nil
     end
 
@@ -62,14 +58,14 @@ module Cadet
     end
 
     def constraint(label, property)
-      @db.schema
+      @underlying.schema
         .constraintFor(DynamicLabel.label(label))
         .assertPropertyIsUnique(property)
         .create()
     end
 
     def begin_tx
-      @db.beginTx
+      @underlying.beginTx
     end
 
     def method_missing(name, *args, &block)

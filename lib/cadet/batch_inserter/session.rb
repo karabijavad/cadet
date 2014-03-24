@@ -2,9 +2,9 @@ module Cadet
   module BatchInserter
     class Session < Cadet::Session
 
-      def initialize(db)
-        @index_provider = CadetIndex::IndexProvider.new(db)
-        @db = db
+      def initialize(underlying)
+        @index_provider = CadetIndex::IndexProvider.new(underlying)
+        @underlying = underlying
       end
 
       def index_on(label, property, node)
@@ -27,7 +27,7 @@ module Cadet
       end
 
       def constraint(label, property)
-        @db.createDeferredConstraint(DynamicLabel.label(label))
+        @underlying.createDeferredConstraint(DynamicLabel.label(label))
           .assertPropertyIsUnique(property)
           .create()
       end
@@ -38,7 +38,7 @@ module Cadet
       end
 
       def create_node(label, properties)
-        Node.new(@db.createNode(properties.inject({}){|result,(k,v)| result[k.to_java_string] = v; result}, DynamicLabel.label(label)))
+        Node.new(@underlying.createNode(properties.inject({}){|result,(k,v)| result[k.to_java_string] = v; result}, DynamicLabel.label(label)))
       end
 
       def get_node(label, property, value)
@@ -49,6 +49,17 @@ module Cadet
         Transaction.new(self)
       end
 
+      def create_relationship(from, to, type, properties)
+        Relationship.new @underlying.createRelationship(from.underlying, to.underlying, DynamicRelationshipType.withName(type), properties)
+      end
+
+      def get_node_properties(node, property)
+        @underlying.getNodeProperties(node.underlying)[property.to_java_string]
+      end
+
+      def set_node_property(node, property, value)
+        @underlying.setNodeProperty node.underlying, property.to_java_string, value
+      end
     end
   end
 end
