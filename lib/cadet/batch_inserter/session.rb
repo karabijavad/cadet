@@ -8,7 +8,7 @@ module Cadet
       end
 
       def index_on(label, property, node)
-        @index_provider[label].add(node.underlying, property.to_sym, node[property])
+        @index_provider[label].add(node.underlying, property, node[property])
       end
 
       def close

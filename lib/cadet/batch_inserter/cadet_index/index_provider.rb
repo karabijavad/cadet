@@ -12,7 +12,9 @@ module Cadet
           @indexes[label.to_sym] ||= CadetIndex::Index.new(@lucene_index, label.to_sym)
         end
         def shutdown
-          @indexes.each { |label, index| index.flush }
+          @indexes.each do |label, index|
+            index.flush
+          end
         end
       end
     end
