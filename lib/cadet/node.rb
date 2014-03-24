@@ -2,8 +2,7 @@ module Cadet
   class Node
     attr_accessor :underlying
 
-    def initialize(node, db = nil)
-      @db = Cadet::Session.current_session
+    def initialize(node)
       @underlying = node
     end
 
