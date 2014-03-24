@@ -53,12 +53,20 @@ module Cadet
         Relationship.new @underlying.createRelationship(from.underlying, to.underlying, DynamicRelationshipType.withName(type), properties)
       end
 
-      def get_node_properties(node, property)
-        @underlying.getNodeProperties(node.underlying)[property.to_java_string]
+      def get_node_properties(node)
+        @underlying.getNodeProperties(node.underlying)
       end
 
       def set_node_property(node, property, value)
-        @underlying.setNodeProperty node.underlying, property.to_java_string, value
+        @underlying.setNodeProperty(node.underlying, property.to_java_string, value)
+      end
+
+      def get_relationship_properties(relationship)
+        @underlying.getRelationshipProperties(relationship.underlying)
+      end
+
+      def set_relationship_property(relationship, property, value)
+        @underlying.setRelationshipProperty(relationship.underlying, property.to_java_string, value)
       end
     end
   end
