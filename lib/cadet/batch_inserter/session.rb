@@ -42,7 +42,7 @@ module Cadet
       end
 
       def get_node(label, property, value)
-        find_node(label, property, value) || create_node(label, {property.to_sym => value}).tap { |n|  index_on(label, property, n) }
+        find_node(label, property, value) || create_node(label, {property.to_sym => value}).tap { |n| index_on(label, property, n); }
       end
 
       def get_transaction

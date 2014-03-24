@@ -11,7 +11,7 @@ module Cadet
       end
 
       def [] (property)
-        Cadet::BatchInserter::Session.current_session.get_node_properties(self)[property]
+        Cadet::BatchInserter::Session.current_session.get_node_properties(self)[property.to_s]
       end
 
       def == other_node
