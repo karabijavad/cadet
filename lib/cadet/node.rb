@@ -3,7 +3,7 @@ module Cadet
     attr_accessor :underlying
 
     def initialize(node, db = nil)
-      @db = db
+      @db = Cadet::Session.current_session
       @underlying = node
     end
 

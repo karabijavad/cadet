@@ -34,11 +34,11 @@ module Cadet
 
       def find_node(label, property, value)
         (node = @index_provider[label].get(property.to_sym, value).first) ?
-          Node.new(node, @db) : nil
+          Node.new(node) : nil
       end
 
       def create_node(label, properties)
-        Node.new(@db.createNode(properties.inject({}){|result,(k,v)| result[k.to_java_string] = v; result}, DynamicLabel.label(label)), @db)
+        Node.new(@db.createNode(properties.inject({}){|result,(k,v)| result[k.to_java_string] = v; result}, DynamicLabel.label(label)))
       end
 
       def get_node(label, property, value)

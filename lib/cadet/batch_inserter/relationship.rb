@@ -8,11 +8,11 @@ module Cadet
       end
 
       def []= (property, value)
-        @db.setRelationshipProperty(@underlying, property.to_java_string, value)
+        Cadet::BatchInserter::Session.current_session.db.setRelationshipProperty(@underlying, property.to_java_string, value)
       end
 
       def [] (property)
-        @db.getRelationshipProperties(@underlying)[property]
+        Cadet::BatchInserter::Session.current_session.db.getRelationshipProperties(@underlying)[property]
       end
 
     end

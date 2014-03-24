@@ -10,6 +10,10 @@ module Cadet
       @db = db
     end
 
+    def db
+      @db
+    end
+
     def self.open(location = nil, &block)
       (location ?
         new(org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location)) :

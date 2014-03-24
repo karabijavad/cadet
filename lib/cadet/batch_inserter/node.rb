@@ -3,15 +3,15 @@ module Cadet
     class Node < Cadet::Node
 
       def create_outgoing(to, type, properties = {})
-        Relationship.new @db.createRelationship(@underlying, to.underlying, DynamicRelationshipType.withName(type), properties), @db
+        Relationship.new Cadet::BatchInserter::Session.current_session.db.createRelationship(@underlying, to.underlying, DynamicRelationshipType.withName(type), properties)
       end
 
       def []= (property, value)
-        @db.setNodeProperty @underlying, property.to_java_string, value
+        Cadet::BatchInserter::Session.current_session.db.setNodeProperty @underlying, property.to_java_string, value
       end
 
       def [] (property)
-        @db.getNodeProperties(@underlying)[property.to_java_string]
+        Cadet::BatchInserter::Session.current_session.db.getNodeProperties(@underlying)[property.to_java_string]
       end
 
       def == other_node
