@@ -13,12 +13,15 @@ describe Cadet::BatchInserter do
       self.class.should == Cadet::BatchInserter::Session
 
       transaction do
-        javad   = Person_by_name("Javad")
-        chicago = City_by_name("Chicago")
-        houston = City_by_name("Houston")
+        Person_by_name("Javad").lives_in_to City_by_name("Chicago")
+        Person_by_name("Javad").lives_in_to City_by_name("Houston")
 
-        javad.lives_in_to chicago
-        javad.lives_in_to houston
+        City_by_name("Chicago").city_of_to State_by_name("Illinois")
+        City_by_name("Houston").city_of_to State_by_name("Texas")
+
+        Person_by_name("Javad")[:birth_year]   = 1988
+        City_by_name("Chicago")[:abbreviation] = "CHI"
+        City_by_name("Houston")[:abbreviation] = "HOU"
       end
     end
 
@@ -26,6 +29,13 @@ describe Cadet::BatchInserter do
       transaction do
         Person_by_name("Javad").outgoing(:lives_in).should =~ [City_by_name("Houston"), City_by_name("Chicago")]
         Person_by_name("Javad").outgoing(:lives_in).should =~ [City_by_name("Chicago"), City_by_name("Houston")]
+
+        Person_by_name("Javad").outgoing(:lives_in).outgoing(:city_of).should == [State_by_name("Texas"), State_by_name("Illinois")]
+        Person_by_name("Javad").outgoing(:lives_in).outgoing(:city_of).to_a.should =~ [State_by_name("Illinois"), State_by_name("Texas")]
+
+        Person_by_name("Javad")[:birth_year].should     == 1988
+        City_by_name("Chicago")[:abbreviation].should == "CHI"
+        City_by_name("Houston")[:abbreviation].should == "HOU"
       end
     end
   end
