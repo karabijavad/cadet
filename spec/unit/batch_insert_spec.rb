@@ -7,7 +7,7 @@ describe Cadet::BatchInserter do
     Cadet::BatchInserter::Session.open(Dir.mktmpdir).class.should == Cadet::BatchInserter::Session
   end
 
-  it "it should accept multiple relationships" do
+  it "it should also work in batch insert mode" do
     at = Dir.mktmpdir
     Cadet::BatchInserter::Session.open(at) do
       self.class.should == Cadet::BatchInserter::Session
