@@ -79,7 +79,7 @@ module Cadet
 
         when /^create_([A-z_]*)$/
           self.class.class_eval "
-            def #{name}(value)
+            def #{name}(value = {})
               create_node :#{$1}, value
             end"
           return self.send(name, *args, &block)
