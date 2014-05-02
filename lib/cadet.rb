@@ -1,8 +1,8 @@
 require 'java'
 
-require "neo4j/neo4j-lucene-index-2.0.1.jar"
-require "neo4j/neo4j-shell-2.0.1.jar"
-require "neo4j/neo4j-kernel-2.0.1-tests.jar"
+require "neo4j/neo4j-lucene-index-2.0.3.jar"
+require "neo4j/neo4j-shell-2.0.3.jar"
+require "neo4j/neo4j-kernel-2.1.0-M02-tests.jar"
 
 require 'cadet/helpers'
 require 'cadet/session'
