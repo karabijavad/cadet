@@ -83,8 +83,6 @@ module Cadet
               create_node :#{$1}, value
             end"
           return self.send(name, *args, &block)
-        else
-          raise NotImplementedError
       end
     end
 
