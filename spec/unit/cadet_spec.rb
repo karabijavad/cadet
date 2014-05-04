@@ -228,5 +228,19 @@ describe Cadet do
     end
   end
 
+  it "should allow indexes to be created via index method" do
+    Cadet::Session.open do
+      transaction do
+        index :Person, :name
+      end
 
+      transaction do
+        pending "need to figure out how to determine the index has been added?" do
+          Cadet::IndexProvider.new(@underlying)
+            .find(:Person, :name).should exist
+        end
+      end
+    end
+  end
 end
+

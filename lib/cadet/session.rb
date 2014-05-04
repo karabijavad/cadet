@@ -30,7 +30,10 @@ module Cadet
     def create_node(label, properties, indexing_property = nil)
       Node.new(@underlying.createNode).tap do |n|
         n.add_label label
-        properties.each { |prop, val| n[prop] = val }
+        properties.each do |prop, val|
+          val = val.to_java_string if val.is_a? Symbol
+          n[prop] = val
+        end
       end
     end
 
@@ -66,6 +69,14 @@ module Cadet
 
     def begin_tx
       @underlying.beginTx
+    end
+
+    def index(label, property)
+      #create index
+      @underlying.schema
+        .indexFor( DynamicLabel.label( label ) )
+        .on( property )
+        .create()
     end
 
     def method_missing(name, *args, &block)
