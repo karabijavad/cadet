@@ -1,17 +1,17 @@
 module Cadet
   module BatchInserter
     class Relationship < Cadet::Relationship
-      attr_accessor :underlying
+      include Cadet::PropertyContainer
 
       def == other_rel
         @underlying == other_rel
       end
 
-      def []= (property, value)
+      def set_property (property, value)
         Cadet::BatchInserter::Session.current_session.set_relationship_property(self, property, value)
       end
 
-      def [] (property)
+      def get_property (property)
         Cadet::BatchInserter::Session.current_session.get_relationship_properties(self)[property]
       end
 

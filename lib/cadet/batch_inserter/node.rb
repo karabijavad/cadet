@@ -6,11 +6,11 @@ module Cadet
         Cadet::BatchInserter::Session.current_session.create_relationship(self, to, type, properties)
       end
 
-      def []= (property, value)
+      def set_property (property, value)
         Cadet::BatchInserter::Session.current_session.set_node_property(self, property, value)
       end
 
-      def [] (property)
+      def get_property (property)
         Cadet::BatchInserter::Session.current_session.get_node_properties(self)[property.to_s]
       end
 

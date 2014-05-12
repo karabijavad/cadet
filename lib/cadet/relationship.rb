@@ -1,21 +1,10 @@
 module Cadet
   class Relationship
-    attr_accessor :underlying
-
-    def initialize(relationship)
-      @underlying = relationship
-    end
+    include Cadet::Proxy
+    include Cadet::PropertyContainer
 
     def == other_rel
       @underlying.getId == other_rel.underlying.getId
-    end
-
-    def []= (property, value)
-      @underlying.setProperty(property.to_java_string, value)
-    end
-
-    def [] (property)
-      @underlying.getProperty(property.to_java_string)
     end
 
     def get_other_node(node)

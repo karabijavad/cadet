@@ -1,10 +1,10 @@
 require 'java'
 
-require "neo4j/neo4j-lucene-index-2.0.3.jar"
-require "neo4j/neo4j-shell-2.0.3.jar"
-require "neo4j/neo4j-kernel-2.1.0-M02-tests.jar"
+Dir[File.dirname(__FILE__) + '/../lib/neo4j/*.jar'].each { |file| require file }
 
 require 'cadet/helpers'
+require 'cadet/proxy'
+require 'cadet/property_container'
 require 'cadet/session'
 require 'cadet/node'
 require 'cadet/relationship'
@@ -24,3 +24,7 @@ require 'cadet/batch_inserter/cadet_index/index'
 
 require 'cadet/dynamic_relationshiptype'
 require 'cadet/dynamic_label'
+
+require 'cadet/spatial/session'
+require 'cadet/spatial/layer'
+

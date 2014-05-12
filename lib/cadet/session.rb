@@ -1,21 +1,15 @@
 module Cadet
   class Session
-    @@current_session = nil
+    include Cadet::Proxy
 
-    def self.current_session
-      @@current_session
-    end
-
-    def initialize(underlying)
-      @underlying = underlying
-    end
+    class << self; attr_accessor :current_session; end;
 
     def self.open(location = nil, &block)
       (location ?
         new(org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location)) :
         new(org.neo4j.test.TestGraphDatabaseFactory.new.newImpermanentDatabase))
       .tap do |session|
-        @@current_session = session
+        @current_session = session
         if block_given?
           session.instance_exec(session, &block)
           session.close

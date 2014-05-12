@@ -1,10 +1,7 @@
 module Cadet
   class Node
-    attr_accessor :underlying
-
-    def initialize(node)
-      @underlying = node
-    end
+    include Cadet::Proxy
+    include Cadet::PropertyContainer
 
     def add_label(label)
       @underlying.addLabel(DynamicLabel.label(label))
@@ -12,14 +9,6 @@ module Cadet
     end
     def labels
       @underlying.getLabels().map(&:name)
-    end
-
-    def []= (property, value)
-      @underlying.setProperty(property.to_java_string, value)
-    end
-
-    def [] (property)
-      @underlying.getProperty(property.to_java_string)
     end
 
     def each_relationship(direction, type)
