@@ -45,6 +45,13 @@ module Cadet
       NodeRelationships.new(self, :incoming, type)
     end
 
+    def data
+      @underlying.getPropertyKeys.each_with_object({}) {|key, result| result[key.to_sym] = self[key]}
+    end
+    def data=(new_data)
+
+    end
+
     def == other_node
       @underlying.getId == other_node.underlying.getId
     end
