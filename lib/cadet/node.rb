@@ -49,7 +49,9 @@ module Cadet
       @underlying.getPropertyKeys.each_with_object({}) {|key, result| result[key.to_sym] = self[key]}
     end
     def data=(new_data)
-
+      new_data.each do |k, v|
+        @underlying.setProperty(k.to_java_string, v)
+      end
     end
 
     def == other_node
