@@ -228,7 +228,29 @@ describe Cadet do
     end
   end
 
-  it "should allow indexes to be created via index method" do
+  it "should retrieve the node properties with the data method" do
+    Cadet::Session.open do
+      transaction do
+        person = Person_by_name("Javad")
+        person[:age] = 25
+
+        person.data.should == {name: "Javad", age: 25}
+      end
+    end
+  end
+
+  it "should retrieve the node properties with the data method" do
+    Cadet::Session.open do
+      transaction do
+        person = Person_by_name("Javad")
+        person.data = {age: 25, occupation: "Software"}
+
+        person.data.should == {name: "Javad", age: 25, occupation: "Software"}
+      end
+    end
+  end
+
+  xit "should allow indexes to be created via index method" do
     Cadet::Session.open do
       pending "need to figure out how to determine the index has been added?" do
         transaction do
@@ -243,4 +265,3 @@ describe Cadet do
     end
   end
 end
-

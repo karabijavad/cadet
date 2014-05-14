@@ -47,11 +47,12 @@ module Cadet
     def transaction
       tx = get_transaction
       begin
-        yield tx
+        result = yield(tx)
         tx.success
       ensure
         tx.close
       end
+      result
     end
 
     def constraint(label, property)

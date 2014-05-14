@@ -21,10 +21,10 @@ module Cadet
       Relationship.new @underlying.createRelationshipTo(to.underlying, DynamicRelationshipType.withName(type))
     end
     def outgoing(type)
-      NodeTraverser.new(self, :outgoing, type)
+      NodePusher.new(self, :outgoing, type)
     end
     def incoming(type)
-      NodeTraverser.new(self, :incoming, type)
+      NodePusher.new(self, :incoming, type)
     end
 
     def outgoing_rels(type)
@@ -32,6 +32,15 @@ module Cadet
     end
     def incoming_rels(type)
       NodeRelationships.new(self, :incoming, type)
+    end
+
+    def data
+      @underlying.getPropertyKeys.each_with_object({}) {|key, result| result[key.to_sym] = self[key]}
+    end
+    def data=(new_data)
+      new_data.each do |k, v|
+        @underlying.setProperty(k.to_java_string, v)
+      end
     end
 
     def == other_node
