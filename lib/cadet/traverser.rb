@@ -1,5 +1,5 @@
 module Cadet
-  class PathTraverser
+  class Traverser
     include Enumerable
 
     def initialize(nodes, direction, type)
@@ -15,10 +15,10 @@ module Cadet
     end
 
     def outgoing(type)
-      PathTraverser.new(to_a, :outgoing, type)
+      Traverser.new to_a, :outgoing, type
     end
     def incoming(type)
-      PathTraverser.new(to_a, :incoming, type)
+      Traverser.new to_a, :incoming, type
     end
 
     def ==(other)

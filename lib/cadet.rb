@@ -10,7 +10,7 @@ require 'cadet/node'
 require 'cadet/relationship'
 require 'cadet/direction'
 require 'cadet/node_pusher'
-require 'cadet/path_traverser'
+require 'cadet/traverser'
 require 'cadet/node_relationships'
 require 'cadet/transaction'
 
