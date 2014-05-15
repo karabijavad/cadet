@@ -22,8 +22,6 @@ describe Cadet::Spatial do
 
           layer.count.should == 2
 
-          layer.within_distance([ 29.665783800000000000 , -95.019372799999990000], 50).count.should == 2
-
         end
      end
     end
