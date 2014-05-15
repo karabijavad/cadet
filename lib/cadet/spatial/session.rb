@@ -17,8 +17,8 @@ module Cadet
         @underlying = org.neo4j.gis.spatial.SpatialDatabaseService.new(session.underlying)
       end
 
-      def get_point_layer(layer_name, xprop="lat", yprop="lng")
-        Layer.new(@underlying.getOrCreatePointLayer(layer_name, xprop, yprop))
+      def get_point_layer(layer_name)
+        Layer.new(Cadet::Session.current_session.underlying.index.forNodes(layer_name, org.neo4j.gis.spatial.indexprovider.SpatialIndexProvider::SIMPLE_POINT_CONFIG))
       end
 
     end

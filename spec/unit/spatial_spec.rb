@@ -14,13 +14,15 @@ describe Cadet::Spatial do
         Cadet::Spatial::Session.open(sess) do
           layer = get_point_layer "cities"
 
-          chicago[:lat], chicago[:lng] = 41.9793333, -87.9073889
-          houston[:lat], houston[:lng] = 29.6454186, -95.2788889
+          chicago[:lat], chicago[:lon] = 41.9793333, -87.9073889
+          houston[:lat], houston[:lon] = 29.6454186, -95.2788889
 
-          layer.add chicago
-          layer.add houston
+          layer.add chicago, "city", "chicago"
+          layer.add houston, "city", "houston"
 
-          layer.count.should == 2
+          layer.within_distance_km([41.9793333, -87.9073889], 1).should == [chicago]
+          layer.within_distance_km([29.6454186, -95.2788889], 1).should == [houston]
+
 
         end
      end
