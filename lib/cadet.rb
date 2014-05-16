@@ -11,7 +11,6 @@ require 'cadet/relationship'
 require 'cadet/direction'
 require 'cadet/node_pusher'
 require 'cadet/traverser'
-require 'cadet/node_relationships'
 require 'cadet/transaction'
 
 require 'cadet/batch_inserter/session'
@@ -27,4 +26,3 @@ require 'cadet/dynamic_label'
 
 require 'cadet/spatial/session'
 require 'cadet/spatial/layer'
-

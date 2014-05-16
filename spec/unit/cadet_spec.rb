@@ -127,8 +127,12 @@ describe Cadet do
         javad.knows_to      ellen
         ellen.also_knows_to javad
 
-        javad.outgoing_rels(:knows).map{ |rel| rel.get_other_node(javad)}.should == [ellen]
-        javad.incoming_rels(:also_knows).map{ |rel| rel.get_other_node(javad)}.should == [ellen]
+        javad.relationships(:outgoing, :knows) { |rel|
+          rel.get_other_node(javad).should == ellen
+        }
+        javad.relationships(:incoming, :also_knows) { |rel|
+          rel.get_other_node(javad).should == ellen
+        }
       end
     end
   end

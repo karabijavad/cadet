@@ -11,7 +11,7 @@ module Cadet
       @underlying.getLabels().map(&:name)
     end
 
-    def each_relationship(direction, type)
+    def relationships(direction, type)
       @underlying.getRelationships(Directions[direction], DynamicRelationshipType.withName(type)).each do |rel|
         yield Relationship.new(rel)
       end
@@ -25,13 +25,6 @@ module Cadet
     end
     def incoming(type)
       NodePusher.new(self, :incoming, type)
-    end
-
-    def outgoing_rels(type)
-      NodeRelationships.new(self, :outgoing, type)
-    end
-    def incoming_rels(type)
-      NodeRelationships.new(self, :incoming, type)
     end
 
     def data
