@@ -3,9 +3,12 @@ require 'tmpdir'
 
 describe Cadet do
 
-  it "should create an instance of cadet session, for test and normal sessions" do
+  it "should create an instance of cadet session, for normal sessions" do
     Cadet::Session.open(Dir.mktmpdir).class.should == Cadet::Session
-    Cadet::Session.open.class.should               == Cadet::Session #test session
+  end
+
+  it "should create an instance of cadet session, for test sessions" do
+    Cadet::Session.open.class.should == Cadet::Session #test session
   end
 
   it "should create an instance of cadet session, for test and normal sessions" do

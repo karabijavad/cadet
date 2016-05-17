@@ -1,3 +1,7 @@
+module JavaIO
+  include_package "java.io"
+end
+
 module Cadet
   class Session
     @@current_session = nil
@@ -11,6 +15,9 @@ module Cadet
     end
 
     def self.open(location = nil, &block)
+      if location
+        location = JavaIO::File.new(location)
+      end
       (location ?
         new(org.neo4j.graphdb.factory.GraphDatabaseFactory.new.newEmbeddedDatabase(location)) :
         new(org.neo4j.test.TestGraphDatabaseFactory.new.newImpermanentDatabase))
@@ -38,8 +45,20 @@ module Cadet
     end
 
     def find_node(label, property, value)
-      ( node = org.neo4j.helpers.collection.IteratorUtil.firstOrNull(@underlying.findNodesByLabelAndProperty(DynamicLabel.label(label), property, value)) ) ?
-        Node.new(node) : nil
+      label = DynamicLabel.label(label)
+      found = @underlying.findNode(label, property.to_s, value)
+      if found
+        return Node.new(found)
+      else
+        return nil
+      end
+      # xxx = @underlying.findNodes(label, property.to_s, value)
+      #
+      # if org.neo4j.helpers.ArrayUtil.isEmpty(xxx)
+      #   return Nil
+      # else
+      #   return Node.new(xxx[0])
+      # end
     end
 
     def get_node(label, property, value)

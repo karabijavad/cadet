@@ -1,3 +1,9 @@
+require 'tmpdir'
+
+module JavaIO
+  include_package "java.io"
+end
+
 module Cadet
   module BatchInserter
     class Session < Cadet::Session
@@ -17,6 +23,10 @@ module Cadet
       end
 
       def self.open(location, &block)
+        if not location
+          location = Dir.mktmpdir
+        end
+        location = JavaIO::File.new(location)
         new(org.neo4j.unsafe.batchinsert.BatchInserters.inserter(location)).tap do |session|
           @@current_session = session
           if block_given?

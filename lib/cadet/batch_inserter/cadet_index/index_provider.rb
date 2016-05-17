@@ -5,7 +5,7 @@ module Cadet
 
         def initialize(db)
           @indexes = {}
-          @lucene_index = org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProviderNewImpl.new(db)
+          @lucene_index = org.neo4j.index.impl.lucene.legacy.LuceneBatchInserterIndexProviderNewImpl.new(db)
         end
 
         def [](label)
